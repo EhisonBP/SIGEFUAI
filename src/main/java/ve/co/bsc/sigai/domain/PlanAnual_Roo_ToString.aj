@@ -16,10 +16,7 @@ privileged aspect PlanAnual_Roo_ToString {
         sb.append("Descripcion: ").append(getDescripcion()).append(", ");
         sb.append("AnoFiscal: ").append(getAnoFiscal()).append(", ");
         sb.append("AccionesPermitidas: ").append(java.util.Arrays.toString(getAccionesPermitidas())).append(", ");
-        sb.append("AnoPlan: ").append(getAnoPlan()).append(", ");
-        sb.append("Rif: ").append(getRif()).append(", ");
-        sb.append("Responsable: ").append(getResponsable()).append(", ");
-        sb.append("Responsable2: ").append(getResponsable2());
+        sb.append("Rif: ").append(getRif());
         return sb.toString();
     }
     

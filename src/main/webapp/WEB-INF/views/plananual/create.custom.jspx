@@ -31,31 +31,31 @@
 		<form:form id="" action="${form_url}" method="post"
 			modelAttribute="planAnual">
 			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
-			<div id="roo_planAnual_anoPlan">
-				<c:if test="${not empty instruirplans}">
-					<label for="_anoPlan_id">Año Fiscal:</label>
-					<form:select cssStyle="width:250px" id="_anoPlan_id" path="anoPlan">
-						<form:options itemValue="id" items="${instruirplans}" itemLabel="ano"
-						/>
-					</form:select>
-					<script type="text/javascript">
-						Spring.addDecoration(new Spring.ElementDecoration({
-							elementId : '_anoPlan_id',
-							widgetType : 'dijit.form.FilteringSelect',
-							widgetAttrs : {
-								hasDownArrow : true
-							}
-						}));
-					</script>
-				</c:if>
+
+			<div id="roo_planAnual_anoFiscal">
+				<label for="_anoFiscal_id">Año Fiscal:</label>
+				<form:input cssStyle="width:250px" id="_anoFiscal_id" maxlength="30"
+					path="anoFiscal" size="0" />
+				<br />
+				<form:errors cssClass="errors" id="_anoFiscal_error_id"
+					path="anoFiscal" />
+				<spring:message code="field.invalid.integer" var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator="," arguments="Ano Fiscal,"
+					code="field.simple.validation" var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_anoFiscal_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							regExp : '-?[0-9]*',
+							required : false
+						}
+					}));
+				</script>
 			</div>
-			<br />
-			<!--<div id="roo_planAnual_estadoPlan">
-                <label for="_estadoPlan_id">Estatus:</label>
-                <div id="_estadoPlan_id">
-                    <c:out value="${planAnual.estadoPlan.nombre}"/>
-                </div>
-            </div>-->
 			<br />
 			<div id="roo_planAnual_descripcion">
 				<label for="_descripcion_id">Comentarios:</label>

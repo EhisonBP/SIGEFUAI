@@ -34,31 +34,10 @@
                 </div>
             </div>
             <br/>
-            <div id="roo_planAnual_anoPlan">
-                <label for="_anoPlan_id">Ano Plan:</label>
-                <div class="box" id="_anoPlan_id">
-                    <c:out value="${planAnual.anoPlan}"/>
-                </div>
-            </div>
-            <br/>
             <div id="roo_planAnual_rif">
                 <label for="_rif_id">Rif:</label>
                 <div class="box" id="_rif_id">
                     <c:out value="${planAnual.rif}"/>
-                </div>
-            </div>
-            <br/>
-            <div id="roo_planAnual_responsable">
-                <label for="_responsable_id">Responsable:</label>
-                <div class="box" id="_responsable_id">
-                    <c:out value="${planAnual.responsable}"/>
-                </div>
-            </div>
-            <br/>
-            <div id="roo_planAnual_responsable2">
-                <label for="_responsable2_id">Responsable2:</label>
-                <div class="box" id="_responsable2_id">
-                    <c:out value="${planAnual.responsable2}"/>
                 </div>
             </div>
             <br/>

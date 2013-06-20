@@ -47,23 +47,9 @@ public class PlanAnual implements Cloneable, ObjetoComentable,
 	@Transient
 	private String[] accionesPermitidas;
 
-	@ManyToOne(targetEntity = InstruirPlan.class)
-	@JoinColumn
-	private InstruirPlan anoPlan;
-
 	@ManyToOne(targetEntity = OrganismoEnte.class)
 	@JoinColumn
 	private OrganismoEnte rif;
-
-	// @javax.validation.constraints.NotNull
-	@ManyToOne(targetEntity = ve.co.bsc.sigai.domain.Auditor.class)
-	@JoinColumn
-	private ve.co.bsc.sigai.domain.Auditor responsable;
-
-	// @javax.validation.constraints.NotNull
-	@ManyToOne(targetEntity = ve.co.bsc.sigai.domain.Auditor.class)
-	@JoinColumn
-	private ve.co.bsc.sigai.domain.Auditor responsable2;
 
 	public void setAccionesPermitidasFromString(
 			String commaSeparadtedStringWithActionsList) {
@@ -84,7 +70,6 @@ public class PlanAnual implements Cloneable, ObjetoComentable,
 		obj.setEstadoPlan(this.estadoPlan);
 		obj.setDescripcion(this.descripcion);
 		obj.setAnoFiscal(this.anoFiscal);
-		obj.setAnoPlan(this.anoPlan);
 		return obj;
 	}
 
@@ -120,22 +105,6 @@ public class PlanAnual implements Cloneable, ObjetoComentable,
 	@Override
 	public String getNombreClase() {
 		return "Plan Anual";
-	}
-
-	public String coordinador() {
-		logger.debug("Buscando login del Usuario para el JPBM");
-		String login = PlanAnual.findPlanAnual(this.getId()).getResponsable()
-				.getLogin();
-		logger.debug("el login Es " + login);
-		return login;
-	}
-
-	public String auditor() {
-		logger.debug("Buscando login del Usuario para el JPBM");
-		String login = PlanAnual.findPlanAnual(this.getId()).getResponsable2()
-				.getLogin();
-		logger.debug("el login Es " + login);
-		return login;
 	}
 
 	public String getEstadoSimple() {

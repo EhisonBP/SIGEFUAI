@@ -29,7 +29,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -38,12 +37,9 @@ import org.drools.runtime.process.ProcessInstance;
 import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,9 +50,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import ve.co.bsc.sigai.domain.Actuacion;
 import ve.co.bsc.sigai.domain.Auditor;
-import ve.co.bsc.sigai.domain.EstadoAuditor;
 import ve.co.bsc.sigai.domain.EstadoPlan;
-import ve.co.bsc.sigai.domain.InstruirPlan;
 import ve.co.bsc.sigai.domain.ItemPlanificacionActuacion;
 import ve.co.bsc.sigai.domain.OrganismoEnte;
 import ve.co.bsc.sigai.domain.OtraActividad;
@@ -125,26 +119,12 @@ public class PlanAnualController {
 		Util util = new Util();
 
 		planAnual.setRif(util.traerIdRif());
-		int ano = planAnual.getAnoPlan().getAno();
-		planAnual.setAnoFiscal(ano);
 
 		// Se asigna el estadoPlan por defecto que es "En Proceso" por eso se
 		// cablea a id 1
 		EstadoPlan estadoPlanEnProceso = EstadoPlan.findEstadoPlan(new Long(1));
 		planAnual.setEstadoPlan(estadoPlanEnProceso);
 
-		Query query = PlanAnual.findPlanAnualsByRif(util.traerIdRif());
-		List<PlanAnual> list = query.getResultList();
-		for (PlanAnual anual : list) {
-			if (anual.getAnoPlan() == planAnual.getAnoPlan()) {
-				result.addError(new ObjectError("anoPlan",
-						"Este Año Fiscal ya se encuentra Registrado"));
-			}
-		}
-
-		// ************************************************
-		EstadoAuditor auditor = new EstadoAuditor();
-		auditor = EstadoAuditor.findEstadoAuditor(new Long(1));
 		if (planAnual == null) {
 			throw new IllegalArgumentException("A planAnual is required");
 		}
@@ -152,8 +132,6 @@ public class PlanAnualController {
 			modelMap.addAttribute("planAnual", planAnual);
 			modelMap.addAttribute("estadoplans",
 					EstadoPlan.findAllEstadoPlans());
-			modelMap.addAttribute("instruirplans", InstruirPlan
-					.findInstruirPlansByEstatus(auditor).getResultList());
 			return "plananual/create";
 		}
 
@@ -161,17 +139,6 @@ public class PlanAnualController {
 		Util.registrarEntradaEnBitacora(planAnual, "Se creó el Plan Anual ",
 				request.getRemoteAddr());
 		status.setComplete();
-		String loginGerente = null;
-		Object usuario = SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
-		loginGerente = ((User) usuario).getUsername().toString();
-		// inicia el workflow para este plan anual
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("plan", planAnual);
-		parameters.put("loginGerente", loginGerente);
-		ProcessInstance p = jbpmService.startProcess(
-				"ve.co.bsc.sigai.domain.bpm.lifecycle.PlanAnual", parameters,
-				planAnual);
 
 		return "redirect:/plananual/" + planAnual.getId();
 	}
@@ -179,19 +146,8 @@ public class PlanAnualController {
 	@RequestMapping(value = "/plananual/form", method = RequestMethod.GET)
 	public String createForm(ModelMap modelMap) {
 
-		PlanAnual miPlanAnual = new PlanAnual();
-
-		// Se asigna el estadoPlan por defecto que es "En Proceso" por eso se
-		// cablea a id 1
-		EstadoPlan estadoPlanEnProceso = EstadoPlan.findEstadoPlan(new Long(1));
-		miPlanAnual.setEstadoPlan(estadoPlanEnProceso);
-		EstadoAuditor auditor = new EstadoAuditor();
-
-		auditor = EstadoAuditor.findEstadoAuditor(new Long(1));
 		modelMap.addAttribute("planAnual", new PlanAnual());
 		modelMap.addAttribute("estadoplans", EstadoPlan.findAllEstadoPlans());
-		modelMap.addAttribute("instruirplans",
-				InstruirPlan.findAllInstruirPlans());
 		modelMap.addAttribute("organismoentes",
 				OrganismoEnte.findAllOrganismoEntes());
 		return "plananual/create";
@@ -311,14 +267,6 @@ public class PlanAnualController {
 			modelMap.addAttribute("estadoplans",
 					EstadoPlan.findAllEstadoPlans());
 			return "plananual/update";
-		}
-		/***
-		 * CUADO es id 92 es CREAR PLAN GERENTE u no debe terner un responsable
-		 * dado q en el Flujo de trabajo se va hacia Analista Sunai
-		 ***/
-		if (planAnual.getEstadoPlan() == EstadoPlan
-				.findEstadoPlan(new Long(92))) {
-			planAnual.setResponsable(null);
 		}
 
 		planAnual.merge();
