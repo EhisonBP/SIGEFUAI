@@ -1,0 +1,40 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">
+        <spring:message code="label.itemcuestionario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Registrar nueva pregunta'}})); </script>
+        <spring:url value="/itemcuestionario" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="itemCuestionario">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_itemCuestionario_cuestionario">
+                <label for="_cuestionario_id">Cuestionario:</label>
+                <div id="_cuestionario_id">
+                    <spring:url value="/cuestionario/${itemCuestionario.cuestionario.id}" var="url_prueba">
+                        <spring:param name="idPapelDeTrabajo" value="${idPapelDeTrabajo}" > </spring:param>
+                    </spring:url>
+                    <a href="${url_prueba}" >${itemCuestionario.cuestionario.nombre}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_pregunta">
+                <label for="_pregunta_id">Pregunta:</label>
+                <form:input cssStyle="width:440px" id="_pregunta_id" maxlength="90" path="pregunta" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_pregunta_error_id" path="pregunta"/>
+                <spring:message arguments="Pregunta" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Pregunta," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_pregunta_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>          
+            <div class="submit" id="roo_itemCuestionario_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+                <input id="idPrueba" type="hidden" value="${idPrueba}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

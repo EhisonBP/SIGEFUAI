@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<definition extends="default" name="estructuracargos/list">
+		<put-attribute name="body" value="/WEB-INF/views/estructuracargos/list.custom.jspx"/>
+	</definition>
+	<definition extends="default" name="estructuracargos/show">
+		<put-attribute name="body" value="/WEB-INF/views/estructuracargos/show.custom.jspx"/>
+	</definition>
+	<definition extends="default" name="estructuracargos/create">
+		<put-attribute name="body" value="/WEB-INF/views/estructuracargos/create.custom.jspx"/>
+	</definition>
+	<definition extends="default" name="estructuracargos/update">
+		<put-attribute name="body" value="/WEB-INF/views/estructuracargos/update.custom.jspx"/>
+	</definition>
+	<definition extends="default" name="estructuracargos/findEstructuraCargosesByNombreCargoEquals">
+		<put-attribute name="body" value="/WEB-INF/views/estructuracargos/findEstructuraCargosesByNombreCargoEquals.jspx"/>
+	</definition>
+	<definition extends="default" name="estructuracargos/findEstructuraCargosesByRif">
+		<put-attribute name="body" value="/WEB-INF/views/estructuracargos/findEstructuraCargosesByRif.jspx"/>
+	</definition>
+</tiles-definitions>

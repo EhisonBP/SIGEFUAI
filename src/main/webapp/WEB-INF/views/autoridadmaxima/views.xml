@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="autoridadmaxima/list">
+        <put-attribute name="body" value="/WEB-INF/views/autoridadmaxima/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="autoridadmaxima/show">
+        <put-attribute name="body" value="/WEB-INF/views/autoridadmaxima/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="autoridadmaxima/create">
+        <put-attribute name="body" value="/WEB-INF/views/autoridadmaxima/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="autoridadmaxima/update">
+        <put-attribute name="body" value="/WEB-INF/views/autoridadmaxima/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="autoridadmaxima/findAutoridadMaximasByRif">
+        <put-attribute name="body" value="/WEB-INF/views/autoridadmaxima/findAutoridadMaximasByRif.jspx"/>
+    </definition>
+</tiles-definitions>

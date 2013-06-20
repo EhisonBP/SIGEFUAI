@@ -1,0 +1,6 @@
+database.driverClassName=org.postgresql.xa.PGXADataSource
+database.host=<CAMBIAME>
+database.port=<CAMBIAME>
+database.name=<CAMBIAME>
+database.username=<CAMBIAME>
+database.password=<CAMBIAME>

@@ -1,0 +1,36 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:output omit-xml-declaration="yes"/>
+	<script type="text/javascript">dojo.require("dijit.TitlePane")</script>
+   	<div id="_title">
+	    <spring:message var="title" code="error.uncaughtexception.title" />
+	    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title}'}})); </script>
+		<h2>Se ha detectado un error interno</h2>
+                <p>El sistema ha detectado un problema interno. Por favor intente de nuevo o comuníquese con el administrador del sistema para reportar los
+                detalles de la falla, incluyendo la operación que estaba intentando realizar.</p>
+
+                <spring:url value="/" var="home"/>
+                <p><a href="${home}">Ir al inicio</a></p>
+                
+                <div style="color: gray; font-weight: bold; text-align: right; font-size: 12pt;"><p>Versión del producto: ${pageContext.servletContext.servletContextName}</p></div>
+                
+        </div>
+        <c:if test="${not empty exception}">
+			<p>
+				<h4><spring:message code="exception.details" /></h4>
+				
+				<spring:message var="message" code="exception.message" />
+				<div id="_exception">
+					<script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_exception', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${message}', open:false}})); </script>
+					<c:out value="${exception.localizedMessage}" />
+				</div>
+				
+				<spring:message var="stacktrace" code="exception.stacktrace" />
+				<div id="_stacktrace">
+					<script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_stacktrace', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${stacktrace}', open:false}})); </script>
+					<c:forEach items="${exception.stackTrace}" var="trace">
+						<c:out value="${trace}"/><br/>
+					</c:forEach>
+				</div>
+			</p>
+		</c:if>
+</div>

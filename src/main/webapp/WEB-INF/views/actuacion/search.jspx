@@ -1,0 +1,141 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:sec="http://www.springframework.org/security/tags" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript"><![CDATA[
+        dojo.require('dijit.TitlePane');
+        
+
+    ]]></script>
+    <div id="x_title_div">
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Búsqueda de Actuaciones'}})); </script>
+
+        <h1>Búsqueda de Actuaciones</h1>
+
+        <form method="get">
+            <div id="roo_actuacions_terms">
+                <input type="hidden" name="vez" value="2"/>
+                <label for="_anoFiscal_id">Año Fiscal:</label>
+                <div class="box">
+                    <input type="text" name="anoFiscal" value="${anoFiscal}" style="width:250px" id="_anoFiscal_id" maxlength="4"/>
+                </div>
+                <br/>
+                <label for="_referencia_id">Código:</label>
+                <div class="box">
+                    <input type="text" name="referencia" value="${referencia}" style="width:250px" id="_referencia_id" maxlength="50"/>
+                </div>
+                <br/>
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box">
+                    <input type="text" name="nombre" value="${nombre}" style="width:250px" id="_nombre_id" maxlength="50"/>
+                </div>
+                <br/>
+                <label for="_terms_id">Tipo de Actuación:</label>
+                <div class="box">
+                    <select name="claseActuacion" value="${claseActuacion}" style="width:250px" id="_claseActuacion_id">
+                        <option value="">-- Seleccione --</option>
+                        <c:forEach items="${claseActuacions}" var="clase">
+                            <c:if test="${(clase.id == claseActuacion)}">
+                                <option selected="true" value="${clase.id}"><c:out value="${clase.nombre}"/></option>
+                            </c:if>
+                            <c:if test="${(clase.id != claseActuacion)}">
+                                <option value="${clase.id}"><c:out value="${clase.nombre}"/></option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
+                <br/>
+                <label for="_terms_id">Estatus de la Actuación:</label>
+                <div class="box">
+                    <select name="estadoActuacion" value="${estadoActuacion}" style="width:250px" id="_estadoActuacion_id">
+                        <option value="">-- Seleccione --</option>
+                        <c:forEach items="${estadoActuacions}" var="estado">
+                            <c:if test="${(estado.id == estadoActuacion)}">
+                                <option selected="true" value="${estado.id}"><c:out value="${estado.nombre}"/></option>
+                            </c:if>
+                            <c:if test="${(estado.id != estadoActuacion)}">
+                                <option value="${estado.id}"><c:out value="${estado.nombre}"/></option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
+                <br/>
+            </div>
+            <div class="submit" id="roo_auditoria_submit">
+                <input id="proceed" type="submit" value="Buscar"/>
+            </div>
+        </form>
+        <br/>      
+        <c:if test="${not empty actuacions}">
+            <table id="menuTable1" width="300">
+                <thead>
+                    <tr>
+                        
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Estatus</th>
+                        <th>Tipo</th>
+                        <th/>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                            <th/>
+                            <th/>
+                        </sec:authorize>
+                    </tr>
+                </thead>
+                <c:forEach items="${actuacions}" var="actuacion">
+                    <tr>                        
+                        <td>
+                            <c:out value="${fn:substring(actuacion.codigoCompleto, 0, 20)}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(actuacion.nombre, 0, 30)}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(actuacion.estadoActuacion.nombre, 0, 15)}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(actuacion.claseActuacion.nombre, 0, 15)}"/>
+                        </td>
+                        <td>
+                            <spring:url value="/actuacion/${actuacion.id}" var="show_form_url"/>
+                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                            <form:form id="" action="${show_form_url}" method="get">
+                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                <input alt="${show_label}" class="image" src="${show_image_url}" title="Mostrar Actuación" type="image" value="${show_label}"/>
+                            </form:form>
+                        </td>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                            <td>
+                                <spring:url value="/actuacion/${actuacion.id}/form" var="update_form_url"/>
+                                <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                <form:form id="" action="${update_form_url}" method="get">
+                                    <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                    <input alt="${update_label}" class="image" src="${update_image_url}" title="Actualizar Actuación" type="image" value="${update_label}"/>
+                                </form:form>
+                            </td>
+                            <td>
+                                <spring:url value="/actuacion/${actuacion.id}" var="delete_form_url"/>
+                                <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                <form:form id="" action="${delete_form_url}" method="DELETE">
+                                    <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                    <input alt="${delete_label}" class="image" src="${delete_image_url}" title="Eliminar Actuación" type="image" value="${delete_label}"/>
+                                    <c:if test="${not empty param.page}">
+                                        <input name="page" type="hidden" value="${param.page}"/>
+                                    </c:if>
+                                    <c:if test="${not empty param.size}">
+                                        <input name="size" type="hidden" value="${param.size}"/>
+                                    </c:if>
+                                </form:form>
+                            </td>
+                        </sec:authorize>
+                    </tr>
+                </c:forEach>
+            </table> 
+        </c:if>
+        <c:if test="${empty actuacions}">
+            No se encontraron actuaciones
+        </c:if>
+    </div>
+<script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+</script>
+</div>

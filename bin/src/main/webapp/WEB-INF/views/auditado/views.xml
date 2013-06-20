@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="auditado/list">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditado/show">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditado/create">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditado/update">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditado/actividades">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/actividades.jspx"/>
+    </definition>
+<definition extends="default" name="auditado/findAuditadoesByLogin">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/findAuditadoesByLogin.jspx"/>
+    </definition>
+<definition extends="default" name="auditado/findAuditadoesByCedulaEquals">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/findAuditadoesByCedulaEquals.jspx"/>
+    </definition>
+<definition extends="default" name="auditado/findAuditadoesByIdOrganismoEnte">
+        <put-attribute name="body" value="/WEB-INF/views/auditado/findAuditadoesByIdOrganismoEnte.jspx"/>
+    </definition>
+</tiles-definitions>

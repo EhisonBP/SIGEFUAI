@@ -1,0 +1,77 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.estructuraorganizativa" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty estructuraOrganizativa}">
+            <div id="roo_estructuraOrganizativa_rif">
+                <label for="_rif_id">Rif:</label>
+                <div class="box" id="_rif_id">
+                    <c:out value="${estructuraOrganizativa.rif}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_nombreUnidad">
+                <label for="_nombreUnidad_id">Nombre Unidad:</label>
+                <div class="box" id="_nombreUnidad_id">
+                    <c:out value="${estructuraOrganizativa.nombreUnidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_descripcionUnidad">
+                <label for="_descripcionUnidad_id">Descripcion Unidad:</label>
+                <div class="box" id="_descripcionUnidad_id">
+                    <c:out value="${estructuraOrganizativa.descripcionUnidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_tipoUnidad">
+                <label for="_tipoUnidad_id">Tipo Unidad:</label>
+                <div class="box" id="_tipoUnidad_id">
+                    <c:out value="${estructuraOrganizativa.tipoUnidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_fechaCreacion">
+                <label for="_fechaCreacion_id">Fecha Creacion:</label>
+                <div class="box" id="_fechaCreacion_id">
+                    <fmt:formatDate pattern="${estructuraOrganizativa_fechaCreacion_date_format}" value="${estructuraOrganizativa.fechaCreacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_fechaModificacion">
+                <label for="_fechaModificacion_id">Fecha Modificacion:</label>
+                <div class="box" id="_fechaModificacion_id">
+                    <fmt:formatDate pattern="${estructuraOrganizativa_fechaModificacion_date_format}" value="${estructuraOrganizativa.fechaModificacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_estatus">
+                <label for="_estatus_id">Estatus:</label>
+                <div class="box" id="_estatus_id">
+                    <c:out value="${estructuraOrganizativa.estatus}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_idEstructuraPadre">
+                <label for="_idEstructuraPadre_id">Id Estructura Padre:</label>
+                <div class="box" id="_idEstructuraPadre_id">
+                    <c:out value="${estructuraOrganizativa.idEstructuraPadre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraOrganizativa_verificarUnidad">
+                <label for="_verificarUnidad_id">Verificar Unidad:</label>
+                <div class="box" id="_verificarUnidad_id">
+                    <c:out value="${estructuraOrganizativa.verificarUnidad}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty estructuraOrganizativa}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

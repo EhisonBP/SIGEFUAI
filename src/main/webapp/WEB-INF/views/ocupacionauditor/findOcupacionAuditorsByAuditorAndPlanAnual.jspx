@@ -1,0 +1,41 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="_title_div">
+        <spring:message code="label.auditorandplananual" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.find" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/ocupacionauditor/find/ByAuditorAndPlanAnual" var="form_url"/>
+        <form:form action="${form_url}" method="GET">
+            <div id="roo_ocupacionAuditor_auditor">
+                <c:if test="${not empty auditors}">
+                    <label for="_auditor_id">Auditor:</label>
+                    <select id="_auditor_id" name="auditor">
+                        <c:forEach items="${auditors}" var="auditor_item">
+                            <option value="${auditor_item.id}">${auditor_item}</option>
+                        </c:forEach>
+                    </select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_auditor_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_planAnual">
+                <c:if test="${not empty plananuals}">
+                    <label for="_planAnual_id">Plan Anual:</label>
+                    <select id="_planAnual_id" name="planAnual">
+                        <c:forEach items="${plananuals}" var="planAnual_item">
+                            <option value="${planAnual_item.id}">${planAnual_item}</option>
+                        </c:forEach>
+                    </select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_planAnual_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_ocupacionAuditor_submit">
+                <spring:message code="button.find" var="find_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${find_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

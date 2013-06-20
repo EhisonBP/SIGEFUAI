@@ -1,0 +1,45 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        dojo.require('dijit.form.FilteringSelect');
+
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id",
+            theme : "simple"
+
+        });
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.proceso" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Registrar Proceso'}})); </script>
+        <spring:url value="/proceso" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="proceso">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>            
+            <div id="roo_proceso_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>                
+            </div>            
+            <br/>
+            <div id="roo_proceso_unidades">
+                <c:if test="${not empty unidads}">
+                    <label for="_unidades_id">Unidades:</label>
+                    <form:select cssStyle="width:250px" id="_unidades_id" path="unidades">
+                        <form:options itemValue="id" items="${unidads}" itemLabel="nombre"/>
+                    </form:select>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_proceso_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

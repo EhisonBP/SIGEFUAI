@@ -1,0 +1,588 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+		dojo.require('dijit.form.FilteringSelect');
+		dojo.require('dijit.form.DateTextBox');
+	</script>
+	<div id="x_title_div">
+		<spring:message code="label.organismoente" var="entity_label" />
+		<spring:message arguments="${entity_label}" code="entity.update"
+			var="title_msg" />
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'x_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : '${title_msg}'
+				}
+			}));
+		</script>
+		<spring:url value="/organismoente/${organismoEnte.id}" var="form_url" />
+		<form:form id="" action="${form_url}" method="PUT"
+			modelAttribute="datosOrganismoEnte">
+			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+			<!-- 
+			
+			Vista L sUPER aDMINISTRADOR DE LA INSTITUCION
+			
+			 -->
+			<sec:authorize ifAnyGranted="ROLE_ADMIN_INSTITUCION">
+				<div id="vista_administrador">
+					<div id="roo_organismoEnte_rif">
+						<label for="_rif_id">Rif:</label>
+						<div class="labelBox" id="_rif_id">
+							<c:out value="${datosOrganismoEnte.organismoEnte.rif}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_organismoEnte_nombre">
+						<label for="_nombre_id">Nombre:</label>
+						<form:input cssStyle="width:250px" id="_Nombre_id" maxlength="70"
+							path="organismoEnte.nombre" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_Nombre_error_id"
+							path="organismoEnte.nombre" />
+						<spring:message arguments="Nombre" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator=","
+							arguments="Nombre,(${field_required})"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring
+									.addDecoration(new Spring.ElementDecoration(
+											{
+												elementId : '_Nombre_id',
+												widgetType : 'dijit.form.ValidationTextBox',
+												widgetAttrs : {
+													promptMessage : '${field_validation}',
+													invalidMessage : '${field_invalid}',
+													regExp : '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ,._-]*$',
+													required : true
+												}
+											}));
+						</script>
+					</div>
+					<br />
+					<div id="roo_organismoEnte_acronimo">
+						<label for="_acronimo_id">Acronimo:</label>
+						<form:input cssStyle="width:250px" id="_Acronimo_id"
+							maxlength="30" path="organismoEnte.acronimo" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_Acronimo_error_id"
+							path="organismoEnte.acronimo" />
+						<spring:message arguments="Acronimo" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator="," arguments="Acronimo,"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring
+									.addDecoration(new Spring.ElementDecoration(
+											{
+												elementId : '_Acronimo_id',
+												widgetType : 'dijit.form.ValidationTextBox',
+												widgetAttrs : {
+													promptMessage : '${field_validation}',
+													invalidMessage : '${field_invalid}',
+													regExp : '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ,._-]*$',
+													required : true
+												}
+											}));
+						</script>
+					</div>
+
+					<br />
+					<div id="roo_organismoEnte_id_tipo_organismo">
+						<c:if test="${not empty tipoorganismoes}">
+							<label for="_id_tipo_organismo_id">Tipo de Organismo:</label>
+							<form:select cssStyle="width:250px" id="_id_tipo_organismo_id"
+								path="organismoEnte.id_tipo_organismo">
+								<form:options itemValue="id" items="${tipoorganismoes}"
+									itemLabel="nombre" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_id_tipo_organismo_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+					</div>
+					<br /> <label for="effectTypes">&#191;Es Adscrito?</label>
+					<form:select name="effects" id="effectTypes" path="effectTypes"
+						cssStyle="width:50px">
+						<option value="2">No</option>
+						<option value="1">Si</option>
+					</form:select>
+					<br />
+					<!-- Aki validacion de opcion -->
+					<script type="text/javascript">
+						function mostrarNombreProyecto() {
+							//$( "#roo_organismoEnte_id_organismo_padre" ).hide();
+							var combo = document.getElementById("effectTypes");
+
+							var div = document
+									.getElementById("roo_organismoEnte_id_organismo_padre");
+
+							if (combo.selectedIndex == undefined) {
+								if (combo.value == 'Si') {
+									div.style.display = '';
+								} else {
+									div.style.display = 'none';
+									//registro.pto.value = x;
+									//Prueba._id_organismo_padre_id.value = null;
+								}
+							} else {
+								if (combo.options[combo.selectedIndex].text == 'Si') {
+									div.style.display = '';
+								} else {
+									div.style.display = 'none';
+								}
+
+							}
+						}
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : 'effectTypes',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								hasDownArrow : true,
+								onChange : function(newValue) {
+									mostrarNombreProyecto();
+								}
+							}
+						}));
+					</script>
+					<div id="roo_organismoEnte_id_organismo_padre"
+						style="display: none;">
+						<br />
+						<c:if test="${not empty organismoentes}">
+							<label for="_id_organismo_padre_id">Ente y/o Organismo Adscrito:</label>
+							<form:select cssStyle="width:250px" id="_id_organismo_padre_id"
+								path="organismoEnte.id_organismo_padre">
+								<form:options itemValue="id" items="${organismoentes}"
+									itemLabel="nombre" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_id_organismo_padre_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+					</div>
+					<br />
+
+					<div id="roo_datosOrganismoEnte_pagina_web">
+						<label for="_pagina_web_id">Pagina web:</label>
+						<form:input cssStyle="width:250px" id="_pagina_web_id"
+							path="datosOrganismoEnte.pagina_web" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_pagina_web_error_id"
+							path="datosOrganismoEnte.pagina_web" />
+						<spring:message arguments="Pagina_web" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator="," arguments="Pagina_web,"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_pagina_web_id',
+								widgetType : 'dijit.form.ValidationTextBox',
+								widgetAttrs : {
+									promptMessage : '${field_validation}',
+									invalidMessage : 'Es obligatorio que ingrese la URL completa de la pagina web',
+									regExp : '-?^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$',
+									required : true
+								}
+							}));
+						</script>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_direcion">
+						<label for="_direcion_id">Direcion:</label>
+						<form:textarea cssStyle="width:250px" id="_direcion_id"
+							path="datosOrganismoEnte.direcion" />
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_direcion_id',
+								widgetType : 'dijit.form.SimpleTextarea',
+								widgetAttrs : {}
+							}));
+						</script>
+						<br />
+						<form:errors cssClass="errors" id="_direcion_error_id"
+							path="datosOrganismoEnte.direcion" />
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_estado">
+						<c:if test="${not empty estadoes}">
+							<label for="_estado_id">Estado:</label>
+							<form:select cssStyle="width:250px" id="_estado_id"
+								path="datosOrganismoEnte.estado">
+								<form:options itemValue="id" items="${estadoes}"
+									itemLabel="nombre" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_estado_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_ciudad">
+						<label for="_ciudad_id">Ciudad:</label>
+						<form:input cssStyle="width:250px" id="_ciudad_id" maxlength="30"
+							path="datosOrganismoEnte.ciudad" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_ciudad_error_id"
+							path="datosOrganismoEnte.ciudad" />
+						<spring:message arguments="Ciudad" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator="," arguments="Ciudad,"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring
+									.addDecoration(new Spring.ElementDecoration(
+											{
+												elementId : '_ciudad_id',
+												widgetType : 'dijit.form.ValidationTextBox',
+												widgetAttrs : {
+													promptMessage : '${field_validation}',
+													invalidMessage : '${field_invalid}',
+													regExp : '^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$',
+													required : true
+												}
+											}));
+						</script>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_municipios">
+						<label for="_municipios_id">Municipio:</label>
+						<form:input cssStyle="width:250px" id="_municipios_id"
+							maxlength="30" path="datosOrganismoEnte.municipios" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_municipios_error_id"
+							path="datosOrganismoEnte.municipios" />
+						<spring:message arguments="Municipios" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator="," arguments="Municipios,"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring
+									.addDecoration(new Spring.ElementDecoration(
+											{
+												elementId : '_municipios_id',
+												widgetType : 'dijit.form.ValidationTextBox',
+												widgetAttrs : {
+													promptMessage : '${field_validation}',
+													invalidMessage : '${field_invalid}',
+													regExp : '^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]*$',
+													required : true
+												}
+											}));
+						</script>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_telefono_master">
+
+						<c:if test="${not empty codigoareas}">
+							<!--   <label for="_codigoArea_id">Codigo Area:</label>-->
+							<form:select cssStyle="width:60px" id="_CodigoArea_id"
+								path="datosOrganismoEnte.codigoArea">
+								<form:options itemValue="id" items="${codigoareas}"
+									itemLabel="codigo" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_CodigoArea_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+
+
+						<label for="_telefono_master_id">Telefono master:</label>
+						<form:input cssStyle="width:185px" id="_telefono_master_id"
+							maxlength="7" path="datosOrganismoEnte.telefono_master" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_telefono_master_error_id"
+							path="datosOrganismoEnte.telefono_master" />
+						<spring:message code="field.invalid.integer" var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator=","
+							arguments="Telefono_master,(${field_required})"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_telefono_master_id',
+								widgetType : 'dijit.form.ValidationTextBox',
+								widgetAttrs : {
+									promptMessage : '${field_validation}',
+									invalidMessage : '${field_invalid}',
+									regExp : '^[0-9]{7}$',
+									required : true
+								}
+							}));
+						</script>
+					</div>
+					<br />
+					<div id="roo_personalizacion_telefonoFax">
+						<c:if test="${not empty codigoareas}">
+							<!--   <label for="_codigoArea_id">Codigo Area:</label>-->
+							<form:select cssStyle="width:60px" id="_CodigoFax_id"
+								path="datosOrganismoEnte.codigoArea">
+								<form:options itemValue="id" items="${codigoareas}"
+									itemLabel="codigo" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_CodigoFax_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+						<label for="_telefonoFax_id">Fax:</label>
+						<form:input cssStyle="width:185px" id="_telefonoFax_id"
+							maxlength="7" path="personalizacion.telefonoFax" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_telefonoFax_error_id"
+							path="personalizacion.telefonoFax" />
+						<spring:message arguments="Telefono Fax" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator="," arguments="Telefono Fax,"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_telefonoFax_id',
+								widgetType : 'dijit.form.ValidationTextBox',
+								widgetAttrs : {
+									promptMessage : '${field_validation}',
+									invalidMessage : '${field_invalid}',
+									regExp : '^[0-9]{7}$',
+									required : true
+								}
+							}));
+						</script>
+					</div>
+					<br />
+					<div id="roo_personalizacion_correoSunai">
+						<label for="_correoSunai_id">Correo de institucion:</label>
+						<form:input cssStyle="width:250px" id="_correoSunai_id"
+							maxlength="90" path="personalizacion.correoSunai" size="0" />
+						<br />
+						<form:errors cssClass="errors" id="_correoSunai_error_id"
+							path="personalizacion.correoSunai" />
+						<spring:message arguments="Correo Sunai" code="field.invalid"
+							var="field_invalid" />
+						<spring:message code="field.required" var="field_required" />
+						<spring:message argumentSeparator=","
+							arguments="Correo Sunai,(${field_required})"
+							code="field.simple.validation" var="field_validation" />
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_correoSunai_id',
+								widgetType : 'dijit.form.ValidationTextBox',
+								widgetAttrs : {
+									promptMessage : '${field_validation}',
+									invalidMessage : '${field_invalid}',
+	regExp : '[a-zA-Z0-9]+([a-zA-Z0-9._-]+)*@([a-zA-Z0-9](-?[a-zA-Z0-9])*.)+[a-zA-Z]{2}([zmuvtg]|fo|me)?',
+									required : true
+								}
+							}));
+						</script>
+					</div>
+
+					<br />
+					<div id="roo_organismoEnte_estatus">
+						<label for="_estatus_id">Estatus:</label>
+						<div class="labelBox" id="_estatus_id">
+							<c:out value="${datosOrganismoEnte.organismoEnte.estatus.nombre}" />
+						</div>
+					</div>
+				</div>
+			</sec:authorize>
+
+			<!-- 
+			
+			Vista L sUPER aDMINISTRADOR DE uSUARIO
+			
+			 -->
+			<sec:authorize ifAnyGranted="ROLE_ADMIN">
+				<div id="vista_administrador">
+					<div id="roo_organismoEnte_rif">
+						<label for="_rif_id">Rif:</label>
+						<div class="labelBox" id="_rif_id">
+							<c:out value="${datosOrganismoEnte.organismoEnte.rif}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_organismoEnte_nombre">
+						<label for="_nombre_id">Nombre:</label>
+						<div class="labelBox" id="_nombre_id">
+							<c:out value="${datosOrganismoEnte.organismoEnte.nombre}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_organismoEnte_acronimo">
+						<label for="_acronimo_id">Acronimo:</label>
+						<div class="labelBox" id="_acronimo_id">
+							<c:out value="${datosOrganismoEnte.organismoEnte.acronimo}" />
+						</div>
+					</div>
+
+					<br />
+					<div id="roo_organismoEnte_id_tipo_organismo">
+						<label for="_id_tipo_organismo_id">Tipo de Organismo:</label>
+						<div class="labelBox" id="_id_tipo_organismo_id">
+							<c:out
+								value="${datosOrganismoEnte.organismoEnte.id_tipo_organismo.nombre}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_personalizacion_nombreTutelar">
+						<label for="_nombreTutelar_id">Ente y/o Organismo Adscrito:</label>
+						<div class="labelBox" id="_nombreTutelar_id">
+							<c:out
+								value="${datosOrganismoEnte.personalizacion.nombreTutelar}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_pagina_web">
+						<label for="_pagina_web_id">Pagina Web:</label>
+						<div class="labelBox" id="_pagina_web_id">
+							<c:out
+								value="${datosOrganismoEnte.datosOrganismoEnte.pagina_web}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_direcion">
+						<label for="_direcion_id">Direccion:</label>
+						<div class="labelBox" id="_direcion_id">
+							<c:out value="${datosOrganismoEnte.datosOrganismoEnte.direcion}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_estado">
+						<label for="_estado_id">Estado:</label>
+						<div class="labelBox" id="_estado_id">
+							<c:out
+								value="${datosOrganismoEnte.datosOrganismoEnte.estado.nombre}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_ciudad">
+						<label for="_ciudad_id">Ciudad:</label>
+						<div class="labelBox" id="_ciudad_id">
+							<c:out value="${datosOrganismoEnte.datosOrganismoEnte.ciudad}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_datosOrganismoEnte_municipios">
+						<label for="_municipios_id">Municipios:</label>
+						<div class="labelBox" id="_municipios_id">
+							<c:out
+								value="${datosOrganismoEnte.datosOrganismoEnte.municipios}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_personalizacion_telefonoMaster">
+						<label for="_telefonoMaster_id">Telefono Master:</label>
+						<div class="labelBox" id="_telefonoMaster_id">
+							<c:out
+								value="${datosOrganismoEnte.personalizacion.telefonoMaster}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_personalizacion_telefonoFax">
+						<label for="_telefonoFax_id">Telefono Fax:</label>
+						<div class="labelBox" id="_telefonoFax_id">
+							<c:out value="${datosOrganismoEnte.personalizacion.telefonoFax}" />
+						</div>
+					</div>
+					<br />
+					<div id="roo_personalizacion_correoSunai">
+						<label for="_correoSunai_id">Correo Sunai:</label>
+						<div class="labelBox" id="_correoSunai_id">
+							<c:out value="${datosOrganismoEnte.personalizacion.correoSunai}" />
+						</div>
+					</div>
+
+					<br />
+					<div id="roo_organismoEnte_estatus">
+						<c:if test="${not empty estadoauditors}">
+							<label for="_estatus_id">Estatus:</label>
+							<form:select cssStyle="width:250px" id="_Estatus_id"
+								path="organismoEnte.estatus">
+								<form:options itemValue="id" items="${estadoauditors}"
+									itemLabel="nombre" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_Estatus_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+					</div>
+				</div>
+			</sec:authorize>
+
+			<br />
+			<div class="submit" id="roo_organismoEnte_submit">
+				<spring:message code="button.update" var="update_button" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<input id="proceed" type="submit" value="${update_button}" /> <input
+					type="button" value="Cancelar"
+					onclick="history.go( -1 );return true;" />
+			</div>
+			<form:hidden id="_id_id" path="organismoEnte.id" />
+			<form:hidden id="_version_id" path="organismoEnte.version" />
+		</form:form>
+	</div>
+</div>

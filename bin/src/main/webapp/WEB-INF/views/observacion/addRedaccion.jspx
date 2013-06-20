@@ -1,0 +1,54 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact", 
+            plugins : "paste", 
+            elements : "_redaccion_id",
+            theme : "simple"
+
+        });
+    </script>
+
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">
+        <spring:message code="label.observacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Registrar Redacción'}})); </script>
+        <spring:url value="/observacion/agregarRedaccion/${observacion.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="observacion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_observacion_referencia">
+                <label for="_referencia_id">Hallazgo:</label>
+                <div id="_referencia_id">
+                    <c:out value="${observacion.referencia}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_observacion_descripcionCorta">
+                <label for="_descripcionCorta_id">Descripcion Corta:</label>
+                <div id="_descripcionCorta_id">
+                    <c:out value="${observacion.descripcionCorta}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_observacion_redaccion">
+                <label for="_redaccion_id">Redacción:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_redaccion_id" path="redaccion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_redaccion_error_id" path="redaccion"/>
+            </div>
+            <br/>
+            <div class="submit" id="roo_observacion_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+                <input type="button" value="Cancelar" onclick="history.go( -1 );return true;"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

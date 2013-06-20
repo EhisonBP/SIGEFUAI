@@ -1,0 +1,46 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <script type="text/javascript">
+        function confirmation(id) {
+            var answer = confirm("¿ Está seguro/a que desea actualizar el estatus del Requerimiento ?")
+            if (answer){
+                window.location = '../../requerimiento/actualizarEstatus/' + id;
+            }
+        }
+
+    </script>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.DateTextBox');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">        
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Actualizar Estatus del Requerimiento'}})); </script>
+        <spring:url value="/requerimiento/actualizarEstatus/${requerimiento.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="requerimiento">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_actividadGeneral_codigoActuacion">
+                <label for="_codigoActuacion_id">Requerimiento:</label>
+                <div id="_codigoActuacion_id">
+                    <spring:url value="/requerimiento/${requerimiento.id}" var="url_req"/>
+                    <a href="${url_req}" >${requerimiento.numeroSolicitud}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_estadoRequerimiento">
+                <c:if test="${not empty estatusrequerimientoes}">
+                    <label for="_estadoRequerimiento_id">Estatus del Requerimiento:</label>
+                    <form:select cssStyle="width:250px" id="_estadoRequerimiento_id" path="estadoRequerimiento">
+                        <form:options itemValue="id" items="${estatusrequerimientoes}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoRequerimiento_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_requerimiento_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}" onclick="confirmation(${requerimiento.id})" />
+                <input type="button" value="Cancelar" onclick="history.go( -1 );return true;"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

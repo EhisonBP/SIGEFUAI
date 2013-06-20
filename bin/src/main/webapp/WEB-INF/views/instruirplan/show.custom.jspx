@@ -1,0 +1,82 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+	</script>
+	<div id="_title_div">
+		<spring:message code="label.instruirplan" var="entity_label" />
+		<spring:message arguments="${entity_label}" code="entity.show"
+			var="title_msg" />
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : '_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : '${title_msg}'
+				}
+			}));
+		</script>
+		<c:if test="${not empty instruirPlan}">
+			<div id="roo_instruirPlan_ano">
+				<label for="_ano_id">Año Fiscal:</label>
+				<div class="box" id="_ano_id">
+					<c:out value="${instruirPlan.ano}" />
+				</div>
+			</div>
+			<br />
+			<div id="roo_instruirPlan_fechaInicio">
+				<label for="_fechaInicio_id">Fecha Inicio:</label>
+				<div class="box" id="_fechaInicio_id">
+					<fmt:formatDate pattern="${instruirPlan_fechaInicio_date_format}"
+						value="${instruirPlan.fechaInicio}" />
+				</div>
+			</div>
+			<br />
+			<div id="roo_instruirPlan_fechaFin">
+				<label for="_fechaFin_id">Fecha Fin:</label>
+				<div class="box" id="_fechaFin_id">
+					<fmt:formatDate pattern="${instruirPlan_fechaFin_date_format}"
+						value="${instruirPlan.fechaFin}" />
+				</div>
+			</div>
+			<br />
+			<div id="roo_instruirPlan_instruccion">
+				<label for="_instruccion_id">Instruccion:</label>
+				<div class="box" id="_instruccion_id">
+					<c:out value="${instruirPlan.instruccion}" />
+				</div>
+			</div>
+			<!-- <br/>
+            <div id="roo_instruirPlan_estatus">
+                <label for="_estatus_id">Estatus:</label>
+                <div class="box" id="_estatus_id">
+                    <c:out value="${instruirPlan.estatus.nombre}" />
+                </div>
+            </div>-->
+			<br />
+		</c:if>
+		<c:if test="${empty instruirPlan}">
+			<spring:message arguments="${entity_label}"
+				code="entity.not.found.single" />
+		</c:if>
+		<div class="submit" id="roo_instruirPlan_submit">
+			<spring:message code="button.save" var="save_button" />
+			<script type="text/javascript">
+				Spring.addDecoration(new Spring.ValidateAllDecoration({
+					elementId : 'proceed',
+					event : 'onclick'
+				}));
+			</script>
+      <spring:url value="/instruirplan/" var="create_url"/>
+       <a href="${create_url}">
+       <spring:url value="/static/images/volver.png" var="create_img_url"/>
+       <spring:message arguments="Volver" code="global.menu.new" var="add_message"/>
+       <img alt="${add_message}" src="${create_img_url}" title="Volver"/>
+        </a>
+		</div>
+	</div>
+</div>

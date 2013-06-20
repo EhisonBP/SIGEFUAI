@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="tecnicadecontrol/list">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="tecnicadecontrol/show">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="tecnicadecontrol/create">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="tecnicadecontrol/update">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="tecnicadecontrol/findTecnicaDeControlsByRiesgos">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/findTecnicaDeControlsByRiesgos.jspx"/>
+    </definition>
+<definition extends="default" name="tecnicadecontrol/findTecnicaDeControlsByRiesgo">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/findTecnicaDeControlsByRiesgo.jspx"/>
+    </definition>
+<definition extends="default" name="tecnicadecontrol/findTecnicaDeControlsByPrueba">
+        <put-attribute name="body" value="/WEB-INF/views/tecnicadecontrol/findTecnicaDeControlsByPrueba.jspx"/>
+    </definition>
+</tiles-definitions>

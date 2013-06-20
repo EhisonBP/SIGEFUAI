@@ -1,0 +1,98 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.papeldetrabajo" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty papelDeTrabajo}">
+            <div id="roo_papelDeTrabajo_codigoActuacion">
+                <label for="_codigoActuacion_id">Codigo Actuacion:</label>
+                <div class="box" id="_codigoActuacion_id">
+                    <c:out value="${papelDeTrabajo.codigoActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_codigo">
+                <label for="_codigo_id">Codigo:</label>
+                <div class="box" id="_codigo_id">
+                    <c:out value="${papelDeTrabajo.codigo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${papelDeTrabajo.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_estadoActividadActuacion">
+                <label for="_estadoActividadActuacion_id">Estado Actividad Actuacion:</label>
+                <div class="box" id="_estadoActividadActuacion_id">
+                    <c:out value="${papelDeTrabajo.estadoActividadActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_documento">
+                <label for="_documento_id">Documento:</label>
+                <div class="box" id="_documento_id">
+                    <c:out value="${papelDeTrabajo.documento}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_actividadActuacion">
+                <label for="_actividadActuacion_id">Actividad Actuacion:</label>
+                <div class="box" id="_actividadActuacion_id">
+                    <c:out value="${papelDeTrabajo.actividadActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_accionesPermitidas">
+                <label for="_accionesPermitidas_id">Acciones Permitidas:</label>
+                <div class="box" id="_accionesPermitidas_id">
+                    <c:out value="${papelDeTrabajo.accionesPermitidas}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_responsables">
+                <label for="_responsables_id">Responsables:</label>
+                <div class="box" id="_responsables_id">
+                    <c:out value="${papelDeTrabajo.responsables}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_objetivoAMitigar">
+                <label for="_objetivoAMitigar_id">Objetivo A Mitigar:</label>
+                <div class="box" id="_objetivoAMitigar_id">
+                    <c:out value="${papelDeTrabajo.objetivoAMitigar}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_tipoSeccion">
+                <label for="_tipoSeccion_id">Tipo Seccion:</label>
+                <div class="box" id="_tipoSeccion_id">
+                    <c:out value="${papelDeTrabajo.tipoSeccion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_contenido">
+                <label for="_contenido_id">Contenido:</label>
+                <div class="box" id="_contenido_id">
+                    <c:out value="${papelDeTrabajo.contenido}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_papelDeTrabajo_accionesPermitidas">
+                <label for="_accionesPermitidas_id">Acciones Permitidas:</label>
+                <div class="box" id="_accionesPermitidas_id">
+                    <c:out value="${papelDeTrabajo.accionesPermitidas}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty papelDeTrabajo}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

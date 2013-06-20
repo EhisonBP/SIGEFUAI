@@ -1,0 +1,74 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_justificacion_id",
+            theme : "simple"
+
+        });
+    </script>
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.SimpleTextarea');dojo.require('dijit.form.FilteringSelect');dojo.require('dijit.form.DateTextBox');</script>
+    <div id="x_title_div">
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Editar Avance'}})); </script>
+        <spring:url value="/avanceactuacion/${avanceActuacion.id}" var="form_url"/>
+        <div>
+             <c:if test="${returnURL eq 'prueba' }">
+                <label>Prueba:</label>   
+            </c:if>
+            <c:if test="${returnURL eq 'actividadgeneral' }">
+                <label>Actividad General:</label>
+            </c:if>
+            <div>
+                <spring:url value="/${returnURL}/${idReturn}" var="url_return"/>
+                <a href="${url_return}" >${codigoCompleto}</a>
+            </div>
+        </div>
+            <br/>
+
+        <form:form id="" action="${form_url}" method="put" modelAttribute="avanceActuacion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>                                    
+            <div id="roo_avanceActuacion_fechaInicioReal">
+                <label for="_fechaInicioReal_id">Fecha Inicio:</label>
+                <form:input cssStyle="width:250px" id="_fechaInicioReal_id" maxlength="30" path="fechaInicioReal" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_fechaInicioReal_error_id" path="fechaInicioReal"/>
+                <spring:message arguments="Fecha Inicio Real" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fecha Inicio Real," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaInicioReal_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaInicioReal_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${avanceActuacion_fechaInicioReal_date_format}', required : false}, datePattern : '${avanceActuacion_fechaInicioReal_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_avanceActuacion_fechaFinReal">
+                <label for="_fechaFinReal_id">Fecha Fin:</label>
+                <form:input cssStyle="width:250px" id="_fechaFinReal_id" maxlength="30" path="fechaFinReal" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_fechaFinReal_error_id" path="fechaFinReal"/>
+                <spring:message arguments="Fecha Fin Real" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fecha Fin Real," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaFinReal_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaFinReal_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${avanceActuacion_fechaFinReal_date_format}', required : false}, datePattern : '${avanceActuacion_fechaFinReal_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_avanceActuacion_justificacion">
+                <label for="_justificacion_id">Justificación:</label>
+                <form:input  cssStyle="width:250px" id="_justificacion_id" path="justificacion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_justificacion_error_id" path="justificacion"/>
+            </div>    
+            <br/>
+            <div class="submit" id="roo_avanceActuacion_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

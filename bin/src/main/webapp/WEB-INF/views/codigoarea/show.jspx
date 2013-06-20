@@ -1,0 +1,63 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.codigoarea" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty codigoArea}">
+            <div id="roo_codigoArea_codigo">
+                <label for="_codigo_id">Codigo:</label>
+                <div class="box" id="_codigo_id">
+                    <c:out value="${codigoArea.codigo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_codigoArea_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${codigoArea.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_codigoArea_estado">
+                <label for="_estado_id">Estado:</label>
+                <div class="box" id="_estado_id">
+                    <c:out value="${codigoArea.estado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_codigoArea_ciudad">
+                <label for="_ciudad_id">Ciudad:</label>
+                <div class="box" id="_ciudad_id">
+                    <c:out value="${codigoArea.ciudad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_codigoArea_tipoTelefono">
+                <label for="_tipoTelefono_id">Tipo Telefono:</label>
+                <div class="box" id="_tipoTelefono_id">
+                    <c:out value="${codigoArea.tipoTelefono}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_codigoArea_fechaCreacion">
+                <label for="_fechaCreacion_id">Fecha Creacion:</label>
+                <div class="box" id="_fechaCreacion_id">
+                    <fmt:formatDate pattern="${codigoArea_fechaCreacion_date_format}" value="${codigoArea.fechaCreacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_codigoArea_fechaModificacion">
+                <label for="_fechaModificacion_id">Fecha Modificacion:</label>
+                <div class="box" id="_fechaModificacion_id">
+                    <fmt:formatDate pattern="${codigoArea_fechaModificacion_date_format}" value="${codigoArea.fechaModificacion}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty codigoArea}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

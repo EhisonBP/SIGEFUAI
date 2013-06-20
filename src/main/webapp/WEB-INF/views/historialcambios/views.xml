@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="historialcambios/list">
+        <put-attribute name="body" value="/WEB-INF/views/historialcambios/list.jspx"/>
+    </definition>
+    <definition extends="default" name="historialcambios/show">
+        <put-attribute name="body" value="/WEB-INF/views/historialcambios/show.jspx"/>
+    </definition>
+    <definition extends="default" name="historialcambios/create">
+        <put-attribute name="body" value="/WEB-INF/views/historialcambios/create.jspx"/>
+    </definition>
+    <definition extends="default" name="historialcambios/update">
+        <put-attribute name="body" value="/WEB-INF/views/historialcambios/update.jspx"/>
+    </definition>
+    <definition extends="default" name="historialcambios/findHistorialCambiosesByArchivoAdjunto">
+        <put-attribute name="body" value="/WEB-INF/views/historialcambios/findHistorialCambiosesByArchivoAdjunto.jspx"/>
+    </definition>
+</tiles-definitions>

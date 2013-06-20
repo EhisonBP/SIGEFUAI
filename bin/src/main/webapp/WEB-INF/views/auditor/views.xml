@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="auditor/list">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditor/show">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditor/create">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditor/update">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="auditor/archivo">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/archivo.custom.jspx"/>
+    </definition>
+        <definition extends="default" name="auditor/modificarPerfil">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/modificarPerfil.jspx"/>
+    </definition>
+<definition extends="default" name="auditor/findAuditorsByCedulaEquals">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/findAuditorsByCedulaEquals.jspx"/>
+    </definition>
+<definition extends="default" name="auditor/findAuditorsByLoginEquals">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/findAuditorsByLoginEquals.jspx"/>
+    </definition>
+<definition extends="default" name="auditor/findAuditorsById_OrganismoEnte">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/findAuditorsById_OrganismoEnte.jspx"/>
+    </definition>
+<definition extends="default" name="auditor/findAuditorsById_estructura">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/findAuditorsById_estructura.jspx"/>
+    </definition>
+<definition extends="default" name="auditor/findAuditorsByCargo">
+        <put-attribute name="body" value="/WEB-INF/views/auditor/findAuditorsByCargo.jspx"/>
+    </definition>
+</tiles-definitions>

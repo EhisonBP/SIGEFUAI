@@ -1,0 +1,67 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        dojo.require('dijit.form.SimpleTextarea');
+        
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id",
+            theme : "simple"
+
+        });
+
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.reporte" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Registrar Reporte'}})); </script>
+        <spring:url value="/reporte" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="reporte" enctype="multipart/form-data">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            
+            <div id="roo_reporte_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <form:textarea cssStyle="width:250px; height: 100px;" id="_descripcion_id" path="descripcion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+            </div>
+            <br/>
+            <div id="roo__file">
+                <label>Ruta:</label>
+                <input type="file" name="filedata" class="submit"/>
+            </div>
+            <br/>
+            <c:if test="${empty reporte.reporte}">
+                <div id="roo_actuacion_mesDesde">
+                    <label for="_mesDesde_id">Formato del Reporte:</label>
+                    <form:select cssStyle="width:250px" id="_extension_id" path="extension">
+                        <form:option value="0">-- Seleccione --</form:option>
+                        <form:option value="pdf">PDF</form:option>
+                        <form:option value="odt">ODT</form:option>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_extension_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                    <form:errors cssClass="errors" id="_extension_error_id" path="extension"/>
+                </div>
+                <br/>
+            </c:if>
+            <div id="roo_reporte_clave">
+                <label for="_clave_id">Clave:</label>
+                <form:input cssStyle="width:250px" id="_clave_id" maxlength="90" path="clave" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_clave_error_id" path="clave"/>
+                <spring:message arguments="Clave" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Clave," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_clave_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div class="submit" id="roo_reporte_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

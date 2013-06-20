@@ -1,0 +1,13 @@
+<jsp:root
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:c="http://java.sun.com/jstl/core"
+version="2.0"
+>
+<jsp:directive.tag language="java"/>
+<br />
+<br />
+<hr width="80%" />
+<br />
+<div class="obtenerEspacios">This is a common footer for all documents</div>
+
+</jsp:root>

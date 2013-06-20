@@ -1,0 +1,35 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.objetivoespecifico" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty objetivoEspecifico}">
+            <div id="roo_objetivoEspecifico_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${objetivoEspecifico.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_objetivoEspecifico_actuacion">
+                <label for="_actuacion_id">Actuacion:</label>
+                <div class="box" id="_actuacion_id">
+                    <c:out value="${objetivoEspecifico.actuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_objetivoEspecifico_referencia">
+                <label for="_referencia_id">Referencia:</label>
+                <div class="box" id="_referencia_id">
+                    <c:out value="${objetivoEspecifico.referencia}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty objetivoEspecifico}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

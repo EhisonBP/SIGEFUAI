@@ -1,0 +1,137 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id, _objetivo_id, _resultado_id, _procedimiento_id" ,
+            theme : "simple"
+
+        });
+    </script>
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');dojo.require('dijit.form.SimpleTextarea');</script>
+    <div id="x_title_div">
+        <spring:message code="label.prueba" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Actualizar Prueba'}})); </script>
+        <spring:url value="/prueba/${prueba.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="put" modelAttribute="prueba">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_actividadGeneral_actuacion">
+                <label for="_actuacion_id">Actuacion:</label>
+                <div id="_actuacion_id">
+                    <spring:url value="/actuacion/${prueba.codigoActuacion.id}" var="url_actuacion"/>
+                    <a href="${url_actuacion}" >${prueba.codigoActuacion.nombre}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_prueba_objetivoAMitigar">
+                <label for="_objetivoAMitigar_id">Objetivo Específico Asociado:</label>
+                <div id="_objetivoAMitigar_id">
+                    <c:out escapeXml="false" value="${prueba.objetivoAMitigar.descripcion}"/>
+                </div>
+            </div>
+            <br/>                        
+            <div id="roo_prueba_codigo">
+                <label for="_codigo_id">Código:</label>
+                 <c:if test="${not empty prueba.actividadActuacion}">
+                        <c:if test="${prueba.actividadActuacion.type eq 'pt' }">
+                            <spring:url value="/papeldetrabajo/${prueba.actividadActuacion.id}" var="url_actividad"/>
+                        </c:if>
+                        <c:if test="${prueba.actividadActuacion.type eq 'a' }">
+                            <spring:url value="/actividadgeneral/${prueba.actividadActuacion.id}" var="url_actividad"/>
+                        </c:if>
+                        <c:if test="${prueba.actividadActuacion.type eq 'p' }">
+                            <spring:url value="/prueba/${prueba.actividadActuacion.id}" var="url_actividad"/>
+                        </c:if>
+                    <a href="${url_actividad}" >${prueba.codigoPadres}</a><form:input cssStyle="width:250px" id="_codigo_id" maxlength="30" path="codigo" size="0"/>
+                </c:if>
+                <br/>
+                <form:errors cssClass="errors" id="_codigo_error_id" path="codigo"/>
+                <spring:message arguments="Codigo" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Codigo,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_codigo_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_prueba_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_descripcion_id', widgetType: 'dijit.form.SimpleTextarea', widgetAttrs: {}})); </script>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+            </div>
+            <br/>
+            <div id="roo_prueba_estadoActividadActuacion">
+                <c:if test="${not empty estadoactividadactuacions}">
+                    <label for="_estadoActividadActuacion_id">Estatus:</label>
+                    <form:select cssStyle="width:250px" id="_estadoActividadActuacion_id" path="estadoActividadActuacion">
+                        <form:options itemValue="id" items="${estadoactividadactuacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoActividadActuacion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            
+            <div id="roo_prueba_objetivo">
+                <label for="_objetivo_id">Objetivo:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_objetivo_id" maxlength="30" path="objetivo" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_objetivo_error_id" path="objetivo"/>                
+            </div>
+            <br/>
+            <div id="roo_prueba_procedimiento">
+                <label for="_procedimiento_id">Procedimiento:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_procedimiento_id" maxlength="30" path="procedimiento" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_procedimiento_error_id" path="procedimiento"/>                
+            </div>
+            <br/>
+            <div id="roo_prueba_resultado">
+                <label for="_resultado_id">Resultado:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_resultado_id" maxlength="30" path="resultado" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_resultado_error_id" path="resultado"/>                
+            </div>
+            <br/>
+            <div id="roo_prueba_porcentajeCompletitud">
+                <label for="_porcentajeCompletitud_id">Porcentaje Completitud:</label>
+                <form:input cssStyle="width:250px" id="_porcentajeCompletitud_id" maxlength="30" path="porcentajeCompletitud" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_porcentajeCompletitud_error_id" path="porcentajeCompletitud"/>
+                <spring:message arguments="Porcentaje Completitud" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Porcentaje Completitud," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_porcentajeCompletitud_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_prueba_requerimientos">
+                <c:if test="${not empty requerimientoes}">
+                    <label for="_requerimientos_id">Requerimientos:</label>
+                    <form:select cssStyle="width:250px" id="_requerimientos_id" path="requerimientos">
+                        <form:options itemValue="id" items="${requerimientoes}" htmlEscape="false"/>
+                    </form:select>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_prueba_responsables">
+                <c:if test="${not empty auditors}">
+                    <label for="_responsables_id">Responsables:</label>
+                    <form:select cssStyle="width:250px" id="_responsables_id" path="responsables">
+                        <form:options itemValue="id" items="${auditors}"/>
+                    </form:select>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_prueba_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

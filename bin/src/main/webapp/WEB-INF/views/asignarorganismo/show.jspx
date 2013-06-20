@@ -1,0 +1,28 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.asignarorganismo" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty asignarOrganismo}">
+            <div id="roo_asignarOrganismo_analista">
+                <label for="_analista_id">Analista:</label>
+                <div class="box" id="_analista_id">
+                    <c:out value="${asignarOrganismo.analista}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_asignarOrganismo_organismo">
+                <label for="_organismo_id">Organismo:</label>
+                <div class="box" id="_organismo_id">
+                    <c:out value="${asignarOrganismo.organismo}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty asignarOrganismo}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

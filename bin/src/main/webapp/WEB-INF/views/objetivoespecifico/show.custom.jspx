@@ -1,0 +1,39 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.objetivoespecifico" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Objetivo Específico'}})); </script>
+        <c:if test="${not empty objetivoEspecifico}">
+            <div id="roo_actuacion_codigo">
+                <label for="_codigo_id">Actuacion:</label>
+                <div class="box" id="_codigo_id">
+                    <spring:url value="/actuacion/${objetivoEspecifico.actuacion.id}" var="url_actuacion"/>
+                    <a href="${url_actuacion}" >${objetivoEspecifico.actuacion.codigo} - ${objetivoEspecifico.actuacion.nombre}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_objetivoEspecifico_referencia">
+                <label for="_referencia_id">Número:</label>
+                <div class="box" id="_referencia_id">
+                    <c:out value="${objetivoEspecifico.referencia}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_objetivoEspecifico_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${objetivoEspecifico.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <spring:url value="/objetivoespecifico/${objetivoEspecifico.id}/form" var="update_form_url"/>
+            <input type="button" value="Editar Objetivo Específico" onclick="document.location='${update_form_url}'"/>
+
+        </c:if>
+        <c:if test="${empty objetivoEspecifico}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:roo="urn:jsptagdir:/WEB-INF/tags"
+	xmlns:spring="http://www.springframework.org/tags">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+	</script>
+	<div id="x_title_div">
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'x_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : 'Actuaciones'
+				}
+			}));
+		</script>
+		<c:if test="${not empty actuacions}">
+		              <h3>Leyenda</h3>
+		              <ul>
+		              <li>Verde: Cuando la Actuación se encuentra entre las fechas planificada.</li>
+					  <li>Amarillo: Cuando la actuación no se inicia en la fecha planificada.</li>
+					  <li>Rojo: Cuando la actuación no se finaliza en la fecha planificada.</li>
+					  </ul>
+			<table id="menuTable1" width="300">
+				<thead>
+					<tr>
+
+						<th>Código</th>
+						<th>Nombre</th>
+						<!-- <th>Estatus</th> -->
+						<th>Tipo</th>
+                        			<th>Estado</th>
+						<th />
+						<th />
+					</tr>
+				</thead>
+					<!-- Verde: Si la Actuacion se encuentra entre las fechas planificadas-->
+					<!-- Amarillo: Cuando la Actuacion no se inicia en la fecha tentativa -->
+					<!-- Rojo: Si la actuacion no se finaliza en la fecha tentativa -->
+				<c:forEach items="${actuacions}" var="actuacion">
+					<!-- <c:if test="${fechaActual == actuacion.mesDesdeReal}">  -->
+					<tr>
+					<td>	
+						<c:out value="${fn:substring(actuacion.codigoCompleto, 0, 20)}" />
+					</td>
+					<td>
+						<c:out value="${fn:substring(actuacion.nombre, 0, 20)}" />
+					</td>
+					<!-- <td>
+						<c:out value="${fn:substring(actuacion.estadoActuacion.nombre, 0, 10)}" />
+					</td> -->
+					<td>
+						<c:out value="${fn:substring(actuacion.claseActuacion.nombre, 0, 10)}" />
+					</td>
+					
+				 <td align="center">
+					<c:choose>
+					 <!--Amarillo: Cuando la Actuacion no se inicia en la fecha tentativa -->
+					<c:when test="${(fechaActual > actuacion.mesDesdeTentativo and actuacion.mesDesdeReal == null and anoActual >= actuacion.anoFiscal) or ((anoActual - actuacion.anoFiscal) > 0 and actuacion.mesDesdeReal == null)}">
+					  
+                                          <spring:url value="/static/images/amarillo48x48.png" var="amarillo" />
+					  <spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+                                          <img src="${amarillo}" alt="${update_label}" title="No se a iniciado la actuación en la fecha planificada." width="40" height="40"/>	
+					    
+					</c:when>
+					 <c:otherwise>
+                                         <!-- Rojo: Si la actuacion no se finaliza en la fecha tentativa -->
+                                            <c:if test="${(fechaActual > actuacion.mesHastaTentativo and actuacion.mesHastaReal == null and anoActual >= actuacion.anoFiscal) or ((anoActual - actuacion.anoFiscal) > 0 and actuacion.mesHastaReal == null)}">
+
+                                                <spring:url value="/static/images/rojo48x48.png" var="rojo" />
+					  <spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+                                          <img src="${rojo}" alt="${update_label}" title="No se a culminado la actuación en la fecha planificada." width="40" height="40"/>
+                                            
+                                            </c:if>
+					 </c:otherwise>
+					</c:choose>
+                                        <!-- Verde: Si la Actuacion se encuentra entre las fechas planificadas  -->	
+					<c:if test="${
+(fechaActual >= actuacion.mesDesdeTentativo and fechaActual &lt;= actuacion.mesHastaTentativo and actuacion.mesDesdeReal != null and actuacion.anoFiscal == anoActual)
+or (actuacion.mesDesdeTentativo >= fechaActual and actuacion.anoFiscal == anoActual)
+or (fechaActual > actuacion.mesHastaTentativo and actuacion.mesHastaReal and actuacion.anoFiscal >= anoActual) 
+or (actuacion.anoFiscal > anoActual and actuacion.mesDesdeReal == null and actuacion.mesHastaReal == null) 
+or (anoActual > actuacion.anoFiscal and actuacion.mesDesdeReal != null and actuacion.mesHastaReal != null)}">
+
+                                          <spring:url value="/static/images/verde48x48.png" var="verde" />
+					  <spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+                                          <img src="${verde}" alt="${update_label}" title="${actuacion.estadoActuacion.nombre}" width="40" height="40"/>                                         
+
+                                         </c:if>
+  
+                                 </td>
+						<!--  <td><c:out value="${fn:substring(actuacion.nombre, 0, 20)}" />
+						</td>
+						<td><c:out
+								value="${fn:substring(actuacion.estadoActuacion.nombre, 0, 10)}" />
+						</td>
+						<td><c:out
+								value="${fn:substring(actuacion.claseActuacion.nombre, 0, 10)}" />
+						</td>-->
+						<td><spring:url value="/actuacion/${actuacion.id}"
+								var="show_form_url" /> <spring:url
+								value="/static/images/show.png" var="show_image_url" /> <form:form
+								id="" action="${show_form_url}" method="get">
+								<spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+								<input alt="${show_label}" class="image" src="${show_image_url}"
+									title="${show_label}" type="image" value="${show_label}" />
+							</form:form>
+						</td>
+						<td><spring:url value="/actuacion/${actuacion.id}/form"
+								var="update_form_url" /> <spring:url
+								value="/static/images/update.png" var="update_image_url" /> <form:form
+								id="" action="${update_form_url}" method="get">
+								<spring:message arguments="${entity_label}" code="entity.update"
+									var="update_label" />
+								<input alt="${update_label}" class="image"
+									src="${update_image_url}" title="${update_label}" type="image"
+									value="${update_label}" />
+							</form:form>
+						</td>
+						<!-- SEMAFORO -->
+	                     
+					<!-- Rojo: Si la actuacion no se finaliza en la fecha tentativa 
+					<c:if test="${
+(fechaActual > actuacion.mesHastaTentativo and actuacion.mesHastaReal == null and anoActual >= actuacion.anoFiscal) 
+or ((anoActual - actuacion.anoFiscal) > 0 and actuacion.mesHastaReal == null)}">
+
+						<div style="background-color: red; color: red;">O
+						</div>
+					</c:if>
+					    </td>	
+					    <td>
+					  Amarillo: Cuando la Actuacion no se inicia en la fecha tentativa 
+					<c:if test="${
+(fechaActual > actuacion.mesDesdeTentativo and actuacion.mesDesdeReal == null and anoActual >= actuacion.anoFiscal) 
+or ((anoActual - actuacion.anoFiscal) > 0 and actuacion.mesDesdeReal == null)}">
+					
+									<div style="background-color: yellow; color: yellow;">O</div>
+								
+							</c:if>
+					    </td>
+                        <td>
+					 Verde: Si la Actuacion se encuentra entre las fechas planificadas  
+					<c:if test="${
+(fechaActual >= actuacion.mesDesdeTentativo and fechaActual &lt;= actuacion.mesHastaTentativo and actuacion.mesDesdeReal != null and actuacion.anoFiscal == anoActual)
+or (actuacion.mesDesdeTentativo >= fechaActual and actuacion.anoFiscal == anoActual)
+or (fechaActual > actuacion.mesHastaTentativo and actuacion.mesHastaReal and actuacion.anoFiscal == anoActual) 
+or (actuacion.anoFiscal > anoActual and actuacion.mesDesdeReal == null and actuacion.mesHastaReal == null) 
+or (anoActual > actuacion.anoFiscal and actuacion.mesDesdeReal != null and actuacion.mesHastaReal != null)}">
+						<div style="background-color: green; color: green;">O
+						</div>
+					</c:if>
+					    </td>
+					     SEMAFORO -->
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+		<c:if test="${empty actuacions}">
+			<spring:message arguments="${entity_label_plural}"
+				code="entity.not.found" />
+		</c:if>
+	</div>
+	<script type="text/javascript">
+		$('#menuTable1').tablePagination({});
+	</script>
+</div>

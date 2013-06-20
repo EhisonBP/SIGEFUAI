@@ -1,0 +1,77 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.itemplanificacionactuacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty itemPlanificacionActuacion}">
+            <div id="roo_itemPlanificacionActuacion_inicioEstimado">
+                <label for="_inicioEstimado_id">Inicio Estimado:</label>
+                <div class="box" id="_inicioEstimado_id">
+                    <c:out value="${itemPlanificacionActuacion.inicioEstimado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_finEstimado">
+                <label for="_finEstimado_id">Fin Estimado:</label>
+                <div class="box" id="_finEstimado_id">
+                    <c:out value="${itemPlanificacionActuacion.finEstimado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_fechaInicioEstimada">
+                <label for="_fechaInicioEstimada_id">Fecha Inicio Estimada:</label>
+                <div class="box" id="_fechaInicioEstimada_id">
+                    <fmt:formatDate pattern="${itemPlanificacionActuacion_fechaInicioEstimada_date_format}" value="${itemPlanificacionActuacion.fechaInicioEstimada}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_fechaFinEstimada">
+                <label for="_fechaFinEstimada_id">Fecha Fin Estimada:</label>
+                <div class="box" id="_fechaFinEstimada_id">
+                    <fmt:formatDate pattern="${itemPlanificacionActuacion_fechaFinEstimada_date_format}" value="${itemPlanificacionActuacion.fechaFinEstimada}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_inicioReal">
+                <label for="_inicioReal_id">Inicio Real:</label>
+                <div class="box" id="_inicioReal_id">
+                    <fmt:formatDate pattern="${itemPlanificacionActuacion_inicioReal_date_format}" value="${itemPlanificacionActuacion.inicioReal}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_finReal">
+                <label for="_finReal_id">Fin Real:</label>
+                <div class="box" id="_finReal_id">
+                    <fmt:formatDate pattern="${itemPlanificacionActuacion_finReal_date_format}" value="${itemPlanificacionActuacion.finReal}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_planAnual">
+                <label for="_planAnual_id">Plan Anual:</label>
+                <div class="box" id="_planAnual_id">
+                    <c:out value="${itemPlanificacionActuacion.planAnual}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_actuacion">
+                <label for="_actuacion_id">Actuacion:</label>
+                <div class="box" id="_actuacion_id">
+                    <c:out value="${itemPlanificacionActuacion.actuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_otraActividad">
+                <label for="_otraActividad_id">Otra Actividad:</label>
+                <div class="box" id="_otraActividad_id">
+                    <c:out value="${itemPlanificacionActuacion.otraActividad}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty itemPlanificacionActuacion}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

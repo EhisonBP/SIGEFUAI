@@ -1,0 +1,282 @@
+<div toolstag="urn:jsptagdir:/WEB-INF/tags" xmlns:tools="http://edwardrayl.com/taglibs/tools" xmlns:sec="http://www.springframework.org/security/tags" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        $(function() {
+            $( "#accordion" ).accordion({
+
+                collapsible: true,
+                active: false
+            });
+        });
+    </script>
+    <div id="x_title_div">
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Consultar Actividad'}})); </script>
+        <c:if test="${not empty actividadGeneral}">                        
+            <div id="roo_actividadGeneral_codigoActuacion">
+                <label for="_codigoActuacion_id">Actuación:</label>
+                <div class="box" id="_codigoActuacion_id">
+                    <spring:url value="/actuacion/${actividadGeneral.codigoActuacion.id}" var="url_actuacion"/>
+                    <a href="${url_actuacion}" >${actividadGeneral.codigoActuacion.nombre}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadGeneral_codigo">
+                <label for="_codigo_id">Código:</label>
+                <div class="box" id="_codigo_id">
+                    <c:if test="${empty actividadGeneral.actividadActuacion}">
+                        <spring:url value="/actuacion/${actividadGeneral.codigoActuacion.id}" var="url_actuacion"/>
+                        <a href="${url_actuacion}" >${actividadGeneral.codigoCompleto}</a>
+                    </c:if>
+                    <c:if test="${not empty actividadGeneral.actividadActuacion}">
+                        <c:if test="${actividadGeneral.actividadActuacion.type eq 'pt' }">
+                            <spring:url value="/papeldetrabajo/${actividadGeneral.actividadActuacion.id}" var="url_actividad"/>
+                            <a href="${url_actividad}" >${actividadGeneral.codigoCompleto}</a>
+                        </c:if>
+                        <c:if test="${actividadGeneral.actividadActuacion.type eq 'a' }">
+                            <spring:url value="/actividadgeneral/${actividadGeneral.actividadActuacion.id}" var="url_actividad"/>
+                            <a href="${url_actividad}" >${actividadGeneral.codigoCompleto}</a>
+                        </c:if>
+                    </c:if>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadGeneral_objetivoAMitigar">
+                <label for="_objetivoAMitigar_id">Objetivo Específico Asociado:</label>
+                <div class="box" id="_objetivoAMitigar_id">
+                    <c:out escapeXml="false" value="${actividadGeneral.objetivoAMitigar.objetivoCompleto}"/>
+                </div>
+            </div>
+            <br/>            
+            <div id="roo_actividadGeneral_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${actividadGeneral.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadGeneral_fechaEstimadaDeInicio">
+                <label for="_fechaEstimadaDeInicio_id">Fecha Estimada De Inicio:</label>
+                <div class="box" id="_fechaEstimadaDeInicio_id">
+                    <fmt:formatDate pattern="${actividadGeneral_fechaEstimadaDeInicio_date_format}" value="${actividadGeneral.fechaEstimadaDeInicio}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadGeneral_fechaEstimadaDeFin">
+                <label for="_fechaEstimadaDeFin_id">Fecha Estimada De Fin:</label>
+                <div class="box" id="_fechaEstimadaDeFin_id">
+                    <fmt:formatDate pattern="${actividadGeneral_fechaEstimadaDeFin_date_format}" value="${actividadGeneral.fechaEstimadaDeFin}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadGeneral_resultadosEsperados">
+                <label for="_resultadosEsperados_id">Resultados Esperados:</label>
+                <div class="box" id="_resultadosEsperados_id">
+                    <c:out escapeXml="false" value="${actividadGeneral.resultadosEsperados}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadGeneral_hitosDeControl">
+                <label for="_hitosDeControl_id">Hitos De Control:</label>
+                <div class="box" id="_hitosDeControl_id">
+                    <c:out escapeXml="false" value="${actividadGeneral.hitosDeControl}"/>
+                </div>
+            </div>            
+            <br/>
+            <c:if test="${not empty actividadGeneral.responsables}">
+                <div id="roo_actividadGeneral_responsables">
+                    <label for="_responsables_id">Responsables:</label>
+                    <div class="box" id="_responsables_id">
+                        <c:forEach items="${actividadGeneral.responsables}" var="resp">
+                            <c:out value="${resp}"/>
+                        </c:forEach>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </c:if>
+
+            <div id="accordion">
+                <h3><a href="#">Avances:</a></h3>
+                <div>
+                    <c:if test="${not empty avanceactuacions}">
+                        <table id="menuTable1" width="300">
+                            <thead>
+                                <tr>
+                                    <th>Justificación</th>                                    
+                                    <th/>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                        <th/>
+                                        <th/>
+                                    </sec:authorize>
+                                </tr>
+                            </thead>
+                            <c:forEach items="${avanceactuacions}" var="avanceActuacion">
+                                <tr>
+                                    <td>
+                                         <div style="overflow: scroll; height: 100px; width: 625px; ">
+                                            <c:out escapeXml="false" value="${avanceActuacion.justificacion}"/>
+                                         </div>
+                                    </td>                                    
+                                    <td>
+                                        <spring:url value="/avanceactuacion/${avanceActuacion.id}" var="show_form_url"/>
+                                        <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                        <form:form id="" action="${show_form_url}" method="get">
+                                            <input name="idReturn" type="hidden" value="${actividadGeneral.id}"/>
+                                            <input name="returnURL" type="hidden" value="actividadgeneral"/>
+                                            <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                            <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                        </form:form>
+                                    </td>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                        <c:if test="${tools:contains(actividadGeneral.accionesPermitidas, 'editar')}">
+                                            <td>
+                                                <spring:url value="/avanceactuacion/${avanceActuacion.id}/form" var="update_form_url"/>
+                                                <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                                <form:form id="" action="${update_form_url}" method="get">
+                                                    <input name="idReturn" type="hidden" value="${actividadGeneral.id}"/>
+                                                    <input name="returnURL" type="hidden" value="actividadgeneral"/>
+                                                    <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                                    <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                                </form:form>
+                                            </td>
+                                            <td>
+                                                <spring:url value="/avanceactuacion/${avanceActuacion.id}" var="delete_form_url"/>
+                                                <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                                <form:form id="" action="${delete_form_url}" method="DELETE">
+                                                    <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                                    <input alt="${delete_label}" class="image" src="${delete_image_url}" title="${delete_label}" type="image" value="${delete_label}"/>
+                                                    <input name="idReturn" type="hidden" value="${actividadGeneral.id}"/>
+                                                    <input name="returnURL" type="hidden" value="actividadgeneral"/>
+                                                    <c:if test="${not empty param.page}">
+                                                        <input name="page" type="hidden" value="${param.page}"/>
+                                                    </c:if>
+                                                    <c:if test="${not empty param.size}">
+                                                        <input name="size" type="hidden" value="${param.size}"/>
+                                                    </c:if>
+                                                </form:form>
+                                            </td>
+                                        </c:if>
+                                    </sec:authorize>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                        <br/>
+                    </c:if>
+                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                        <c:if test="${tools:contains(actividadGeneral.accionesPermitidas, 'editar')}">
+                            <spring:url value="/avanceactuacion/form" var="web_mvc_jsp_create_avanceactuacion_menu_item_url">
+                                <spring:param name="idReturn" value="${actividadGeneral.id}" > </spring:param>
+                                <spring:param name="returnURL" value="actividadgeneral" > </spring:param>
+                            </spring:url>
+                            <input type="button" value="Agregar Avance" onclick="document.location='${web_mvc_jsp_create_avanceactuacion_menu_item_url}'"/>
+                        </c:if>
+                    </sec:authorize>
+                </div>
+
+                <h3><a href="#">Tareas / Pruebas:</a></h3>
+                <div>
+                    <c:if test="${not empty actividades}">
+                        <table id="menuTable2" width="300">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descripcion</th>
+                                    <th>Tipo</th>
+                                    <th/>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                        <th/>
+                                    </sec:authorize>
+                                </tr>
+                            </thead>
+                            <c:forEach items="${actividades}" var="actividad">
+                                <tr>
+                                    <td>${actividad.codigoCompleto}</td>
+                                    <td>
+                                         <div style="overflow: scroll; height: 100px; width: 625px; ">
+                                            <c:out escapeXml="false" value="${actividad.descripcion}"/>
+                                         </div>
+                                    </td>
+                                    <td>
+                                        <c:if test="${actividad.type eq 'pt' }">
+                                            <c:out value="S"/>
+                                        </c:if>
+                                        <c:if test="${actividad.type eq 'p' }">
+                                            <c:out value="P"/>
+                                        </c:if>
+                                        <c:if test="${actividad.type eq 'a' }">
+                                            <c:out value="A"/>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <c:if test="${actividad.type eq 'a' }">
+                                            <spring:url value="/actividadgeneral/${actividad.id}" var="show_form_url"/>
+                                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                            <form:form id="" action="${show_form_url}" method="get">
+                                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                                <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                            </form:form>
+                                        </c:if>
+                                        <c:if test="${actividad.type eq 'p' }">
+                                            <spring:url value="/prueba/${actividad.id}" var="show_form_url"/>
+                                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                            <form:form id="" action="${show_form_url}" method="get">
+                                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                                <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                            </form:form>
+                                        </c:if>
+                                    </td>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                        <c:if test="${tools:contains(actividadGeneral.accionesPermitidas, 'editar')}">
+                                            <td>
+                                                <c:if test="${actividad.type eq 'a' }">
+                                                    <spring:url value="/actividadgeneral/${actividad.id}/form" var="update_form_url"/>
+                                                    <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                                    <form:form id="" action="${update_form_url}" method="get">
+                                                        <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                                        <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                                    </form:form>
+                                                </c:if>
+                                                <c:if test="${actividad.type eq 'p' }">
+                                                    <spring:url value="/prueba/${actividad.id}/form" var="update_form_url"/>
+                                                    <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                                    <form:form id="" action="${update_form_url}" method="get">
+                                                        <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                                        <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                                    </form:form>
+                                                </c:if>
+                                            </td>
+                                        </c:if>
+                                    </sec:authorize>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:if>
+                    <br/>
+                    <c:if test="${tools:contains(actividadGeneral.accionesPermitidas, 'editar')}">
+                        <c:if test="${esActividadHija eq 'false'}">
+                            <spring:url value="/actividadgeneral/form" var="web_mvc_jsp_create_actividadgeneral_menu_item_url">
+                                <spring:param name="idActuacion" value="${actividadGeneral.codigoActuacion.id}"/>
+                                <spring:param name="idActividad" value="${actividadGeneral.id}"/>
+                            </spring:url>
+                            <input type="button" value="Agregar Tarea" onclick="document.location='${web_mvc_jsp_create_actividadgeneral_menu_item_url}'"/>
+                        </c:if>
+
+                        <spring:url value="/prueba/form" var="web_mvc_jsp_create_prueba_menu_item_url">
+                            <spring:param name="idActuacion" value="${actividadGeneral.codigoActuacion.id}"/>
+                            <spring:param name="idActividad" value="${actividadGeneral.id}"/>
+                        </spring:url>
+                        <input type="button" value="Agregar Prueba" onclick="document.location='${web_mvc_jsp_create_prueba_menu_item_url}'"/>
+                    </c:if>
+                    </div>
+            </div>
+        </c:if>
+        <c:if test="${empty actividadGeneral}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+    <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+        $('#menuTable2').tablePagination({});
+    </script>
+</div>

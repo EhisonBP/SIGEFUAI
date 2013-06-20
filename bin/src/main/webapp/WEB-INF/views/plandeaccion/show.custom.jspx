@@ -1,0 +1,79 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.plandeaccion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Acción Correctiva'}})); </script>
+        <c:if test="${not empty planDeAccion}">
+            <div id="roo_observacion_codigo">
+                <label for="_codigo_id">Hallazgo:</label>
+                <div class="box" id="_codigo_id">
+                    <spring:url value="/observacion/${planDeAccion.observacion.id}" var="url_observacion"/>
+                    <a href="${url_observacion}" >AG-${planDeAccion.observacion.referencia}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_descripcion">
+                <label for="_descripcion_id">Acción Correctiva:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${planDeAccion.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_fechaCierre">
+                <label for="_fechaCierre_id">Fecha Estimada de Cierre:</label>
+                <div class="box" id="_fechaCierre_id">
+                    <c:if test="${empty planDeAccion.fechaCierre}">
+                        <c:out escapeXml="false" value="--"/>
+                    </c:if>
+                    <c:if test="${not empty planDeAccion.fechaCierre}">
+                        <fmt:formatDate pattern="${planDeAccion_fechaCierre_date_format}" value="${planDeAccion.fechaCierre}"/>
+                    </c:if>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_fechaCierre2">
+                <label for="_fechaCierre2_id">Fecha Revisada:</label>
+                <div class="box" id="_fechaCierre2_id">
+                    <c:if test="${empty planDeAccion.fechaCierre2}">
+                        <c:out escapeXml="false" value="--"/>
+                    </c:if>
+                    <c:if test="${not empty planDeAccion.fechaCierre2}">
+                        <fmt:formatDate pattern="${planDeAccion_fechaCierre2_date_format}" value="${planDeAccion.fechaCierre2}"/>
+                    </c:if>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_fechaSeguimiento">
+                <label for="_fechaSeguimiento_id">Fecha Seguimiento:</label>
+                <div class="box" id="_fechaSeguimiento_id">
+                    <c:if test="${empty planDeAccion.fechaSeguimiento}">
+                        <c:out escapeXml="false" value="--"/>
+                    </c:if>
+                    <c:if test="${not empty planDeAccion.fechaSeguimiento}">
+                        <fmt:formatDate pattern="${planDeAccion_fechaSeguimiento_date_format}" value="${planDeAccion.fechaSeguimiento}"/>
+                    </c:if>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_unidad">
+                <label for="_unidad_id">Dependencia Sujeta a Control:</label>
+                <div class="box" id="_unidad_id">
+                    <c:out value="${planDeAccion.unidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_estadoPlanDeAccion">
+                <label for="_estadoPlanDeAccion_id">Estatus:</label>
+                <div class="box" id="_estadoPlanDeAccion_id">
+                    <c:out value="${planDeAccion.estadoPlanDeAccion.nombre}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty planDeAccion}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

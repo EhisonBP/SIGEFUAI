@@ -1,0 +1,16 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">        
+        <script type="text/javascript">
+            Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Plan Duplicado Exitosamente'}}));
+        </script>
+        <div id="roo_actuacion_nombre">
+            <label for="_nombre_id">Ir al nuevo Plan Anual:</label>
+            <div id="link">
+                <spring:url value="/plananual/${planAnual.id}" var="url"/>
+                <a href="${url}" >${planAnual.anoFiscal}</a>
+            </div>
+        </div>
+    </div>    
+</div>

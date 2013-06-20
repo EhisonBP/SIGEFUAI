@@ -1,0 +1,46 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:tools="http://edwardrayl.com/taglibs/tools" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags">
+
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_alcance_id, _objetivo_id, _enfoque_id, _metodo_id, _comentarios_id  ",
+            theme : "simple"
+
+        });
+    </script>
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.SimpleTextarea');dojo.require('dijit.form.FilteringSelect');dojo.require('dijit.form.DateTextBox');</script>
+    <div id="x_title_div">
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Asignar Biblioteca'}})); </script>
+        <spring:url value="/actuacion/asignarbiblioteca/${actuacion.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="actuacion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+
+            <div id="roo_actuacion_biblioteca">
+                <c:if test="${not empty bibliotecas}">
+                    <label for="_biblioteca_id">Biblioteca:</label>
+                    <form:select cssStyle="width:250px" id="_biblioteca_id" path="biblioteca">
+                        <form:options itemValue="id" items="${bibliotecas}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_biblioteca_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            
+            <div class="submit" id="roo_actuacion_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+                <input type="button" value="Cancelar" onclick="history.go( -1 );return true;"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+        <script type="text/javascript">
+            actualizarCodigo();
+            mostrarOcultarCheckBox();
+        </script>
+    </div>
+</div>

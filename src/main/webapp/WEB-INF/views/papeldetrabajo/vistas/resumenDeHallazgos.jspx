@@ -1,0 +1,100 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:sec="http://www.springframework.org/security/tags" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.observacion" var="entity_label"/>
+        <spring:message code="label.observacions" var="entity_label_plural"/>
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Resumen de Hallazgos'}})); </script>
+        <div id="roo_actividadGeneral_codigoActuacion">
+            <label for="_actuacion_id" style="width: 70px">Actuación:</label>
+            <div id="_actuacion_id">
+                <spring:url value="/actuacion/${actuacion.id}" var="url_actuacion"/>
+                <a href="${url_actuacion}" >${actuacion.nombre}</a>
+            </div>
+            
+
+        </div>
+        <br/>
+        <c:if test="${not empty observacions}">
+            <table id="menuTable1" width="300">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Condicion</th>
+                        <th>Estatus</th>
+                        <th/>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                            <th/>
+                        </sec:authorize>
+                    </tr>
+                </thead>
+                <c:forEach items="${observacions}" var="observacion">
+                    <tr>
+                        <td>
+                            <c:out escapeXml="false" value="AG-${observacion.referencia}"/>
+                        </td>
+                        <td>
+                            <c:out escapeXml="false" value="${observacion.condicion}"/>
+                        </td>
+                        <td>
+                            <c:out escapeXml="false" value="${observacion.estadoObservacion.nombre}"/>
+                        </td>
+                        <td>
+                            <spring:url value="/observacion/${observacion.id}" var="show_form_url"/>
+                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                            <form:form id="" action="${show_form_url}" method="get">
+                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                <input alt="${show_label}" class="image" src="${show_image_url}" title="Mostrar Hallazgo" type="image" value="${show_label}"/>
+                            </form:form>
+                        </td>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                            <td>
+                                <spring:url value="/observacion/${observacion.id}/form" var="update_form_url"/>
+                                <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                <form:form id="" action="${update_form_url}" method="get">
+                                    <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                    <input alt="${update_label}" class="image" src="${update_image_url}" title="Actualizar Hallazgo" type="image" value="${update_label}"/>
+                                </form:form>
+                            </td>
+                        </sec:authorize>
+                    </tr>
+                </c:forEach>                
+            </table>
+            <br/>
+            <spring:url value="/reporte/prepare" var="url" />
+            <script type="text/javascript"><![CDATA[
+                
+
+                function prepare(){
+                    var url = '${url}';
+                        $.ajax({
+                            type: 'get',
+                            url: url + '?key=resumenDeHallazgos',
+                            async: false
+                        });
+                        document.forms['form'].submit();
+                }
+            ]]>
+            </script>
+            <spring:url value="/reporte/renderDirect/" var="form_url"/>
+            <form:form id="form" action="${form_url}" method="get" modelAttribute="parametros" enctype="multipart/form-data">
+                <div>
+                    <input type="hidden" name="elements[0].valor" value="${actuacion.id}"/>
+                </div>
+                <div class="submit" id="roo_reporte_submit" >
+                    <spring:message code="button.save" var="save_button"/>
+                    
+                    <input type="button" value="Reporte Resumen de Hallazgos" onclick="prepare() "/>
+
+                </div>
+            </form:form>
+        </c:if>
+        <c:if test="${empty observacions}">
+            <spring:message text="No se encontraron Hallazgos"/>
+        </c:if>
+    </div>
+     <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+</script>
+</div>

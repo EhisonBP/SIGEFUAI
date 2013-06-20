@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="recomendacion/list">
+        <put-attribute name="body" value="/WEB-INF/views/recomendacion/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="recomendacion/show">
+        <put-attribute name="body" value="/WEB-INF/views/recomendacion/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="recomendacion/create">
+        <put-attribute name="body" value="/WEB-INF/views/recomendacion/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="recomendacion/update">
+        <put-attribute name="body" value="/WEB-INF/views/recomendacion/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="recomendacion/findRecomendacionsByObservacion">
+        <put-attribute name="body" value="/WEB-INF/views/recomendacion/findRecomendacionsByObservacion.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="riesgo/list">
+        <put-attribute name="body" value="/WEB-INF/views/riesgo/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="riesgo/show">
+        <put-attribute name="body" value="/WEB-INF/views/riesgo/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="riesgo/create">
+        <put-attribute name="body" value="/WEB-INF/views/riesgo/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="riesgo/update">
+        <put-attribute name="body" value="/WEB-INF/views/riesgo/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="riesgo/findRiesgoesByProceso">
+        <put-attribute name="body" value="/WEB-INF/views/riesgo/findRiesgoesByProceso.jspx"/>
+    </definition>
+<definition extends="default" name="riesgo/findRiesgoesByPrueba">
+        <put-attribute name="body" value="/WEB-INF/views/riesgo/findRiesgoesByPrueba.jspx"/>
+    </definition>
+</tiles-definitions>

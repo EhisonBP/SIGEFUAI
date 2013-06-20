@@ -1,0 +1,49 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.estructuracargos" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty estructuraCargos}">
+		<div id="roo_estructuraCargos_idEstructura">
+                <label for="_idEstructura_id">Gerencia y/o Departamento:</label>
+                <div class="box" id="_idEstructura_id">
+                    <c:out value="${estructuraCargos.idEstructura.nombreUnidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_nombreCargo">
+                <label for="_nombreCargo_id">Nombre del Cargo:</label>
+                <div class="box" id="_nombreCargo_id">
+                    <c:out value="${estructuraCargos.nombreCargo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_descripcionCargo">
+                <label for="_descripcionCargo_id">Descripcion del Cargo:</label>
+                <div class="box" id="_descripcionCargo_id">
+                    <c:out value="${estructuraCargos.descripcionCargo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_funcionesCargo">
+                <label for="_funcionesCargo_id">Funciones del Cargo:</label>
+                <div class="box" id="_funcionesCargo_id">
+                    <c:out value="${estructuraCargos.funcionesCargo}"/>
+                </div>
+            </div>
+            <br/>            
+        </c:if>
+        <c:if test="${empty estructuraCargos}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+        
+        <spring:url value="/estructuracargos/" var="create_url"/>
+       <a href="${create_url}">
+       <spring:url value="/static/images/volver.png" var="create_img_url"/>
+       <spring:message arguments="Volver" code="global.menu.new" var="add_message"/>
+       <img alt="${add_message}" src="${create_img_url}" title="Volver"/>
+        </a>
+    </div>
+</div>

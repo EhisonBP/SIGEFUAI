@@ -1,0 +1,120 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+		dojo.require('dijit.form.FilteringSelect');
+	</script>
+	<div id="_title_div">
+		<spring:message code="label.autoridadmaxima" var="entity_label" />
+		<spring:message arguments="${entity_label}" code="entity.create"
+			var="title_msg" />
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : '_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : '${title_msg}'
+				}
+			}));
+		</script>
+		<spring:url value="/autoridadmaxima" var="form_url" />
+		<form:form action="${form_url}" method="POST"
+			modelAttribute="autoridadMaxima">
+			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+			<div id="roo_autoridadMaxima_nombre">
+				<label for="_nombre_id">Nombre:</label>
+				<form:input cssStyle="width:250px" id="_nombre_id" maxlength="30"
+					path="nombre" size="0" />
+				<br />
+				<form:errors cssClass="errors" id="_nombre_error_id" path="nombre" />
+				<spring:message arguments="Nombre" code="field.invalid"
+					var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator=","
+					arguments="Nombre,(${field_required})"
+					code="field.simple.validation" var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_nombre_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							regExp : '^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$',
+							required : true
+						}
+					}));
+				</script>
+			</div>
+			<br />
+
+
+
+
+
+
+			<div id="roo_autoridadMaxima_cedula">
+				<label>Cedula:</label>
+				<form:select name="effects" path="effectTypes">
+					<option value="1">V</option>
+					<option value="2">E</option>
+				</form:select>
+				<!--  <label for="_cedula_id">Cedula:</label>-->
+				<form:input cssStyle="width:220px" id="_cedula_id" maxlength="8"
+					path="cedula" size="0" />
+				<br />
+				<form:errors cssClass="errors" id="_cedula_error_id" path="cedula" />
+				<spring:message arguments="Cedula" code="field.invalid"
+					var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator="," arguments="Cedula,"
+					code="field.simple.validation" var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_cedula_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							regExp : '^[1-9][0-9]{6,7}$',
+							required : true
+						}
+					}));
+				</script>
+			</div>
+			<br />
+			<div id="roo_autoridadMaxima_cargoAutoridad">
+				<c:if test="${not empty estructuracargoses}">
+					<label for="_cargoAutoridad_id">Cargo Autoridad:</label>
+					<form:select cssStyle="width:250px" id="_cargoAutoridad_id"
+						path="cargoAutoridad">
+						<form:options itemValue="id" items="${estructuracargoses}" itemLabel="NombreCargo"/>
+					</form:select>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : '_cargoAutoridad_id',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								hasDownArrow : true
+							}
+						}));
+					</script>
+				</c:if>
+			</div>
+			<br />
+			<div class="submit" id="roo_autoridadMaxima_submit">
+				<spring:message code="button.save" var="save_button" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<input id="proceed" type="submit" value="${save_button}" />
+			</div>
+		</form:form>
+	</div>
+</div>

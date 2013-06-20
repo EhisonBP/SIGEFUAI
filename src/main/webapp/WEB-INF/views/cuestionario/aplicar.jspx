@@ -1,0 +1,31 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">
+        <spring:message code="label.cuestionario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Aplicar Cuestionario'}})); </script>
+        <spring:url value="/cuestionario/aplicar/${cuestionario.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="cuestionario">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>            
+            <div id="roo_cuestionario_auditado">
+                <c:if test="${not empty unidades}">
+                    <label for="_auditado_id">Dependencia Sujeta a Control:</label>
+                    <form:select cssStyle="width:250px" id="_auditado_id" path="unidad">
+                        <form:options itemValue="id" items="${unidades}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_auditado_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>            
+            <div class="submit" id="roo_cuestionario_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Aplicar"/>
+                <input type="button" value="Cancelar" onclick="history.go( -1 );return true;"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

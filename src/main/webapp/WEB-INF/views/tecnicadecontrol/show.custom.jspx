@@ -1,0 +1,52 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.tecnicadecontrol" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Ténica de Control'}})); </script>
+        <c:if test="${not empty tecnicaDeControl}">
+            <c:if test="${not empty codigoCompletoPrueba}">
+            <div id="roo_prueba_codigo">
+                <label>Prueba:</label>
+                <spring:url value="/prueba/${idPrueba}" var="url_return"/>
+                <div class="box">
+                    <a href="${url_return}">${codigoCompletoPrueba}</a>
+                </div>
+            </div>
+            </c:if>
+            <c:if test="${not empty descripcionRiesgo}">
+                <div id="roo">
+                    <label for="_id">Riesgo:</label>
+                    <div class="box" id="_uid">
+                        <spring:url value="/riesgo/${idRiesgo}" var="url"/>
+                        <a href="${url}" >${descripcionRiesgo}</a>
+                    </div>
+                </div>                
+            </c:if>
+            <div  id="roo_tecnicaDeControl_referencia">
+                <label for="_referencia_id">Número:</label>
+                <div class="box" >${tecnicaDeControl.referencia}</div>
+            </div>
+            <br/>
+            
+            <div id="roo_efectividadTecnicaControl">
+                <label for="_efectividadTecnicaControl_id">Efectividad del Control:</label>
+                <div class="box" id="_efectividadTecnicaControl_id">
+                    <c:out value="${tecnicaDeControl.efectividadTecnicaControl.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_tecnicaDeControl_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${tecnicaDeControl.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty tecnicaDeControl}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

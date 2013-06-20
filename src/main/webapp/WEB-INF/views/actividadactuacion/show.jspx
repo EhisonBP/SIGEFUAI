@@ -1,0 +1,77 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.actividadactuacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty actividadActuacion}">
+            <div id="roo_actividadActuacion_codigoActuacion">
+                <label for="_codigoActuacion_id">Codigo Actuacion:</label>
+                <div class="box" id="_codigoActuacion_id">
+                    <c:out value="${actividadActuacion.codigoActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_codigo">
+                <label for="_codigo_id">Codigo:</label>
+                <div class="box" id="_codigo_id">
+                    <c:out value="${actividadActuacion.codigo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${actividadActuacion.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_estadoActividadActuacion">
+                <label for="_estadoActividadActuacion_id">Estado Actividad Actuacion:</label>
+                <div class="box" id="_estadoActividadActuacion_id">
+                    <c:out value="${actividadActuacion.estadoActividadActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_documento">
+                <label for="_documento_id">Documento:</label>
+                <div class="box" id="_documento_id">
+                    <c:out value="${actividadActuacion.documento}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_actividadActuacion">
+                <label for="_actividadActuacion_id">Actividad Actuacion:</label>
+                <div class="box" id="_actividadActuacion_id">
+                    <c:out value="${actividadActuacion.actividadActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_accionesPermitidas">
+                <label for="_accionesPermitidas_id">Acciones Permitidas:</label>
+                <div class="box" id="_accionesPermitidas_id">
+                    <c:out value="${actividadActuacion.accionesPermitidas}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_responsables">
+                <label for="_responsables_id">Responsables:</label>
+                <div class="box" id="_responsables_id">
+                    <c:out value="${actividadActuacion.responsables}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_actividadActuacion_objetivoAMitigar">
+                <label for="_objetivoAMitigar_id">Objetivo A Mitigar:</label>
+                <div class="box" id="_objetivoAMitigar_id">
+                    <c:out value="${actividadActuacion.objetivoAMitigar}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty actividadActuacion}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

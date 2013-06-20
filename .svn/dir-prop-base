@@ -1,0 +1,11 @@
+K 10
+svn:ignore
+V 60
+target
+log.roo*
+application.log*
+sigai.log*
+bpm.log*
+*.tlog
+
+END

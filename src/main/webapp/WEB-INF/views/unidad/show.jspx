@@ -1,0 +1,84 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.unidad" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty unidad}">
+            <div id="roo_unidad_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${unidad.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_rif">
+                <label for="_rif_id">Rif:</label>
+                <div class="box" id="_rif_id">
+                    <c:out value="${unidad.rif}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${unidad.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_auditado">
+                <label for="_auditado_id">Auditado:</label>
+                <div class="box" id="_auditado_id">
+                    <c:out value="${unidad.auditado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_tipoUnidad">
+                <label for="_tipoUnidad_id">Tipo Unidad:</label>
+                <div class="box" id="_tipoUnidad_id">
+                    <c:out value="${unidad.tipoUnidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_planesDeAccion">
+                <label for="_planesDeAccion_id">Planes De Accion:</label>
+                <div class="box" id="_planesDeAccion_id">
+                    <c:out value="${unidad.planesDeAccion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_mision">
+                <label for="_mision_id">Mision:</label>
+                <div class="box" id="_mision_id">
+                    <c:out value="${unidad.mision}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_vision">
+                <label for="_vision_id">Vision:</label>
+                <div class="box" id="_vision_id">
+                    <c:out value="${unidad.vision}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_funciones">
+                <label for="_funciones_id">Funciones:</label>
+                <div class="box" id="_funciones_id">
+                    <c:out value="${unidad.funciones}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_unidad_responsable">
+                <label for="_responsable_id">Responsable:</label>
+                <div class="box" id="_responsable_id">
+                    <c:out value="${unidad.responsable}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty unidad}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

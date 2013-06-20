@@ -1,0 +1,619 @@
+<div xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" >
+
+<style>
+    .info-content { width: 100px; height: 500px;}
+    .droppable { width: 50px; height: 30px; float: left; background-color: blue; border: 1px solid #999999;}
+
+    .drag {width: 50px; height: 30px; background-color: #730606; border: 1px solid #999999;}
+
+    .mesable { width: 50px; height: 30px; float: left; background-color: #CCCCCC; border: 1px solid #999999; text-align: center}
+
+    .drag2 {
+	position: absolute;
+	border: 1px solid #89B;
+	background: #BCE;
+	height: 58px;
+	width: 58px;
+	top: 1320px;
+	cursor: move;
+	}
+
+    .drag3 {
+	position: absolute;
+	border: 1px solid #89B;
+	background: #BCE;
+	height: 58px;
+	width: 58px;
+	cursor: move;
+	top: 120px;
+	text-align: center;
+	line-height: 58px;
+	}
+
+    .handle {
+            position: absolute;
+            height: 6px;
+            width: 6px;
+            border: 1px solid #89B;
+            background: #9AC;
+            }
+ 
+    .selected {
+            background-color: #ECB;
+            border-color: #B98;
+            }
+    .selected .handle {
+            background-color: #CA9;
+            border-color: #B98;
+            }
+     
+     .ui-widget-header p, .ui-widget-content p { margin: 0; }
+     #snaptarget { height: 140px; }
+
+     .containment-wrapper { width: 95%; height:34px; border:2px solid #999999; padding: 5px; }
+
+     .containment-combo { border:2px solid #ccc; }
+
+     .tabla { margin: 0px 0; }
+
+     .ui-selected {background-color: yellow;}
+     .ui-selecting {background-color: red;}
+
+</style>
+
+<spring:url value="/planificadoractuacion/crear" var="url" />
+<spring:url value="/planificadoractuacion/getitems" var="urlGetItems" />
+<spring:url value="/planificadoractuacion/getactuaciones" var="urlGetActuaciones" />
+<spring:url value="${idPlan}" var="idPlan" />
+
+<script type="text/javascript">
+    var url = '${url}';
+    var urlGetItems = '${urlGetItems}';
+    var urlGetActuaciones = '${urlGetActuaciones}';
+    var idPlan = '${idPlan}';    
+</script>
+
+<script type="text/javascript"><![CDATA[
+    //itemsLoaded es un arreglo que contiene información de los itemPlanificacionActuacions
+    var itemsLoaded = new Array();
+
+    //actuacionesLoaded es un arreglo que contiene información de las actuaciones cargadas en la aplicacion
+    var actuacionesLoaded = new Array();
+
+    //arreglo que almacena las cajas que se han guardado en la BD
+    var cajasGuardadas = new Array();
+
+    var cantFilas = 0;
+    var num = 0;
+    var creando = 0;
+    var seleccionado = false;
+    var slots = new Array();
+    var statusFilas = new Array();
+
+    var diccionarioDeActuaciones = new Array();
+
+    function incializarStatusFilas(){
+         for (i = 0; i < 200; i++){
+            statusFilas[i] = false;
+         }
+    }
+    function ocuparFila(fila){
+        statusFilas[fila] = true;
+    }
+    function liberarFila(fila){
+        statusFilas[fila] = false;
+    }
+
+    function verificarCajaGuardada(idCaja){
+        for (k = 0; k < cajasGuardadas.length; k++){
+            if (cajasGuardadas[k] == idCaja){                
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function incializarSlot(fila){
+        slots[fila] = new Array();
+        
+        for (i = 1; i <= 12; i++){
+            slots[fila][i] = new Array();
+            
+            slots[fila][i]['inicio'] = parseFloat($('#' + fila + '_' + i).offset().left);
+
+            var width = ($('#' + fila + '_' + i).css("width")).split("p");
+            slots[fila][i]['fin'] = parseFloat($('#' + fila + '_' + i).offset().left) + parseFloat(width[0]);
+
+            slots[fila][i]['top'] = parseFloat($('#' + fila + '_' + i).offset().top);
+            
+            var height = ($('#' + fila + '_' + i).css("height")).split("p");
+            slots[fila][i]['down'] = parseFloat($('#' + fila + '_' + i).offset().top) + parseFloat(height[0]);
+        }
+        
+    }
+
+    function ubicarClick(top, left){        
+        for (i = 1; i <= cantFilas; i++){ // filas
+            for (j = 1; j <= 12; j++){ // columnas                
+                if ((left > slots[i][j]['inicio']) && (left < slots[i][j]['fin']) && (top > slots[i][j]['top']) && (top < slots[i][j]['down'])){
+                    return i + '_' + j;
+                }
+            }
+        }
+    }
+
+    function calcularLongitudCaja(idCaja){
+
+        var result = new Array();
+
+        for (i = 1; i <= cantFilas; i++){ // filas
+            for (j = 1; j <= 12; j++){ // columnas
+                //busco el id del div en el que comienza la caja
+                inicioCaja = parseFloat($('#' + idCaja).offset().left);
+                if (inicioCaja == slots[i][j]['inicio']){
+                    result['inicio'] = i + '_' + j;
+                }
+
+                //busco el id del div en el que termina la caja
+                var width = ($('#' + idCaja).css("width")).split("p");
+                finCaja = parseFloat($('#' + idCaja).offset().left) + parseFloat(width[0]);
+                if (finCaja == slots[i][j]['fin']){
+                    result['fin'] = i + '_' + j;
+                }
+            }
+        }
+
+        var inicio = result['inicio'].split('_');
+        var fin = result['fin'].split('_');
+        result['longitud'] = parseInt(fin[1]) - parseInt(inicio[1]) + 1;
+
+        /*El arreglo result contiene
+         * result['inicio'] -> id del div donde inicia la caja
+         * result['fin'] -> id del div donde termina la caja
+         * result['longitud'] -> longitud de la caja
+        */
+        return result;
+    }
+
+    function cargarComboActuaciones(){
+        cargarActuaciones(); //este método llena el arreglo actuacionesLoaded
+        //alert('actuaciones cargadas: ' + actuacionesLoaded.length);
+        if (actuacionesLoaded.length > 0){
+            var opciones = '';
+            for (i=0; i < actuacionesLoaded.length; i++){
+                opciones = opciones + '<OPTION VALUE="' + actuacionesLoaded[i]['id'] + '">' + actuacionesLoaded[i]['nombre'] + '</OPTION>';
+            }
+
+            $('<tr>\n\
+                    <th style="vertical-align: middle; height: 53px;">\n\
+                        <div class="containment-combo">\n\
+                            <SELECT ID="combo_actuaciones_' + cantFilas + '" NAME="combo_actuaciones_' + cantFilas + '" SIZE=1">\n\
+                            ' + opciones + '</SELECT>\n\
+                        </div>\n\
+                    </th>\n\
+               <tr> ')
+                    .appendTo("#info_column");
+        }
+        else{
+            alert('No hay actuaciones cargadas');
+        }
+    }
+
+    function pintarDivs(){
+        cantFilas++;
+        $('<tr>\n\
+                <th style="vertical-align:top;">\n\
+                    <div id="fila_meses_' + cantFilas + '" class="containment-wrapper">\n\
+                        <div id="' + cantFilas + '_1" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_2" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_3" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_4" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_5" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_6" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_7" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_8" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_9" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_10" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_11" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                        <div id="' + cantFilas + '_12" class="ui-widget-header droppable" >\n\
+                            <p></p>\n\
+                        </div>\n\
+                   </div>\n\
+                </th>\n\
+            </tr>')
+                   .appendTo("#cuadrilla");
+    }
+
+    function agregarFila(){
+            pintarDivs();
+            incializarSlot(cantFilas);
+            loadBasics();
+            cargarComboActuaciones();
+   }
+
+   function crearCaja(idDiv){
+       $('<div class="drag" id="caja_' + num + '"/>')
+               
+               .appendTo( '#fila_meses_' + num )
+               .css({
+                       top:  $('#' + idDiv).offset().top,
+                       left: $('#' + idDiv).offset().left,
+                       position:"absolute"
+               });
+   }
+
+   function asignarSelectable(id){
+       $('#' + id).mousedown(
+           function(ev){
+               //alert(ev.target.id);
+               if (!seleccionado){
+                   $('#'+ev.target.id).css('background', '#FE0400');
+                   seleccionado = true;
+               }
+               else {
+                   $('#'+ev.target.id).css('background', '#730606');
+                   seleccionado = false;
+               }
+
+               }
+           );
+   }
+
+   function administrarCaja(ev){
+        
+        var idDiv = ubicarClick(ev.pageY, ev.pageX);
+        
+        if (idDiv != undefined){
+            var filaSplit = idDiv.split("_");
+
+            if ((ev.target.className == "ui-resizable-handle ui-resizable-e") || (ev.target.className == "ui-resizable-handle ui-resizable-w"))
+            {
+                //entro aqui cuando el se hizo click en un borde - RESIZE
+            }
+            else
+            {
+                var itemClicked = ev.target.id.split("_");
+                //alert('ITEM: ' + ev.target.className);
+                if ((statusFilas[filaSplit[0]] == true) && (itemClicked[0] != "caja" )){
+                    // 3
+                    //alert('Fila Ocupada');
+                }
+                else if ((statusFilas[filaSplit[0]] == true) && (itemClicked[0] == "caja" )){
+                    // 4
+                    //*********************************************************
+                    //Ejemplo para buscar la longitud de la caja
+                    //llamo al metodo calcularLongitudCaja y le paso el id
+                    //de la caja a la que quiero calcular la longitud
+                    /*
+                    var result = calcularLongitudCaja(ev.target.id);
+                    alert('Longitud de la caja en meses: ' + result['longitud']);
+                    */
+                    //*********************************************************
+
+                }
+                else if (statusFilas[filaSplit[0]] == false){
+                    //1                    
+                    creando = 1;
+                    num++;
+                    ocuparFila(filaSplit[0]);
+                
+                    crearCaja(idDiv);
+                    
+                    var numFila = idDiv.split("_");
+                    $( '#caja_' + num ).draggable({ snap: ".ui-widget-header", snapMode: "inner", snapTolerance: "40", containment: '#fila_meses_' + numFila[0]});
+                    $( '#caja_' + num ).resizable({
+                        grid: 30, minWidth: 50,
+                        handles: 'e',
+                        containment: '#fila_meses_' + numFila[0],
+                        resize: function(event, ui) {
+                            //if (creando==1){
+                              var idDiv = ubicarClick(event.pageY, event.pageX);
+                              if (idDiv != undefined){
+                                  var width = $('#' + idDiv).css("width").split("p");
+                                  $('#' + this.id)
+                                      .css({
+                                              width: parseFloat($('#' + idDiv).offset().left) + parseFloat(width[0]) - parseFloat($('#' + this.id).offset().left)
+                                      });
+                              }
+                            }
+                     });
+                    
+                    asignarSelectable('caja_' + num);
+
+                }
+            }
+        }
+   }
+
+   function definirTamanoCaja(ev){
+       if (creando==1){
+            $('#caja_' + num)
+               .css({
+                       width: ev.pageX - parseInt($('#caja_' + num).css("left"))
+               });
+       }
+   }
+
+   function ajusteAutomatico(ev){
+       if (creando==1)
+       {
+           var idDiv = ubicarClick(ev.pageY, ev.pageX);
+           var width = $('#' + idDiv).css("width").split("p");           
+           $('#caja_' + num)
+               .css({
+                       width: parseFloat($('#' + idDiv).offset().left) + parseFloat(width[0]) - parseFloat($('#caja_' + num).offset().left)
+               });
+           creando = 0;
+        }
+   }
+
+   function ajaxCrearItemPlanificacionActuacion(ev){       
+       if (verificarCajaGuardada('caja_' + num) == false){
+           var result = calcularLongitudCaja('caja_' + num);
+           //result['longitud'] //result['inicio'] //result['fin']
+
+           //var idActuacion = $('combo_actuaciones_' + cantFilas).value;
+
+           var comboActuaciones = document.getElementById('combo_actuaciones_' + cantFilas);
+           var idActuacion = comboActuaciones.options[comboActuaciones.selectedIndex].value;
+                      
+           $.ajax({
+              type: 'post',
+              url: url + '?inicio=' + result['inicio'] + '&fin=' + result['fin'] + '&idPlan=' + idPlan + '&idActuacion=' + idActuacion,
+              success: function(data){
+                           //alert("Data Loaded: " + data);
+                           //$('<pre>'+ data + '</pre>').appendTo("#salida");
+                           cajasGuardadas.push('caja_' + num);
+
+                       },
+              async: false
+            });
+
+       }
+   }
+
+   function loadBasics(){
+       $('.droppable').mousedown(
+             function(ev){                     
+                 administrarCaja(ev);
+             }
+          );
+
+       $('.droppable').mousemove(
+             function(ev){
+                definirTamanoCaja(ev);
+             }
+          );
+
+       $('.droppable').mouseup(
+             function(ev){
+                ajusteAutomatico(ev);
+                ajaxCrearItemPlanificacionActuacion(ev);
+             }
+          );
+   }
+
+   function pintarCaja(idItem){
+        //Busco el mes de inicio de la caja
+        dDateI = new Date();
+        var inicioInt = parseInt(itemsLoaded[idItem]['inicioEstimado']);
+        dDateI.setTime(inicioInt);
+        var mesInicio = dDateI.getMonth() + 1;
+        //*******
+
+        //Busco el mes de fin de la caja
+        dDateF = new Date();
+        var finInt = parseInt(itemsLoaded[idItem]['finEstimado']);
+        dDateF.setTime(finInt);
+        var mesFin = dDateF.getMonth() + 1;
+        //*******
+
+        creando = 1;
+        num++;
+        ocuparFila(idItem);
+        var fila = idItem + 1;
+        var idDiv = fila + '_' + mesInicio;
+        crearCaja(idDiv);
+
+        var numFila = idDiv.split("_");
+        $( '#caja_' + num ).draggable({ snap: ".ui-widget-header", snapMode: "inner", snapTolerance: "40", containment: '#fila_meses_' + numFila[0]});
+        $( '#caja_' + num ).resizable({
+            grid: 30, minWidth: 50,
+            handles: 'e',
+            containment: '#fila_meses_' + numFila[0],
+            resize: function(event, ui) {
+                //if (creando==1){
+                  var idDiv = ubicarClick(event.pageY, event.pageX);
+                  if (idDiv != undefined){
+                      var width = $('#' + idDiv).css("width").split("p");
+                      $('#' + this.id)
+                          .css({
+                                  width: parseFloat($('#' + idDiv).offset().left) + parseFloat(width[0]) - parseFloat($('#' + this.id).offset().left)
+                          });
+                  }
+                }
+         });
+
+        asignarSelectable('caja_' + num);
+
+        //Engordo la caja a su tamaño real
+        $('#caja_' + num)
+           .css({
+                width: slots[fila][mesFin]['fin'] - slots[fila][mesInicio]['inicio']
+           });
+
+   }
+
+   function crearCajasCargadas(){
+       //alert('cargando items');
+       for (a = 0; a < itemsLoaded.length; a++){           
+           pintarDivs();
+           incializarSlot(cantFilas);
+           pintarCaja(a);
+           cargarComboActuaciones();
+       }
+   }
+
+   function asignarActuacionesPorCombos(){
+       
+       for (i = 0; i < itemsLoaded.length; i++){                      
+           var comboActuaciones = document.getElementById('combo_actuaciones_' + (i+1));
+           var idActuacion = itemsLoaded[i]['actuacion']['id'];           
+           comboActuaciones.selectedIndex = diccionarioDeActuaciones[itemsLoaded[i]['actuacion']['id']];           
+       }
+   }
+
+   function cargarItems() {
+
+        $.ajax({
+            //url: urlGetItems + '?idPlan=1',
+            url: urlGetItems + '?idPlan=' + idPlan,
+            success: function(items) {
+                        //alert(items);
+                        //$('<pre>'+ items[0]['id'] + '</pre>').appendTo("#salida");
+                        
+                        for (i = 0; i < items.length; i++){
+                            itemsLoaded[i] = new Array();
+                            itemsLoaded[i]['id'] = items[i]['id'];
+                            itemsLoaded[i]['actuacion'] = items[i]['actuacion'];
+                            itemsLoaded[i]['inicioEstimado'] = items[i]['inicioEstimado'];
+                            itemsLoaded[i]['finEstimado'] = items[i]['finEstimado'];
+                        }                        
+            },
+            dataType: 'json',
+            async: false
+        });
+
+        crearCajasCargadas();
+
+        asignarActuacionesPorCombos();
+        
+    }
+
+    function cargarActuaciones() {
+
+        $.ajax({            
+            url: urlGetActuaciones,
+            success: function(actuaciones) {
+                        for (i = 0; i < actuaciones.length; i++){
+                            actuacionesLoaded[i] = new Array();
+                            actuacionesLoaded[i]['id'] = actuaciones[i]['id'];
+                            actuacionesLoaded[i]['nombre'] = actuaciones[i]['nombre'];
+
+                            diccionarioDeActuaciones[actuaciones[i]['id']] = i;
+                        }
+            },
+            dataType: 'json',
+            async: false
+        });
+    }
+
+    $(function() {
+
+            incializarStatusFilas();            
+            cargarItems();           
+            
+    });
+]]></script>
+
+    <jsp:output omit-xml-declaration="yes"/>
+	<script type="text/javascript">dojo.require("dijit.TitlePane")</script>
+    <div id="_title">
+    	<spring:message var="app_name" code="application.name" />
+    	<spring:message var="title" code="welcome.titlepane" arguments="${app_name}" />
+    	<script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title}'}})); </script>
+		<h2>Planificador</h2>
+                <h3>Año Fiscal: ${plan.anoFiscal}</h3>
+                <h3>Descripcion: ${plan.descripcion}</h3>
+                
+                <table width="300">
+                    <thead>
+                        <tr>
+                            <th>Actuación</th>
+                            <th width="670">                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th valign="top" style="vertical-align: top">
+                                <div>
+                                    <input type="button" value="Agregar fila" onclick="agregarFila()" />
+                                </div>
+                            </th>
+                            <th>
+                                <div id="fila_meses" class="containment-wrapper">
+                                    <div class="mesable" >
+                                        <p>Ene</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Feb</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Mar</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Abr</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>May</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Jun</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Jul</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Ago</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Sep</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Oct</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Nov</p>
+                                    </div>
+                                    <div class="mesable" >
+                                        <p>Dic</p>
+                                    </div>
+                               </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="vertical-align: top">
+                                <div id="info_column" class="info-content">
+                                </div>
+                            </th>
+                            <th style="vertical-align:top;">
+                                <table id="cuadrilla" class="tabla">
+                                </table>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="salida"/>
+	</div>
+</div>

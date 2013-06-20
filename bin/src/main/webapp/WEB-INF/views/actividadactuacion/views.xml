@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="actividadactuacion/list">
+        <put-attribute name="body" value="/WEB-INF/views/actividadactuacion/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actividadactuacion/show">
+        <put-attribute name="body" value="/WEB-INF/views/actividadactuacion/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actividadactuacion/create">
+        <put-attribute name="body" value="/WEB-INF/views/actividadactuacion/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actividadactuacion/update">
+        <put-attribute name="body" value="/WEB-INF/views/actividadactuacion/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="actividadactuacion/findActividadActuacionsByCodigoActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/actividadactuacion/findActividadActuacionsByCodigoActuacion.jspx"/>
+    </definition>
+    <definition extends="default" name="actividadactuacion/findActividadActuacionsByActividadActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/actividadactuacion/findActividadActuacionsByActividadActuacion.jspx"/>
+    </definition>
+</tiles-definitions>

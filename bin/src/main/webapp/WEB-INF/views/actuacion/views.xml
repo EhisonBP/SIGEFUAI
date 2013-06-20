@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="actuacion/list">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/show">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/create">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/update">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/findActuacionsByActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/findActuacionsByActuacion.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/search">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/search.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/asignarbiblioteca">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/asignarbiblioteca.jspx"/>
+    </definition>
+    <definition extends="default" name="actuacion/findActuacionsByCodigo">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/findActuacionsByCodigo.jspx"/>
+    </definition>
+<definition extends="default" name="actuacion/findActuacionsByRif">
+        <put-attribute name="body" value="/WEB-INF/views/actuacion/findActuacionsByRif.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,70 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.SimpleTextarea');dojo.require('dijit.form.DateTextBox');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="_title_div">
+        <spring:message code="label.entradabitacora" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/entradabitacora" var="form_url"/>
+        <form:form action="${form_url}" method="POST" modelAttribute="entradaBitacora">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_entradaBitacora_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <form:textarea cssStyle="width:250px" id="_descripcion_id" path="descripcion"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_descripcion_id', widgetType: 'dijit.form.SimpleTextarea', widgetAttrs: {}})); </script>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+            </div>
+            <br/>
+            <div id="roo_entradaBitacora_timeStamp">
+                <label for="_timeStamp_id">Time Stamp:</label>
+                <form:input cssStyle="width:250px" id="_timeStamp_id" maxlength="30" path="timeStamp" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_timeStamp_error_id" path="timeStamp"/>
+                <spring:message arguments="Time Stamp" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Time Stamp," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_timeStamp_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_timeStamp_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${entradaBitacora_timeStamp_date_format}', required : false}, datePattern : '${entradaBitacora_timeStamp_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_entradaBitacora_usuario">
+                <label for="_usuario_id">Usuario:</label>
+                <form:input cssStyle="width:250px" id="_usuario_id" maxlength="30" path="usuario" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_usuario_error_id" path="usuario"/>
+                <spring:message arguments="Usuario" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Usuario," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_usuario_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_entradaBitacora_ip">
+                <label for="_ip_id">Ip:</label>
+                <form:input cssStyle="width:250px" id="_ip_id" maxlength="30" path="ip" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_ip_error_id" path="ip"/>
+                <spring:message arguments="Ip" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Ip," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_ip_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_entradaBitacora_tipo">
+                <c:if test="${not empty tipoentradabitacoras}">
+                    <label for="_tipo_id">Tipo:</label>
+                    <form:select cssStyle="width:250px" id="_tipo_id" path="tipo">
+                        <form:options itemValue="id" items="${tipoentradabitacoras}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_tipo_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_entradaBitacora_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

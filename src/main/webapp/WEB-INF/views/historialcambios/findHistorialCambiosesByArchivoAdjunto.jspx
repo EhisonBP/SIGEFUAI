@@ -1,0 +1,29 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="_title_div">
+        <spring:message code="label.archivoadjunto" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.find" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/historialcambios/find/ByArchivoAdjunto" var="form_url"/>
+        <form:form action="${form_url}" method="GET">
+            <div id="roo_historialCambios_archivoAdjunto">
+                <c:if test="${not empty archivoadjuntoes}">
+                    <label for="_archivoAdjunto_id">Archivo Adjunto:</label>
+                    <select id="_archivoAdjunto_id" name="archivoAdjunto">
+                        <c:forEach items="${archivoadjuntoes}" var="archivoAdjunto_item">
+                            <option value="${archivoAdjunto_item.id}">${archivoAdjunto_item}</option>
+                        </c:forEach>
+                    </select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_archivoAdjunto_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_historialCambios_submit">
+                <spring:message code="button.find" var="find_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${find_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

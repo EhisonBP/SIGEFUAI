@@ -1,0 +1,99 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id",
+            theme : "simple"
+
+        });
+    </script>
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+
+
+    <div id="x_title_div">
+        <spring:message code="label.archivoadjunto" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <div>
+            <c:if test="${returnURL eq 'prueba' }">
+                <label>Prueba:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'papeldetrabajo' }">
+                <label>Sección:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'observacion' }">
+                <label>Hallazgo:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'respuesta' }">
+                <label>Respuesta:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'personalizacion' }">
+                <label>Personalización:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'requerimiento' }">
+                <label>Requerimiento:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'alegato' }">
+                <label>Alegato:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'secciondefault' }">
+                <label>Sección Básica:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'avanceactuacion' }">
+                <label>Avance:</label>
+            </c:if>
+            <div>
+                <spring:url value="/${returnURL}/${idReturn}" var="url_return"/>
+                <a href="${url_return}" >${codigoCompleto}</a>
+            </div>
+        </div>
+        <br/>
+
+
+        <spring:url value="/archivoadjunto/${archivoAdjunto.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="put" modelAttribute="archivoAdjunto">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_archivoAdjunto_codigo">
+                <label for="_codigo_id">Referencia:</label>
+                <form:input cssStyle="width:250px" id="_codigo_id" maxlength="90" path="codigo" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_codigo_error_id" path="codigo"/>
+                <spring:message arguments="Codigo" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Codigo,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_codigo_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <form:input cssStyle="width:250px" id="_nombre_id" maxlength="30" path="nombre" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_nombre_error_id" path="nombre"/>
+                <spring:message arguments="Nombre" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Nombre,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_nombre_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <form:input cssStyle="width:250px" id="_descripcion_id" maxlength="30" path="descripcion" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+            </div>
+            <br/>
+
+            <div class="submit" id="roo_archivoAdjunto_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

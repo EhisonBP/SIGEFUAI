@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="proceso/list">
+        <put-attribute name="body" value="/WEB-INF/views/proceso/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="proceso/show">
+        <put-attribute name="body" value="/WEB-INF/views/proceso/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="proceso/create">
+        <put-attribute name="body" value="/WEB-INF/views/proceso/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="proceso/update">
+        <put-attribute name="body" value="/WEB-INF/views/proceso/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="proceso/findProcesoesByUnidad">
+        <put-attribute name="body" value="/WEB-INF/views/proceso/findProcesoesByUnidad.jspx"/>
+    </definition>
+<definition extends="default" name="proceso/findProcesoesByProceso">
+        <put-attribute name="body" value="/WEB-INF/views/proceso/findProcesoesByProceso.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="reporte/listuser">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/listuser.jspx"/>
+    </definition>
+    <definition extends="default" name="reporte/list">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="reporte/show">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="reporte/create">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="reporte/update">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="reporte/prepare">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/prepare.jspx"/>
+    </definition>
+<definition extends="default" name="reporte/findReportesByReporte">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/findReportesByReporte.jspx"/>
+    </definition>
+<definition extends="default" name="reporte/findReportesByClave">
+        <put-attribute name="body" value="/WEB-INF/views/reporte/findReportesByClave.jspx"/>
+    </definition>
+</tiles-definitions>

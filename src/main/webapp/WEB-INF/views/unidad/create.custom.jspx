@@ -1,0 +1,89 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id, _mision_id, _vision_id, _funciones_id",
+            theme : "simple"
+
+        });
+    </script>
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.unidad" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Crear Dependencia Sujeta a Control'}})); </script>
+        <spring:url value="/unidad" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="unidad">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_unidad_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <form:input cssStyle="width:520px" id="_nombre_id" maxlength="70" path="nombre" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_nombre_error_id" path="nombre"/>
+                <spring:message arguments="Nombre" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Nombre,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_nombre_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_unidad_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>                
+            </div>
+            <br/>
+            <div id="roo_unidad_tipoUnidad">
+                <c:if test="${not empty tipounidads}">
+                    <label for="_tipoUnidad_id">Tipo:</label>
+                    <form:select cssStyle="width:250px" id="_tipoUnidad_id" path="tipoUnidad">
+                        <form:options itemValue="id" items="${tipounidads}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_tipoUnidad_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_unidad_mision">
+                <label for="_mision_id">Misión:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_mision_id" path="mision"/>
+                <br/>
+                <form:errors cssClass="errors" id="_mision_error_id" path="mision"/>                
+            </div>
+            <br/>
+            <div id="roo_unidad_vision">
+                <label for="_vision_id">Visión:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_vision_id" path="vision"/>
+                <br/>
+                <form:errors cssClass="errors" id="_vision_error_id" path="vision"/>                                
+            </div>
+            <br/>
+            <div id="roo_unidad_funciones">
+                <label for="_funciones_id">Funciones:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_funciones_id"  path="funciones"/>
+                <br/>
+                <form:errors cssClass="errors" id="_funciones_error_id" path="funciones"/>                
+            </div>
+            <br/>
+            <div id="roo_unidad_responsable">
+                <c:if test="${not empty auditadoes}">
+                    <label for="_responsable_id">Responsable:</label>
+                    <form:select cssStyle="width:250px" id="_responsable_id" path="responsable">
+                        <form:options itemValue="id" items="${auditadoes}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_responsable_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_unidad_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+                <input type="button" value="Cancelar" onclick="history.go( -1 );return true;"/>
+            </div>
+        </form:form>
+    </div>
+</div>

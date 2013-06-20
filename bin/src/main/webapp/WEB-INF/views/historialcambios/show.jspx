@@ -1,0 +1,42 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.historialcambios" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty historialCambios}">
+            <div id="roo_historialCambios_accion">
+                <label for="_accion_id">Accion:</label>
+                <div class="box" id="_accion_id">
+                    <c:out value="${historialCambios.accion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_historialCambios_fecha">
+                <label for="_fecha_id">Fecha:</label>
+                <div class="box" id="_fecha_id">
+                    <fmt:formatDate pattern="${historialCambios_fecha_date_format}" value="${historialCambios.fecha}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_historialCambios_usuario">
+                <label for="_usuario_id">Usuario:</label>
+                <div class="box" id="_usuario_id">
+                    <c:out value="${historialCambios.usuario}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_historialCambios_archivoAdjunto">
+                <label for="_archivoAdjunto_id">Archivo Adjunto:</label>
+                <div class="box" id="_archivoAdjunto_id">
+                    <c:out value="${historialCambios.archivoAdjunto}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty historialCambios}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id" ,
+            theme : "simple"
+
+        });
+    </script>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.riesgo" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Registrar Riesgo'}})); </script>
+        <spring:url value="/riesgo" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="riesgo">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <c:if test="${not empty nombreProceso}">
+                <div id="roo">
+                    <label for="_id">Proceso:</label>
+                    <div id="_uid">
+                        <spring:url value="/proceso/${idProceso}" var="url"/>
+                        <a href="${url}" >${nombreProceso}</a>
+                    </div>
+                </div>
+                <br/>
+            </c:if>
+            <div id="roo_riesgo_referencia">
+                <label for="_referencia_id">Número:</label>
+                <label>${riesgo.referencia}</label>
+            </div>
+            <br/>
+            <br/>
+            <div id="roo_riesgo_clasificacionRiesgo">
+                <c:if test="${not empty clasificacionriesgoes}">
+                    <label for="_clasificacionRiesgo_id">Impacto Patrimonial:</label>
+                    <form:select cssStyle="width:250px" id="_clasificacionRiesgo_id" path="clasificacionRiesgo">
+                        <form:options itemValue="id" items="${clasificacionriesgoes}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_clasificacionRiesgo_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_riesgo_frecuenciaOcurrenciaRiesgo">
+                <c:if test="${not empty frecuenciaocurrenciariesgos}">
+                    <label for="_frecuenciaOcurrenciaRiesgo_id">Frecuencia de Ocurrencia:</label>
+                    <form:select cssStyle="width:250px" id="_frecuenciaOcurrenciaRiesgo_id" path="frecuenciaOcurrenciaRiesgo">
+                        <form:options itemValue="id" items="${frecuenciaocurrenciariesgos}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_frecuenciaOcurrenciaRiesgo_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <br/>
+            <div id="roo_riesgo_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>                
+            </div>
+            <br/>
+            <div class="submit" id="roo_riesgo_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>               
+
+            </div>
+        </form:form>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id",
+            theme : "simple"
+
+        });
+    </script>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.cuestionario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/cuestionario/${cuestionario.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="put" modelAttribute="cuestionario">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_cuestionario_correlativo">
+                <label for="_correlativo_id">Correlativo:</label>
+                <form:input cssStyle="width:250px" id="_correlativo_id" maxlength="30" path="correlativo" size="0" disabled="true"/>
+                <br/>
+                <form:errors cssClass="errors" id="_correlativo_error_id" path="correlativo"/>
+                <spring:message code="field.invalid.integer" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Correlativo," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_correlativo_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', regExp: '-?[0-9]*', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <form:input cssStyle="width:250px" id="_nombre_id" maxlength="30" path="nombre" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_nombre_error_id" path="nombre"/>
+                <spring:message arguments="Nombre" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Nombre," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_nombre_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <form:input cssStyle="width:520px; height:200px" id="_descripcion_id" maxlength="30" path="descripcion" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+                <spring:message arguments="Descripcion" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Descripcion," code="field.simple.validation" var="field_validation"/>
+                
+            </div>
+            <br/>
+            <div class="submit" id="roo_cuestionario_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+
+                <spring:url value="/papeldetrabajo/${idPapelDeTrabajo}" var="volver"/>
+                <input type="button" value="Volver" onclick="document.location='${volver}'"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

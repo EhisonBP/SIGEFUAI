@@ -1,0 +1,63 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.cuestionario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty cuestionario}">
+            <div id="roo_cuestionario_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${cuestionario.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${cuestionario.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_actuacion">
+                <label for="_actuacion_id">Actuacion:</label>
+                <div class="box" id="_actuacion_id">
+                    <c:out value="${cuestionario.actuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_correlativo">
+                <label for="_correlativo_id">Correlativo:</label>
+                <div class="box" id="_correlativo_id">
+                    <c:out value="${cuestionario.correlativo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_respondido">
+                <label for="_respondido_id">Respondido:</label>
+                <div class="box" id="_respondido_id">
+                    <c:out value="${cuestionario.respondido}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_auditado">
+                <label for="_auditado_id">Auditado:</label>
+                <div class="box" id="_auditado_id">
+                    <c:out value="${cuestionario.auditado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_cuestionario_unidad">
+                <label for="_unidad_id">Unidad:</label>
+                <div class="box" id="_unidad_id">
+                    <c:out value="${cuestionario.unidad}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty cuestionario}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

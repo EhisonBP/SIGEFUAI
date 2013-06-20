@@ -1,0 +1,141 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_criterio_id, _condicion_id, _causa_id, _efecto_id, _comentarios_id",
+            theme : "simple"
+
+        });
+    </script>
+
+
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">
+        <spring:message code="label.observacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Registrar Hallazgo'}})); </script>
+        <spring:url value="/observacion" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="observacion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>            
+            <div id="roo_observacion_prueba">
+                <label for="_criterio_id">Prueba:</label>
+                <div  id="_prueba_id">
+                    <spring:url value="/prueba/${observacion.prueba.id}" var="url_prueba"/>
+                    <a href="${url_prueba}" >${observacion.prueba.codigoCompleto}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_observacion_referencia">
+                <label for="_referencia_id">Código:</label>
+                AG-<c:out value="${observacion.referencia}"/>
+            </div>
+            <br/>
+            <div id="roo_observacion_descripcionCorta">
+                <label for="_descripcionCorta_id">Descripcion Corta:</label>
+                <form:input cssStyle="width:250px" id="_descripcionCorta_id" maxlength="50" path="descripcionCorta" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcionCorta_error_id" path="descripcionCorta"/>
+                <spring:message arguments="Descripcion Corta" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Descripcion Corta,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_descripcionCorta_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_observacion_condicion">
+                <label for="_condicion_id">Condición:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_condicion_id" maxlength="30" path="condicion" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_condicion_error_id" path="condicion"/>
+
+            </div>
+            <br/>
+            <div id="roo_observacion_criterio">
+                <label for="_criterio_id">Criterio:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_criterio_id" maxlength="30" path="criterio" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_criterio_error_id" path="criterio"/>
+                
+            </div>
+            <br/>            
+            <div id="roo_observacion_causa">
+                <label for="_causa_id">Causa:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_causa_id" maxlength="30" path="causa" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_causa_error_id" path="causa"/>
+                
+            </div>
+            <br/>
+            <div id="roo_observacion_efecto">
+                <label for="_efecto_id">Efecto:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_efecto_id" maxlength="30" path="efecto" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_efecto_error_id" path="efecto"/>
+                
+            </div>            
+            <br/>
+            <div id="roo_observacion_estadoObservacion">
+                <c:if test="${not empty estadoobservacions}">
+                    <label for="_estadoObservacion_id">Estatus:</label>
+                    <form:select cssStyle="width:250px" id="_estadoObservacion_id" path="estadoObservacion">
+                        <form:options itemValue="id" items="${estadoobservacions}" itemLabel="nombre"/>
+                    </form:select>                    
+                    <spring:url value="${estados}" var="estados" />
+                    <div style="display: inline" id="info"></div>
+                    <script type="text/javascript">
+                        <![CDATA[
+                        Spring.addDecoration(
+                            new Spring.ElementDecoration(
+                                {elementId : '_estadoObservacion_id',
+                                 widgetType: 'dijit.form.FilteringSelect',
+                                 widgetAttrs : {hasDownArrow : true,
+                                 onChange : function(newValue){
+                                     mostrarInfo(newValue);
+                                 }}
+                                })
+                            );
+
+                          function mostrarInfo(newValue){
+                            var estados = '${estados}';     
+                            var descripciones = estados.split(",");
+                            var desc = descripciones[newValue-1];
+
+                            var todo1 = descripciones[newValue-1].split("[");
+                            if (todo1[0] == ""){
+                                desc = todo1[1];
+                            }
+
+                            var todo2 = descripciones[newValue-1].split("]");
+                            if (todo2[1] == ""){
+                                desc = todo2[0];
+                            }
+                            
+                            document.getElementById("info").innerHTML=desc;
+                          }
+                        ]]>
+                    </script>
+                </c:if>
+            </div>
+            <br/>
+            <br/>
+            <div id="roo_observacion_comentarios">
+                <label for="_comentarios_id">Descripción del Estatus:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_comentarios_id" path="comentarios"/>
+                <br/>
+                <form:errors cssClass="errors" id="_comentarios_error_id" path="comentarios"/>                                
+            </div>
+            <br/>
+            <br/>           
+            <div class="submit" id="roo_observacion_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+            </div>
+        </form:form>
+            <script type="text/javascript">
+                mostrarInfo(1);
+            </script>
+    </div>
+</div>

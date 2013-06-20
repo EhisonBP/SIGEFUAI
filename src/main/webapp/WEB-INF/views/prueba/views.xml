@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="prueba/list">
+        <put-attribute name="body" value="/WEB-INF/views/prueba/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="prueba/show">
+        <put-attribute name="body" value="/WEB-INF/views/prueba/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="prueba/create">
+        <put-attribute name="body" value="/WEB-INF/views/prueba/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="prueba/update">
+        <put-attribute name="body" value="/WEB-INF/views/prueba/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="prueba/findPruebasByCodigoActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/prueba/findPruebasByCodigoActuacion.jspx"/>
+    </definition>
+</tiles-definitions>

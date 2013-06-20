@@ -1,0 +1,48 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.comentario" var="entity_label"/>
+        <spring:message code="label.comentarios" var="entity_label_plural"/>
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+
+        <c:if test="${not empty comentarios}">
+            <c:forEach items="${comentarios}" var="comentario">
+                <div style="font-weight: bold" id="roo_usuario">
+                    <c:out value="${fn:substring(comentario.usuario, 0, 25)} escribió:"/>
+                </div>
+                <br/>
+                <div id="_comentario_id">
+                    <c:out value="${fn:substring(comentario.redaccionComentario, 0, 300)}"/>
+                </div>
+                <br/>
+            </c:forEach>
+        </c:if>
+
+        <br/>
+        <br/>
+        <spring:url value="/comentario" var="form_url"/>            
+        <form:form id="" action="${form_url}" method="post" modelAttribute="comentario">
+            <div id="roo_comentario_redaccionComentario">
+                <label for="_redaccionComentario_id">Registrar Comentario:</label>
+
+                <input name="id" type="hidden" value="${id}"/>
+                <input name="tipo" type="hidden" value="${tipo}"/>
+                <br/>
+                <br/>
+                <form:textarea cssStyle="width:725px; height:50px" id="_redaccionComentario_id" maxlength="300" path="redaccionComentario" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_redaccionComentario_error_id" path="redaccionComentario"/>
+                <spring:message arguments="Redaccion Comentario" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Redaccion Comentario," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_redaccionComentario_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>            
+            <div class="submit" id="roo_comentario_submit">
+                <input id="proceed" type="button" value="Guardar" onclick="enviar(); return false;"/>
+            </div>
+        </form:form>
+
+    </div>
+</div>

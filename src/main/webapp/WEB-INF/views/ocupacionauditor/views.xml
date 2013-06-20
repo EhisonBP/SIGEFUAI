@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="ocupacionauditor/list">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="ocupacionauditor/show">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="ocupacionauditor/create">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="ocupacionauditor/update">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="ocupacionauditor/findOcupacionAuditorsByAuditor">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/findOcupacionAuditorsByAuditor.jspx"/>
+    </definition>
+<definition extends="default" name="ocupacionauditor/findOcupacionAuditorsByActividadAuditor">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/findOcupacionAuditorsByActividadAuditor.jspx"/>
+    </definition>
+<definition extends="default" name="ocupacionauditor/findOcupacionAuditorsByAuditorAndPlanAnual">
+        <put-attribute name="body" value="/WEB-INF/views/ocupacionauditor/findOcupacionAuditorsByAuditorAndPlanAnual.jspx"/>
+    </definition>
+</tiles-definitions>

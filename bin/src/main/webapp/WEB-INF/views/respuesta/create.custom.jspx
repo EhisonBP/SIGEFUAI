@@ -1,0 +1,49 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.DateTextBox');</script>
+    <div id="x_title_div">
+        <spring:message code="label.respuesta" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/respuesta" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="respuesta">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_actividadGeneral_codigoActuacion">
+                <label for="_codigoActuacion_id">Requerimiento:</label>
+                <div id="_codigoActuacion_id">
+                    <spring:url value="/requerimiento/${respuesta.requerimiento.id}" var="url_req"/>
+                    <a href="${url_req}" >${respuesta.requerimiento.numeroSolicitud}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_respuesta_numero">
+                <label for="_numero_id">Numero:</label>
+                <form:input cssStyle="width:250px" id="_numero_id" maxlength="30" path="numero" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_numero_error_id" path="numero"/>
+                <spring:message arguments="Numero" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Numero,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_numero_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_respuesta_fecha">
+                <label for="_fecha_id">Fecha:</label>
+                <form:input cssStyle="width:250px" id="_fecha_id" maxlength="30" path="fecha" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_fecha_error_id" path="fecha"/>
+                <spring:message arguments="Fecha" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fecha," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fecha_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fecha_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${respuesta_fecha_date_format}', required : false}, datePattern : '${respuesta_fecha_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div class="submit" id="roo_respuesta_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

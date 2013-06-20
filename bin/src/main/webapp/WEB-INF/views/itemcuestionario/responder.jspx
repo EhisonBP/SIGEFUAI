@@ -1,0 +1,58 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        dojo.require('dijit.form.SimpleTextarea');
+        dojo.require('dijit.form.FilteringSelect');
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_respuesta_id",
+            theme : "simple"
+
+        });
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.itemcuestionario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Responder Pregunta'}})); </script>
+        <spring:url value="/itemcuestionario/responder/${itemCuestionario.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="post" modelAttribute="itemCuestionario" enctype="multipart/form-data">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_itemCuestionario_pregunta">
+                <label for="_pregunta_id">Pregunta:</label>
+                <c:out value="${itemCuestionario.pregunta}"/>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_respuesta">
+                <label for="_respuesta_id">Respuesta:</label>
+                <form:textarea cssStyle="width:440px; height:200px" id="_respuesta_id" path="respuesta"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_respuesta_id', widgetType: 'dijit.form.SimpleTextarea', widgetAttrs: {}})); </script>
+                <br/>
+                <form:errors cssClass="errors" id="_respuesta_error_id" path="respuesta"/>
+            </div>
+            <br/>
+            <div id="roo__file">
+                <label>Archivo Adjunto:</label>
+                <input type="file" name="filedata" class="submit"/>
+            </div>
+            <br/>
+            <c:if test="${ultimaPregunta eq 'true' }">
+                <div class="submit" id="roo_itemCuestionario_submit">
+                    <spring:message code="button.update" var="update_button"/>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                    <input id="proceed" type="submit" value="Terminar"/>
+                </div>
+            </c:if>
+            <c:if test="${ultimaPregunta eq 'false' }">
+                <div class="submit" id="roo_itemCuestionario_submit">
+                    <spring:message code="button.update" var="update_button"/>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                    <input id="proceed" type="submit" value="Siguiente"/>
+                </div>
+            </c:if>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

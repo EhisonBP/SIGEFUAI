@@ -1,0 +1,88 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.DateTextBox');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">
+        <spring:message code="label.itemplanificacionactuacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/itemplanificacionactuacion/${itemPlanificacionActuacion.id}" var="form_url"/>
+        <form:form id="" action="${form_url}" method="put" modelAttribute="itemPlanificacionActuacion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_itemPlanificacionActuacion_inicioEstimado">
+                <label for="_inicioEstimado_id">Inicio Estimado:</label>
+                <form:input cssStyle="width:250px" id="_inicioEstimado_id" maxlength="30" path="inicioEstimado" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_inicioEstimado_error_id" path="inicioEstimado"/>
+                <spring:message arguments="Inicio Estimado" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Inicio Estimado," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_inicioEstimado_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_inicioEstimado_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${itemPlanificacionActuacion_inicioEstimado_date_format}', required : false}, datePattern : '${itemPlanificacionActuacion_inicioEstimado_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_finEstimado">
+                <label for="_finEstimado_id">Fin Estimado:</label>
+                <form:input cssStyle="width:250px" id="_finEstimado_id" maxlength="30" path="finEstimado" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_finEstimado_error_id" path="finEstimado"/>
+                <spring:message arguments="Fin Estimado" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fin Estimado," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_finEstimado_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_finEstimado_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${itemPlanificacionActuacion_finEstimado_date_format}', required : false}, datePattern : '${itemPlanificacionActuacion_finEstimado_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_inicioReal">
+                <label for="_inicioReal_id">Inicio Real:</label>
+                <form:input cssStyle="width:250px" id="_inicioReal_id" maxlength="30" path="inicioReal" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_inicioReal_error_id" path="inicioReal"/>
+                <spring:message arguments="Inicio Real" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Inicio Real," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_inicioReal_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_inicioReal_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${itemPlanificacionActuacion_inicioReal_date_format}', required : false}, datePattern : '${itemPlanificacionActuacion_inicioReal_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_finReal">
+                <label for="_finReal_id">Fin Real:</label>
+                <form:input cssStyle="width:250px" id="_finReal_id" maxlength="30" path="finReal" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_finReal_error_id" path="finReal"/>
+                <spring:message arguments="Fin Real" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fin Real," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_finReal_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_finReal_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${itemPlanificacionActuacion_finReal_date_format}', required : false}, datePattern : '${itemPlanificacionActuacion_finReal_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_planAnual">
+                <c:if test="${not empty plananuals}">
+                    <label for="_planAnual_id">Plan Anual:</label>
+                    <form:select cssStyle="width:250px" id="_planAnual_id" path="planAnual">
+                        <form:options itemValue="id" items="${plananuals}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_planAnual_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_itemPlanificacionActuacion_actuacion">
+                <c:if test="${not empty actuacions}">
+                    <label for="_actuacion_id">Actuacion:</label>
+                    <form:select cssStyle="width:250px" id="_actuacion_id" path="actuacion">
+                        <form:options itemValue="id" items="${actuacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_actuacion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_itemPlanificacionActuacion_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

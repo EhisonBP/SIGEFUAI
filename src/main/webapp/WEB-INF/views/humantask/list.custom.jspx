@@ -1,0 +1,85 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:roo="urn:jsptagdir:/WEB-INF/tags"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:spring="http://www.springframework.org/tags">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require("dijit.TitlePane")
+	</script>
+	<script type="text/javascript">
+		function confirmation(taskId) {
+			var answer = confirm("¿Está seguro/a marcar la tarea como realizada?")
+			if (answer) {
+				document.getElementById('elForm_' + taskId).submit();
+			}
+		}
+	</script>
+	<div id="_title">
+		<spring:message var="app_name" code="application.name" />
+		<spring:message var="title" code="welcome.titlepane"
+			arguments="${app_name}" />
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : '_title',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : 'Tareas pendientes'
+				}
+			}));
+		</script>
+		<!-- <h3>Tareas pendientes List Humans</h3> -->
+
+		<c:if test="${not empty unavailable}">
+			<p style="color: red;">El servicio de tareas no esta disponible
+				temporalmente. Por favor intente nuevamente mas tarde o contacte al
+				administrador del sistema.</p>
+		</c:if>
+
+
+		<c:if test="${not empty theTasks}">
+			<table id="menuTable1" width="300">
+				<thead>
+					<tr>
+						<th style="font-size: 16">Descripcion</th>
+						<th>Ver elemento</th>
+						<th>Enviar tarea</th>
+					</tr>
+				</thead>
+				<c:forEach items="${theTasks}" var="task">
+					<tr>
+						<td><c:out escapeXml="false" value="${task.name}" />
+						</td>
+						<td><spring:url value="${task.description}"
+								var="show_form_url" /> <spring:url
+								value="/static/images/show.png" var="show_image_url" /> <form:form
+								id="" action="${show_form_url}" method="get">
+								<spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+								<input alt="${show_label}" class="image" src="${show_image_url}"
+									title="${show_label}" type="image" value="${show_label}" />
+							</form:form>
+						</td>
+						<td><spring:url value="/humantask/complete/${task.id}"
+								var="show_form_url" /> <spring:url
+								value="/static/images/check.png" var="show_image_url" /> <form:form
+								id="elForm_${task.id}" action="${show_form_url}" method="post">
+								<spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+								<a onclick="confirmation(${task.id}); return false;" href="#"
+									alt="Marcar tarea como REALIZADA"><img
+									src="${show_image_url}" title="Marcar tarea como REALIZADA" />
+								</a>
+							</form:form></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+		<c:if test="${empty theTasks}">
+			<c:out value="Usted no tiene tareas pendientes" />
+		</c:if>
+	</div>
+</div>

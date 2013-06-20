@@ -1,0 +1,72 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.SimpleTextarea');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="_title_div">
+        <spring:message code="label.riesgo" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.create" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/riesgo" var="form_url"/>
+        <form:form action="${form_url}" method="POST" modelAttribute="riesgo">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_riesgo_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <form:textarea cssStyle="width:250px" id="_descripcion_id" path="descripcion"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_descripcion_id', widgetType: 'dijit.form.SimpleTextarea', widgetAttrs: {}})); </script>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+            </div>
+            <br/>
+            <div id="roo_riesgo_proceso">
+                <c:if test="${not empty procesoes}">
+                    <label for="_proceso_id">Proceso:</label>
+                    <form:select cssStyle="width:250px" id="_proceso_id" path="proceso">
+                        <form:options itemValue="id" items="${procesoes}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_proceso_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_riesgo_inactivo">
+                <label for="_inactivo_id">Inactivo:</label>
+                <form:checkbox id="_inactivo_id" path="inactivo"/>
+            </div>
+            <br/>
+            <div id="roo_riesgo_referencia">
+                <label for="_referencia_id">Referencia:</label>
+                <form:input cssStyle="width:250px" id="_referencia_id" maxlength="30" path="referencia" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_referencia_error_id" path="referencia"/>
+                <spring:message code="field.invalid.integer" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Referencia,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_referencia_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', regExp: '-?[0-9]*', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_riesgo_clasificacionRiesgo">
+                <c:if test="${not empty clasificacionriesgoes}">
+                    <label for="_clasificacionRiesgo_id">Clasificacion Riesgo:</label>
+                    <form:select cssStyle="width:250px" id="_clasificacionRiesgo_id" path="clasificacionRiesgo">
+                        <form:options itemValue="id" items="${clasificacionriesgoes}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_clasificacionRiesgo_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_riesgo_frecuenciaOcurrenciaRiesgo">
+                <c:if test="${not empty frecuenciaocurrenciariesgoes}">
+                    <label for="_frecuenciaOcurrenciaRiesgo_id">Frecuencia Ocurrencia Riesgo:</label>
+                    <form:select cssStyle="width:250px" id="_frecuenciaOcurrenciaRiesgo_id" path="frecuenciaOcurrenciaRiesgo">
+                        <form:options itemValue="id" items="${frecuenciaocurrenciariesgoes}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_frecuenciaOcurrenciaRiesgo_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_riesgo_submit">
+                <spring:message code="button.save" var="save_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${save_button}"/>
+            </div>
+        </form:form>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.estructuracargos" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty estructuraCargos}">
+            <div id="roo_estructuraCargos_nombreCargo">
+                <label for="_nombreCargo_id">Nombre Cargo:</label>
+                <div class="box" id="_nombreCargo_id">
+                    <c:out value="${estructuraCargos.nombreCargo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_descripcionCargo">
+                <label for="_descripcionCargo_id">Descripcion Cargo:</label>
+                <div class="box" id="_descripcionCargo_id">
+                    <c:out value="${estructuraCargos.descripcionCargo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_funcionesCargo">
+                <label for="_funcionesCargo_id">Funciones Cargo:</label>
+                <div class="box" id="_funcionesCargo_id">
+                    <c:out value="${estructuraCargos.funcionesCargo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_fechaCreacion">
+                <label for="_fechaCreacion_id">Fecha Creacion:</label>
+                <div class="box" id="_fechaCreacion_id">
+                    <fmt:formatDate pattern="${estructuraCargos_fechaCreacion_date_format}" value="${estructuraCargos.fechaCreacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_fechaModificacion">
+                <label for="_fechaModificacion_id">Fecha Modificacion:</label>
+                <div class="box" id="_fechaModificacion_id">
+                    <fmt:formatDate pattern="${estructuraCargos_fechaModificacion_date_format}" value="${estructuraCargos.fechaModificacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_estado">
+                <label for="_estado_id">Estado:</label>
+                <div class="box" id="_estado_id">
+                    <c:out value="${estructuraCargos.estado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_idEstructura">
+                <label for="_idEstructura_id">Id Estructura:</label>
+                <div class="box" id="_idEstructura_id">
+                    <c:out value="${estructuraCargos.idEstructura}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_estructuraCargos_rif">
+                <label for="_rif_id">Rif:</label>
+                <div class="box" id="_rif_id">
+                    <c:out value="${estructuraCargos.rif}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty estructuraCargos}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

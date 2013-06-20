@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="tipoentradabitacora/list">
+        <put-attribute name="body" value="/WEB-INF/views/tipoentradabitacora/list.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoentradabitacora/show">
+        <put-attribute name="body" value="/WEB-INF/views/tipoentradabitacora/show.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoentradabitacora/create">
+        <put-attribute name="body" value="/WEB-INF/views/tipoentradabitacora/create.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoentradabitacora/update">
+        <put-attribute name="body" value="/WEB-INF/views/tipoentradabitacora/update.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoentradabitacora/findTipoEntradaBitacorasByClase">
+        <put-attribute name="body" value="/WEB-INF/views/tipoentradabitacora/findTipoEntradaBitacorasByClase.jspx"/>
+    </definition>
+</tiles-definitions>

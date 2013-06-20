@@ -1,0 +1,77 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.requerimiento" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty requerimiento}">
+            <div id="roo_requerimiento_numeroSolicitud">
+                <label for="_numeroSolicitud_id">Numero Solicitud:</label>
+                <div class="box" id="_numeroSolicitud_id">
+                    <c:out value="${requerimiento.numeroSolicitud}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_fechaSolicitud">
+                <label for="_fechaSolicitud_id">Fecha Solicitud:</label>
+                <div class="box" id="_fechaSolicitud_id">
+                    <fmt:formatDate pattern="${requerimiento_fechaSolicitud_date_format}" value="${requerimiento.fechaSolicitud}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_observaciones">
+                <label for="_observaciones_id">Observaciones:</label>
+                <div class="box" id="_observaciones_id">
+                    <c:out value="${requerimiento.observaciones}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_asunto">
+                <label for="_asunto_id">Asunto:</label>
+                <div class="box" id="_asunto_id">
+                    <c:out value="${requerimiento.asunto}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_actuacion">
+                <label for="_actuacion_id">Actuacion:</label>
+                <div class="box" id="_actuacion_id">
+                    <c:out value="${requerimiento.actuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_unidad">
+                <label for="_unidad_id">Unidad:</label>
+                <div class="box" id="_unidad_id">
+                    <c:out value="${requerimiento.unidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_estadoRequerimiento">
+                <label for="_estadoRequerimiento_id">Estado Requerimiento:</label>
+                <div class="box" id="_estadoRequerimiento_id">
+                    <c:out value="${requerimiento.estadoRequerimiento}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_fechaRecibidoTotalmente">
+                <label for="_fechaRecibidoTotalmente_id">Fecha Recibido Totalmente:</label>
+                <div class="box" id="_fechaRecibidoTotalmente_id">
+                    <fmt:formatDate pattern="${requerimiento_fechaRecibidoTotalmente_date_format}" value="${requerimiento.fechaRecibidoTotalmente}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_auditado">
+                <label for="_auditado_id">Auditado:</label>
+                <div class="box" id="_auditado_id">
+                    <c:out value="${requerimiento.auditado}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty requerimiento}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

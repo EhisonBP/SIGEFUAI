@@ -1,0 +1,173 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.SimpleTextarea');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="_title_div">
+        <spring:message code="label.archivoadjunto" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/archivoadjunto/${archivoAdjunto.id}" var="form_url"/>
+        <form:form action="${form_url}" method="PUT" modelAttribute="archivoAdjunto">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_archivoAdjunto_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <form:input cssStyle="width:250px" id="_nombre_id" maxlength="30" path="nombre" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_nombre_error_id" path="nombre"/>
+                <spring:message arguments="Nombre" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Nombre,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_nombre_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <form:input cssStyle="width:250px" id="_descripcion_id" maxlength="30" path="descripcion" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+                <spring:message arguments="Descripcion" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Descripcion," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_descripcion_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_actividadActuacion">
+                <c:if test="${not empty actividadactuacions}">
+                    <label for="_actividadActuacion_id">Actividad Actuacion:</label>
+                    <form:select cssStyle="width:250px" id="_actividadActuacion_id" path="actividadActuacion">
+                        <form:options itemValue="id" items="${actividadactuacions}"/>
+                    </form:select>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_codigo">
+                <label for="_codigo_id">Codigo:</label>
+                <form:textarea cssStyle="width:250px" id="_codigo_id" path="codigo"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_codigo_id', widgetType: 'dijit.form.SimpleTextarea', widgetAttrs: {}})); </script>
+                <br/>
+                <form:errors cssClass="errors" id="_codigo_error_id" path="codigo"/>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_filedata">
+                <label for="_filedata_id">Filedata:</label>
+                <form:input cssStyle="width:250px" id="_filedata_id" maxlength="30" path="filedata" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_filedata_error_id" path="filedata"/>
+                <spring:message arguments="Filedata" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Filedata," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_filedata_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_extension">
+                <label for="_extension_id">Extension:</label>
+                <form:input cssStyle="width:250px" id="_extension_id" maxlength="30" path="extension" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_extension_error_id" path="extension"/>
+                <spring:message arguments="Extension" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Extension," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_extension_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_filesize">
+                <label for="_filesize_id">Filesize:</label>
+                <form:input cssStyle="width:250px" id="_filesize_id" maxlength="30" path="filesize" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_filesize_error_id" path="filesize"/>
+                <spring:message arguments="Filesize" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Filesize," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_filesize_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_loginUsuario">
+                <label for="_loginUsuario_id">Login Usuario:</label>
+                <form:input cssStyle="width:250px" id="_loginUsuario_id" maxlength="30" path="loginUsuario" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_loginUsuario_error_id" path="loginUsuario"/>
+                <spring:message arguments="Login Usuario" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Login Usuario," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_loginUsuario_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_respuesta">
+                <c:if test="${not empty respuestas}">
+                    <label for="_respuesta_id">Respuesta:</label>
+                    <form:select cssStyle="width:250px" id="_respuesta_id" path="respuesta">
+                        <form:options itemValue="id" items="${respuestas}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_respuesta_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_requerimiento">
+                <c:if test="${not empty requerimientoes}">
+                    <label for="_requerimiento_id">Requerimiento:</label>
+                    <form:select cssStyle="width:250px" id="_requerimiento_id" path="requerimiento">
+                        <form:options itemValue="id" items="${requerimientoes}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_requerimiento_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_alegato">
+                <c:if test="${not empty alegatoes}">
+                    <label for="_alegato_id">Alegato:</label>
+                    <form:select cssStyle="width:250px" id="_alegato_id" path="alegato">
+                        <form:options itemValue="id" items="${alegatoes}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_alegato_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_hallazgo">
+                <c:if test="${not empty observacions}">
+                    <label for="_hallazgo_id">Hallazgo:</label>
+                    <form:select cssStyle="width:250px" id="_hallazgo_id" path="hallazgo">
+                        <form:options itemValue="id" items="${observacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_hallazgo_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_seccionDefault">
+                <c:if test="${not empty secciondefaults}">
+                    <label for="_seccionDefault_id">Seccion Default:</label>
+                    <form:select cssStyle="width:250px" id="_seccionDefault_id" path="seccionDefault">
+                        <form:options itemValue="id" items="${secciondefaults}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_seccionDefault_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_avanceActuacion">
+                <c:if test="${not empty avanceactuacions}">
+                    <label for="_avanceActuacion_id">Avance Actuacion:</label>
+                    <form:select cssStyle="width:250px" id="_avanceActuacion_id" path="avanceActuacion">
+                        <form:options itemValue="id" items="${avanceactuacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_avanceActuacion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_personalizacion">
+                <c:if test="${not empty personalizacions}">
+                    <label for="_personalizacion_id">Personalizacion:</label>
+                    <form:select cssStyle="width:250px" id="_personalizacion_id" path="personalizacion">
+                        <form:options itemValue="id" items="${personalizacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_personalizacion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_archivoAdjunto_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

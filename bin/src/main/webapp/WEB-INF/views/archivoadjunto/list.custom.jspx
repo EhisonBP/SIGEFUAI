@@ -1,0 +1,68 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        function confirmation(id) {
+            var answer = confirm("¿ Está seguro/a que desea liberar este archivo adjunto ?")
+            if (answer){
+                window.location='../archivoadjunto/liberar/'+id;
+            }
+	
+        }
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.archivoadjunto" var="entity_label"/>
+        <spring:message code="label.archivoadjuntoes" var="entity_label_plural"/>
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Archivos Adjuntos Bloqueados'}})); </script>
+        <c:if test="${not empty archivoadjuntoes}">
+            <table id="menuTable1" width="300">
+                <thead>
+                    <tr><th>Referencia</th>
+                        <th>Nombre</th>
+                        <th>Extensión</th>
+                        <th>Tamaño</th>
+                        <th>Usuario</th>
+                        <th/>
+                    </tr>
+                </thead>
+                <c:forEach items="${archivoadjuntoes}" var="archivo">
+                    <tr>
+                        <td>
+                            <c:out value="${archivo.codigo}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(archivo.nombre, 0, 50)}"/>
+                        </td>
+
+                        <td>
+                            <c:out value="${archivo.extension}"/>
+                        </td>
+
+                        <td>
+                            <c:out value="${archivo.filesize}Kb"/>
+                        </td>
+                        <td>
+                            <c:out value="${archivo.loginUsuario}"/>
+                        </td>
+                        <td>
+                            <spring:url value="/archivoadjunto/liberar/${archivo.id}" var="show_form_url"></spring:url>
+                            <spring:url value="/static/images/icon-check.png" var="show_image_url"/>
+                            <form:form id="" action="${show_form_url}" method="get">
+                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                <input type="button" value="Desbloquear" onclick="confirmation(${archivo.id})" />
+                            </form:form>
+                        </td>
+
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+        <c:if test="${empty archivoadjuntoes}">
+            <spring:message arguments="No se han encontrado archivos adjuntos bloqueados" code="entity.not.found"/>
+        </c:if>
+    </div>
+    <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+    </script>
+</div>

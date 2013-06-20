@@ -1,0 +1,86 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:sec="http://www.springframework.org/security/tags" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Pruebas de la Actuación'}})); </script>
+        <div id="roo_actividadGeneral_codigoActuacion">
+            <label for="_actuacion_id" style="width: 70px">Actuación:</label>
+            <div id="_actuacion_id" class="box">
+                <spring:url value="/actuacion/${actuacion.id}" var="url_actuacion"/>
+                <a href="${url_actuacion}" >${actuacion.nombre}</a>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <c:forEach items="${todo}" var="tabla">
+            <c:if test="${not empty tabla}">
+                <label for="_objetivo_id">Objetivo Específico:</label>
+                <div id="_objetivo_id" class="box">
+                     <div style="overflow: scroll; height: 100px; width: 450px; ">
+                        <c:out escapeXml="false" value="${tabla[0].objetivoAMitigar.objetivoCompleto}"/>
+                     </div>
+                </div>
+                
+                <table id="menuTable1" class="x" width="300">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Descripción</th>
+                            <th>Estatus</th>
+                            <th>Responsables</th>
+                            <th/>
+                            <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                <th/>
+                            </sec:authorize>
+                        </tr>
+                    </thead>
+                    <c:forEach items="${tabla}" var="prueba">
+                        <tr>
+                            <td>
+                                <c:out value="${prueba.codigoCompleto}"/>
+                            </td>
+                            <td>
+                                 <div style="overflow: scroll; height: 100px; width: 450px; ">
+                                    <c:out escapeXml="false" value="${prueba.descripcion}"/>
+                                 </div>
+                            </td>
+                            <td>
+                                <c:out value="${prueba.estadoActividadActuacion.nombre}"/>
+                            </td>
+                            <td>
+                                <c:out value="${prueba.responsables}"/>
+                            </td>
+                            <td>
+                                <spring:url value="/prueba/${prueba.id}" var="show_form_url"/>
+                                <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                <form:form id="" action="${show_form_url}" method="get">
+                                    <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                    <input alt="${show_label}" class="image" src="${show_image_url}" title="Mostrar Prueba" type="image" value="${show_label}"/>
+                                </form:form>
+                            </td>
+                            <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                <td>
+                                    <spring:url value="/prueba/${prueba.id}/form" var="update_form_url"/>
+                                    <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                    <form:form id="" action="${update_form_url}" method="get">
+                                        <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                        <input alt="${update_label}" class="image" src="${update_image_url}" title="Actualizar Prueba" type="image" value="${update_label}"/>
+                                    </form:form>
+                                </td>
+                            </sec:authorize>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
+            <br/>
+            <br/>
+        </c:forEach>
+        <c:if test="${empty todo}">
+            <spring:message text="No se encontraron Pruebas"/>
+        </c:if>
+    </div>
+    <script type="text/javascript">
+        $('.x').tablePagination({});
+    </script>
+</div>

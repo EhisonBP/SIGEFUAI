@@ -1,0 +1,53 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Recursos Empleados (Humanos)'}})); </script>
+        <div id="roo_actividadGeneral_codigoActuacion">
+            <label for="_actuacion_id" style="width: 70px">Actuación:</label>
+            <div id="_actuacion_id">
+                <spring:url value="/actuacion/${actuacion.id}" var="url_actuacion"/>
+                <a href="${url_actuacion}" >${actuacion.nombre}</a>
+            </div>
+        </div>
+        <br/>
+        <c:if test="${not empty ocupaciones}">
+            <table width="300">
+                <thead>
+                    <tr>                        
+                        <th>Nombre</th>
+                        <th>Cédula de Identidad</th>
+                        <th>Cargo</th>
+                        <th/>
+                    </tr>
+                </thead>
+                <c:forEach items="${ocupaciones}" var="ocupacion">
+                    <tr>                        
+                        <td>
+                            <c:out value="${ocupacion.auditor}"/>
+                        </td>
+                        <td>
+                            <c:out value="${ocupacion.auditor.cedula}"/>
+                        </td>
+                        <td>
+                            <c:out value="${ocupacion.cargoAuditor.nombre}"/>
+                        </td>
+                        <td>
+                            <spring:url value="/ocupacionauditor/${ocupacion.id}" var="show_form_url"/>
+                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                            <form:form id="" action="${show_form_url}" method="get">
+                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                <input alt="${show_label}" class="image" src="${show_image_url}" title="Mostrar Ocupación Auditor" type="image" value="${show_label}"/>
+                            </form:form>
+                        </td>                       
+                    </tr>
+                </c:forEach>
+                
+            </table>
+        </c:if>
+        <c:if test="${empty ocupaciones}">
+            <spring:message text="No se han asignado recursos humanos para esta actuación"/>
+        </c:if>
+    </div>
+</div>

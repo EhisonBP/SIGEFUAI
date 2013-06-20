@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="view-state-1">
+        <put-attribute name="body" value="/WEB-INF/views/sampleflow/view-state-1.jspx"/>
+    </definition>
+    <definition extends="default" name="view-state-2">
+        <put-attribute name="body" value="/WEB-INF/views/sampleflow/view-state-2.jspx"/>
+    </definition>
+    <definition extends="default" name="end-state">
+        <put-attribute name="body" value="/WEB-INF/views/sampleflow/end-state.jspx"/>
+    </definition>
+    <definition extends="default" name="prueba">
+        <put-attribute name="body" value="/WEB-INF/views/sampleflow/prueba.jspx"/>
+    </definition>
+</tiles-definitions>

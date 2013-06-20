@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="organismoente/list">
+        <put-attribute name="body" value="/WEB-INF/views/organismoente/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="organismoente/show">
+        <put-attribute name="body" value="/WEB-INF/views/organismoente/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="organismoente/create">
+        <put-attribute name="body" value="/WEB-INF/views/organismoente/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="organismoente/update">
+        <put-attribute name="body" value="/WEB-INF/views/organismoente/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="organismoente/findOrganismoEntesByRifEquals">
+        <put-attribute name="body" value="/WEB-INF/views/organismoente/findOrganismoEntesByRifEquals.jspx"/>
+    </definition>
+</tiles-definitions>

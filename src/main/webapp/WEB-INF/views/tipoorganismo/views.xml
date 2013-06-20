@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="tipoorganismo/list">
+        <put-attribute name="body" value="/WEB-INF/views/tipoorganismo/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoorganismo/show">
+        <put-attribute name="body" value="/WEB-INF/views/tipoorganismo/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoorganismo/create">
+        <put-attribute name="body" value="/WEB-INF/views/tipoorganismo/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="tipoorganismo/update">
+        <put-attribute name="body" value="/WEB-INF/views/tipoorganismo/update.custom.jspx"/>
+    </definition>
+</tiles-definitions>

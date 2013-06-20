@@ -1,0 +1,961 @@
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-11-20 09:54:46
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-11-21 14:11:28
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-11-22 10:52:48
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-11-23 15:01:36
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-11-25 23:52:17
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-01 17:53:10
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-02 17:10:17
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-03 19:57:32
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-03 21:36:20
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-06 16:04:22
+entity --class ve.co.bsc.sigai.domain.Ciudad
+field string --fieldName Nombre --notNull
+field reference --fieldName id_estado --class ve.co.bsc.sigai.domain.Ciudad --type ve.co.bsc.sigai.domain.Estado --notNull
+entity --class ve.co.bsc.sigai.domain.Municipios
+field string --fieldName Nombre --notNull
+field reference --fieldName id_ciudad --class ve.co.bsc.sigai.domain.Municipios --type ve.co.bsc.sigai.domain.Ciudad --notNull
+entity --class ve.co.bsc.sigai.domain.TipoPersonaRif
+field string --fieldName Nombre --notNull
+field string --fieldName Descripcion --sizeMax 1000
+field date --fieldName fechaCreacion --type java.util.Date --notNull
+field date --fieldName fechaModificacion --type java.util.Date --notNull
+field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.TipoPersonaRif --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull
+entity --class ve.co.bsc.sigai.domain.OrganismoEnte
+field string --fieldName Nombre
+field string --fieldName Acronimo
+field reference --fieldName tipo_rif --class ve.co.bsc.sigai.domain.OrganismoEnte --type ve.co.bsc.sigai.domain.TipoPersonaRif --notNull
+field number --fieldName Rif --type java.lang.Integer
+field reference --fieldName id_organismo_padre --class ve.co.bsc.sigai.domain.OrganismoEnte --type ve.co.bsc.sigai.domain.OrganismoEnte --notNull
+field date --fieldName fechaCreacion --type java.util.Date --notNull
+field date --fieldName fechaModificacion --type java.util.Date --notNull
+field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.OrganismoEnte --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull
+field reference --fieldName id_tipo_organismo --class ve.co.bsc.sigai.domain.OrganismoEnte --type ve.co.bsc.sigai.domain.TipoOrganismo --notNull
+entity --class ve.co.bsc.sigai.domain.DatosOrganismoEnte
+field number --fieldName Rif --type java.lang.Integer
+field string --fieldName pagina_web 
+field string --fieldName direcion --sizeMax 1000
+field reference --fieldName estado --class ve.co.bsc.sigai.domain.DatosOrganismoEnte --type ve.co.bsc.sigai.domain.Estado --notNull
+field reference --fieldName ciudad --class ve.co.bsc.sigai.domain.DatosOrganismoEnte --type ve.co.bsc.sigai.domain.Ciudad --notNull
+field reference --fieldName municipios --class ve.co.bsc.sigai.domain.DatosOrganismoEnte --type ve.co.bsc.sigai.domain.Municipios --notNull
+field number --fieldName telefono_master --type java.lang.Number
+field number --fieldName fax --type java.lang.Number
+field date --fieldName fechaCreacion --type java.util.Date --notNull
+field date --fieldName fechaModificacion --type java.util.Date --notNull
+field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.DatosOrganismoEnte --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull
+entity --class ve.co.bsc.sigai.domain.CodigoArea
+field number --fieldName Codigo --type java.lang.Integer
+field string --fieldName Nombre
+field reference --fieldName estado --class ve.co.bsc.sigai.domain.CodigoArea --type ve.co.bsc.sigai.domain.Estado
+field reference --fieldName ciudad --class ve.co.bsc.sigai.domain.CodigoArea --type ve.co.bsc.sigai.domain.Ciudad
+field number --fieldName TipoTelefono --type java.lang.Integer
+field date --fieldName fechaCreacion --type java.util.Date --notNull
+field date --fieldName fechaModificacion --type java.util.Date --notNull
+// [failed] field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.DatosOrganismoEnte --type ve.co.bsc.sigai.domain.CodigoArea --notNull
+controller scaffold --class ve.co.bsc.sigai.web.CiudadController --entity ve.co.bsc.sigai.domain.Ciudad
+controller scaffold --class ve.co.bsc.sigai.web.MunicipiosController --entity ve.co.bsc.sigai.domain.Municipios
+controller scaffold --class ve.co.bsc.sigai.web.TipoPersonaRifController --entity ve.co.bsc.sigai.domain.TipoPersonaRif
+controller scaffold --class ve.co.bsc.sigai.web.OrganismoEnteController --entity ve.co.bsc.sigai.domain.OrganismoEnte
+controller scaffold --class ve.co.bsc.sigai.web.DatosOrganismoEnteController --entity ve.co.bsc.sigai.domain.DatosOrganismoEnte
+controller scaffold --class ve.co.bsc.sigai.web.EstructuraOrganizativaController --entity ve.co.bsc.sigai.domain.EstructuraOrganizativa
+controller scaffold --class ve.co.bsc.sigai.web.CodigoAreaController --entity ve.co.bsc.sigai.domain.CodigoArea
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-06 20:52:20
+perform eclipse
+perform clean
+perform tests
+backup
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-08 12:03:11
+// [failed] class --class ve.co.bsc.sigai.domain.DatosOrganismoEnte
+field reference --fieldName CodigoArea --class ve.co.bsc.sigai.domain.DatosOrganismoEnte --type ve.co.bsc.sigai.domain.CodigoArea
+exit
+// Spring Roo 1.0.1.RELEASE [rev 601] log closed at 2012-12-08 15:46:05
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-08 20:50:23
+perform clean
+perform eclipse
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+backup
+// [failed] class --class ve.co.bsc.sigai.domain.Personalizacion
+field number --fieldName Rif --type java.lang.Integer
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform clean
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+backup
+backup
+backup
+backup
+perform tests
+perform tests
+exit
+// Spring Roo 1.0.1.RELEASE [rev 601] log closed at 2012-12-09 04:57:44
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2012-12-09 12:56:46
+backup
+perform tests
+perform tests
+perform tests
+perform clean
+perform assembly
+perform clean
+backup
+backup
+perform tests
+perform tests
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-10 08:29:44
+perform clean
+perform assembly
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-10 08:47:54
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-10 08:50:55
+perform clean
+perform assembly
+perform package
+// [failed] class --class ve.co.bsc.sigai.domain.EstructuraOrganizativa
+field reference --fieldName idEstructuraPadre --type ve.co.bsc.sigai.domain.EstructuraOrganizativa --class ve.co.bsc.sigai.domain.EstructuraOrganizativa
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2012-12-10 10:13:30
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-10 10:18:02
+perform clean
+perform package
+perform eclipse
+perform clean
+perform package
+perform clean
+perform package
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2012-12-10 14:13:08
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-10 14:16:00
+perform clean
+perform eclipse
+perform tests
+perform clean
+perform package
+perform clean
+perform package
+finder list --class ve.co.bsc.sigai.domain.EstructuraOrganizativa
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-10 17:24:43
+finder list --class ve.co.bsc.sigai.domain.EstructuraOrganizativa
+finder add --finderName findEstructuraOrganizativasByNombreUnidadEquals 
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-11 01:37:22
+perform eclipse
+finder list --class ve.co.bsc.sigai.domain.EstructuraCargos
+finder add --finderName findEstructuraCargosesByNombreCargoEquals
+perform clean
+perform package
+perform package
+perform package
+perform eclipse
+perform clean
+perform package
+perform assembly
+perform clean
+perform assembly
+perform clean
+perform assembly
+perform tests
+perform assembly
+perform package
+perform eclipse
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-11 10:26:54
+finder list --class ve.co.bsc.sigai.domain.EstructuraOrganizativa
+// [failed] class --class ve.co.bsc.sigai.domain.RolUsuario
+field string --fieldName descripcion
+field reference --fieldName estatus --class ve.co.bsc.sigai.domain.RolUsuario --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull 
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+field date --fieldName fechaCreacion --type java.util.Date --notNull 
+field date --fieldName fechaModificacion --type java.util.Date --notNull
+field string --fieldName usuario --notNull 
+field boolean --fieldName life --notNull 
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform clean
+perform package
+finder list --class ve.co.bsc.sigai.domain.RolUsuario
+finder add --finderName findRolUsuariosByLife
+perform tests
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-13 09:14:00
+perform clean
+perform assembly
+perform package
+perform eclipse
+entity --class ve.co.bsc.sigai.domain.TipoRol
+field string --fieldName nombre --notNull 
+field string --fieldName descripcion --notNull 
+controller scaffold --class ve.co.bsc.sigai.web.TipoRolController --entity ve.co.bsc.sigai.domain.TipoRol
+field reference --fieldName tipoRol --type ve.co.bsc.sigai.domain.TipoRol --class ve.co.bsc.sigai.domain.RolUsuario --notNull 
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-13 13:04:20
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-13 13:27:20
+finder list --class ve.co.bsc.sigai.domain.RolUsuario
+finder add --finderName findRolUsuariosByTipoRol
+finder list --class ve.co.bsc.sigai.domain.TipoRol
+finder add --finderName findTipoRolsByNombreEquals
+finder add --finderName findTipoRolsByNombreNotEquals
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-13 14:44:25
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-13 14:59:56
+perform clean
+perform assembly
+perform tests
+perform package
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-13 15:52:37
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-13 15:56:19
+perform clean
+perform assembly
+perform tests
+perform tests
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-13 17:07:47
+perform tests
+perform clean
+perform package
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-13 18:29:28
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-14 08:28:17
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+perform clean
+perform tests
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-14 17:39:42
+perform tests
+perform assembly
+perform package
+perform eclipse
+backup
+perform clean
+perform clean
+perform tests
+perform package
+field reference --fieldName idEstructura --class ve.co.bsc.sigai.domain.Auditado --type ve.co.bsc.sigai.domain.EstructuraOrganizativa
+perform clean
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-14 19:53:54
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-14 19:54:09
+perform tests
+perform clean
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-14 21:44:10
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2010-05-16 19:36:56
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-17 09:25:48
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-17 11:06:32
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-17 17:09:21
+backup
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-18 08:13:17
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+backup
+controller scaffold --class ve.co.bsc.sigai.web.Estado --entity ve.co.bsc.sigai.domain.Estado
+controller scaffold --class ve.co.bsc.sigai.web.EstadoController --entity ve.co.bsc.sigai.domain.Estado
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-18 16:24:44
+backup
+controller scaffold --class ve.co.bsc.sigai.web.TipoOrganismoController --entity ve.co.bsc.sigai.domain.TipoOrganismo
+backup
+backup
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-19 08:10:30
+backup
+backup
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform assembly
+perform assembly
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-20 08:30:03
+backup
+backup
+// [failed] class --class ve.co.bsc.sigai.domain.Estado
+backup
+field string --fieldName Descripcion --sizeMax 1000
+field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.Estado --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull
+// [failed] class --class ve.co.bsc.sigai.domain.Ciudad
+field string --fieldName Descripcion --sizeMax 1000
+field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.Ciudad --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull
+// [failed] class --class ve.co.bsc.sigai.domain.Municipios
+field string --fieldName Descripcion --sizeMax 1000
+field reference --fieldName Estatus --class ve.co.bsc.sigai.domain.Municipios --type ve.co.bsc.sigai.domain.EstadoAuditor --notNull
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-20 13:13:55
+perform clean
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-20 13:51:49
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-20 13:55:41
+perform clean
+perform tests
+perform package
+perform package
+backup
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-20 14:39:12
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+backup
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+backup
+perform clean
+perform assembly
+perform eclipse
+perform tests
+perform tests
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2012-12-21 03:35:59
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-21 03:46:51
+perform clean
+perform tests
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-21 10:44:12
+perform clean
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2012-12-21 14:30:56
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-03 16:13:39
+perform clean
+perform assembly
+perform eclipse
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-03 16:55:30
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-04 16:49:35
+perform clean
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-04 16:53:26
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-07 13:49:51
+perform clean
+perform package
+perform te
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-07 17:22:13
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-08 09:11:52
+perform clean
+perform package
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform package
+perform clean
+perform package
+backup
+finder list --class ve.co.bsc.sigai.domain.Personalizacion
+finder add --finderName findPersonalizacionsByRifEquals
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform clean
+perform package
+perform package
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-09 08:33:55
+perform clean
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform package
+finder list --class ve.co.bsc.sigai.domain.Unidad
+finder add --finderName findUnidadsByNombreEquals
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-09 17:02:36
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-10 08:49:23
+perform clean
+perform package
+perform clean
+perform tests
+perform tests
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform clean
+perform package
+perform clean
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-11 08:50:10
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-12 05:51:53
+perform eclipse
+field boolean --fieldName verificarUnidad --class ve.co.bsc.sigai.domain.EstructuraOrganizativa 
+perform clean
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-12 06:11:19
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-12 19:20:11
+perform clean
+perform eclipse
+perform clean
+perform tests
+perform clean
+perform package
+perform eclipse
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+perform clean
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-14 07:39:44
+perform clean
+perform eclipse
+perform clean
+perform package
+perform tests
+perform package
+perform clean
+perform package
+perform package
+backup
+perform clean
+perform package
+perform clean
+perform package
+backup
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform tests
+perform package
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-14 17:44:33
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-15 09:42:50
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-15 10:45:14
+perform clean
+perform package
+backup
+perform eclipse
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform tests
+finder list --class ve.co.bsc.sigai.domain.EstructuraOrganizativa
+finder add --finderName findEstructuraOrganizativasByVerificarUnidad
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+perform package
+finder list --class ve.co.bsc.sigai.domain.OrganismoEnte
+finder add --finderName findOrganismoEntesByRifEquals
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-15 18:03:12
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-16 10:05:50
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-17 11:17:22
+perform clean
+perform package
+perform eclipse
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform package
+perform clean
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-17 14:56:45
+finder list --class ve.co.bsc.sigai.domain.DatosOrganismoEnte
+finder add --finderName findDatosOrganismoEntesByRifEquals
+perform tests
+perform tests
+perform tests
+perform package
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform package
+perform clean
+perform assembly
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-17 18:04:56
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-18 09:53:35
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform package
+perform package
+finder list --class ve.co.bsc.sigai.domain.Auditado
+finder add --finderName findAuditadoesByIdOrganismoEnte
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform package
+perform package
+perform package
+perform package
+perform clean
+perform package
+backup
+backup
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-18 18:31:28
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-21 11:58:48
+perform tests
+perform tests
+perform clean
+perform package
+perform package
+perform tests
+perform package
+perform package
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-21 14:16:51
+perform tests
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-22 08:30:38
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+backup
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-24 08:07:40
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+exit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-24 11:38:23
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-24 11:56:27
+exit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-24 13:00:56
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-24 13:04:25
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-24 13:47:00
+exit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-01-24 13:49:14
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-24 16:14:31
+// [failed] class --class ve.co.bsc.sigai.domain.PlanAnual
+field set --fieldName responsable --element ve.co.bsc.sigai.domain.PlanAnual --class ve.co.bsc.sigai.domain.Auditor
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2013-01-24 20:30:51
+field reference --fieldName responsable --class ve.co.bsc.sigai.domain.PlanAnual --type ve.co.bsc.sigai.domain.Auditor --notNull
+perform tests
+perform tests
+perform clean
+perform clean
+perform clean
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-25 07:24:52
+perform eclipse
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-25 11:15:54
+perform tests
+perform clean
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-25 16:47:24
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2013-01-26 12:14:50
+perform eclipse
+perform clean
+perform tests
+perform tests
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+backup
+// [failed] class --class ve.co.bsc.sigai.domain.Actuacion
+field reference --fieldName rif --class ve.co.bsc.sigai.domain.Actuacion --type ve.co.bsc.sigai.domain.OrganismoEnte
+perform tests
+exit
+// Spring Roo 1.0.1.RELEASE [rev 601] log closed at 2013-01-26 16:44:45
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2013-01-26 16:44:49
+finder list --class ve.co.bsc.sigai.domain.Actuacion
+finder add --finderName findActuacionsByRif
+perform tests
+perform tests
+backup
+// [failed] class --class ve.co.bsc.sigai.domain.OtraActividad
+field reference --fieldName rif --class ve.co.bsc.sigai.domain.OtraActividad --type ve.co.bsc.sigai.domain.OrganismoEnte --notNull
+finder list --class ve.co.bsc.sigai.domain.OtraActividad
+finder add --finderName findOtraActividadsByRif
+perform tests
+// Spring Roo 1.0.1.RELEASE [rev 601] log opened at 2013-01-26 18:31:18
+perform tests
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-01-28 09:40:47
+perform eclipse
+perform tests
+perform clean
+perform tests
+perform tests
+perform clean
+perform package
+perform clean
+perform tes
+perform package
+perform clean
+perform package
+perform clean
+perform package

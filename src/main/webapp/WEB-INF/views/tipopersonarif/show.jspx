@@ -1,0 +1,49 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.tipopersonarif" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty tipoPersonaRif}">
+            <div id="roo_tipoPersonaRif_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${tipoPersonaRif.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_tipoPersonaRif_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${tipoPersonaRif.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_tipoPersonaRif_fechaCreacion">
+                <label for="_fechaCreacion_id">Fecha Creacion:</label>
+                <div class="box" id="_fechaCreacion_id">
+                    <fmt:formatDate pattern="${tipoPersonaRif_fechaCreacion_date_format}" value="${tipoPersonaRif.fechaCreacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_tipoPersonaRif_fechaModificacion">
+                <label for="_fechaModificacion_id">Fecha Modificacion:</label>
+                <div class="box" id="_fechaModificacion_id">
+                    <fmt:formatDate pattern="${tipoPersonaRif_fechaModificacion_date_format}" value="${tipoPersonaRif.fechaModificacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_tipoPersonaRif_estatus">
+                <label for="_estatus_id">Estatus:</label>
+                <div class="box" id="_estatus_id">
+                    <c:out value="${tipoPersonaRif.estatus}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty tipoPersonaRif}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

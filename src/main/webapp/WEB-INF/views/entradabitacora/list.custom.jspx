@@ -1,0 +1,118 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.SimpleTextarea');dojo.require('dijit.form.FilteringSelect');dojo.require('dijit.form.DateTextBox');</script>
+    <div id="x_title_div">
+        <spring:message code="label.entradabitacora" var="entity_label"/>
+        <spring:message code="label.entradabitacoras" var="entity_label_plural"/>
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Bitácora de Cambios'}})); </script>
+            <label for="_terms_id">Clase:</label>
+            <div >
+                <spring:url value="/entradabitacora" var="form_url_entradaBitacora"/>
+                <form:form id="" action="${form_url_entradaBitacora}" method="get" modelAttribute="TiposEntradaBitacoraForm">
+                    <div id="roo_entradabitacora_tipos">
+                        <form:select cssStyle="width:250px" id="_tiposEntradaBitacora_id" path="tipo">
+                            <form:option value="0" label="-- SELECCIONE --" />
+                            <c:if test="${not empty tipoEntradasBitacora}">
+                                
+                                <form:options htmlEscape="false" itemValue="id" items="${tipoEntradasBitacora}" itemLabel="clase"/>
+                            </c:if>
+                        </form:select>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_tiposEntradaBitacora_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                    </div>
+                    <br/>
+                    <div id="roo_entradaBitacora_fechaDesde">
+                        <label for="_fecha_id">Desde:</label>
+                        <form:input  cssStyle="width:250px" id="_fechaDesde_id" maxlength="30" path="timeStampDesde" size="0"/>
+                        <br/>
+                        <form:errors cssClass="errors" id="_fechaDesde_error_id" path="timeStampDesde"/>
+                        <spring:message arguments="Fecha" code="field.invalid" var="field_invalid"/>
+                        <spring:message code="field.required" var="field_required"/>
+                        <spring:message argumentSeparator="," arguments="Fecha" code="field.simple.validation" var="field_validation"/>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaDesde_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaDesde_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Introduzca el rango de fecha inicial ', constraints: {datePattern : '${entradaBitacora_timeStamp_date_format}', required : false}, datePattern : '${entradaBitacora_timeStamp_date_format}'}})); </script>
+                    </div>
+                    <br/>
+
+                    <div id="roo_entradaBitacora_fechaHasta">
+                        <label for="_fecha_id">Hasta:</label>
+                        <form:input  cssStyle="width:250px" id="_fechaHasta_id" maxlength="30" path="timeStampHasta" size="0"/>
+                        <br/>
+                        <form:errors cssClass="errors" id="_fechaHasta_error_id" path="timeStampHasta"/>
+                        <spring:message arguments="Fecha" code="field.invalid" var="field_invalid"/>
+                        <spring:message code="field.required" var="field_required"/>
+                        <spring:message argumentSeparator="," arguments="Fecha" code="field.simple.validation" var="field_validation"/>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaHasta_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaHasta_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Introduzca el rango de fecha final ', constraints: {datePattern : '${entradaBitacora_timeStamp_date_format}', required : false}, datePattern : '${entradaBitacora_timeStamp_date_format}'}})); </script>
+                    </div>
+                    <br/>
+                    <div id="roo_entradaBitacora_nombre">
+                        <label for="_nombre_id">Nombre Usuario:</label>
+                        <form:input cssStyle="width:250px" id="_nombre_id" maxlength="50" path="usuario" size="0"/>
+                        <br/>
+                        <form:errors cssClass="errors" id="_nombre_error_id" path="usuario"/>
+                        <spring:message arguments="Nombre" code="field.invalid" var="field_invalid"/>
+                        <spring:message code="field.required" var="field_required"/>
+                        <spring:message argumentSeparator="," arguments="Nombre," code="field.simple.validation" var="field_validation"/>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_nombre_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                    </div>
+                    
+                    <br/>
+                    <input id="proceed" type="submit" value="Buscar"/>
+            <br/>    
+                </form:form>
+            </div>
+
+        <c:if test="${not empty entradabitacoras}">
+            <table id="menuTable1" width="300">
+                <thead>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Ip</th>
+                        <th>Clase Modificada</th>
+                        <th/>
+                        
+                    </tr>
+                </thead>
+                <c:forEach items="${entradabitacoras}" var="entradaBitacora">
+                    <tr>
+                        <td>
+                            <c:out value="${fn:substring(entradaBitacora.descripcion, 0, 55)}"/>
+                        </td>
+                        <td>
+                            <fmt:formatDate pattern="${entradaBitacora_timeStamp_date_format}" value="${entradaBitacora.timeStamp}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(entradaBitacora.usuario, 0, 25)}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(entradaBitacora.ip, 0, 14)}"/>
+                        </td>
+                        <td>
+                            <c:out value="${fn:substring(entradaBitacora.tipo.clase, 0, 25)}"/>
+                        </td>
+                        <td>
+                            <spring:url value="/entradabitacora/${entradaBitacora.id}" var="show_form_url"/>
+                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                            <form:form id="" action="${show_form_url}" method="get">
+                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                            </form:form>
+                        </td>
+
+                    </tr>
+                </c:forEach>
+                
+            </table>
+        </c:if>
+        <c:if test="${empty entradabitacoras}">
+            <spring:message arguments="${entity_label_plural}" code="entity.not.found"/>
+        </c:if>
+    </div>
+        <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+    </script>
+</div>

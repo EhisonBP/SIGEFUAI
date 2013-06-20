@@ -1,0 +1,29 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.recomendacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Recomendación'}})); </script>
+        <c:if test="${not empty recomendacion}">
+            <div id="roo_recomendacion_observacion">
+                <label for="_observacion_id">Hallazgo:</label>
+                <div class="box" id="_observacion_id">                    
+                    <spring:url value="/observacion/${recomendacion.observacion.id}" var="url_observacion"/>
+                    <a href="${url_observacion}" >AG-${recomendacion.observacion.referencia}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_recomendacion_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${recomendacion.descripcion}"/>
+                </div>
+            </div>
+            <br/>            
+        </c:if>
+        <c:if test="${empty recomendacion}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');
+     $(function() {
+            $( ".accordion" ).accordion({
+
+                collapsible: true,
+                active: false
+            });
+        });
+        </script>
+        <div id="x_title_div_planAnual">
+        <spring:message code="label.plananual" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div_planAnual', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Actividades por auditor'}})); </script>
+        <c:if test="${not empty planAnual}">
+            <div id="roo_planAnual_fin">
+                <label for="_fin_id">Año Fiscal:</label>
+                <div id="_fin_id">
+                    <spring:url value="/plananual/${planAnual.id}" var="url"/>
+                    <a href="${url}">${planAnual.anoFiscal}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_planAnual_estadoPlan">
+                <label for="_estadoPlan_id">Estatus Plan:</label>
+                <div id="_estadoPlan_id">
+                    <c:out value="${planAnual.estadoPlan.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            
+            <spring:url value="/ocupacionauditor" var="form_url_ocupacion"/>
+            <form:form id="" action="${form_url_ocupacion}" method="get" modelAttribute="OcupacionForm">
+                <div id="roo_planAnual_auditor">
+                    <form:hidden id="_idPlan" path="idPlan"/>
+                    <label for="_auditor_id">Auditor:</label>
+                    <form:select cssStyle="width:250px" id="_auditor_id" path="auditor">
+                        <form:options itemValue="id" items="${auditors}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_auditor_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </div>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Buscar"/>
+            </form:form>
+            
+            <c:if test="${not empty ocupacionauditors}">
+                <div style="font-weight:bold;">Actividades</div>
+                <table id="menuTable1" width="300">
+                    <thead>
+                        <tr>
+                            <th>Auditor</th>
+                            <th>Actividad</th>
+                            <th>Cargo</th>
+                            <th>Horas</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th>%</th>
+                            <th/>
+                            <th/>
+                            <th/>
+                        </tr>
+                    </thead>
+                    <c:forEach items="${ocupacionauditors}" var="ocupacion">
+                        <tr>
+                            <td>
+                                <c:out value="${ocupacion.auditor}"/>
+                            </td>
+                            <td>
+                                <c:out  value="${fn:substring(ocupacion.actividadAuditor.descripcionGeneral, 0 , 50)}"/>
+                            </td>
+                            <td>
+                                <c:out value="${ocupacion.cargoAuditor.nombre}"/>
+                            </td>
+                            <td>
+                                <c:out value="${ocupacion.horas}"/>
+                            </td>
+                            <td>
+                                <fmt:formatDate pattern="${ocupacion_inicio_date_format}" value="${ocupacion.inicio}"/>
+                            </td>
+                            <td>
+                                <fmt:formatDate pattern="${ocupacion_fin_date_format}" value="${ocupacion.fin}"/>
+                            </td>
+                            <td>
+                                <c:out value="${ocupacion.porcentajeCompletado}"/>
+                            </td>
+                            <td>
+                                <spring:url value="/ocupacionauditor/${ocupacion.id}" var="show_form_url"/>
+                                <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                <form:form id="" action="${show_form_url}" method="get">
+                                    <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                    <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                </form:form>
+                            </td>
+                            <td>
+                                <spring:url value="/ocupacionauditor/${ocupacion.id}/form" var="update_form_url"/>
+                                <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                <form:form id="" action="${update_form_url}" method="get">
+                                    <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                    <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                </form:form>
+                            </td>
+                            <td>
+                                <spring:url value="/ocupacionauditor/${ocupacion.id}" var="delete_form_url"/>
+                                <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                <form:form id="" action="${delete_form_url}" method="DELETE">
+                                    <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                    <input alt="${delete_label}" class="image" src="${delete_image_url}" title="${delete_label}" type="image" value="${delete_label}"/>
+                                    <c:if test="${not empty param.page}">
+                                        <input name="page" type="hidden" value="${param.page}"/>
+                                    </c:if>
+                                    <c:if test="${not empty param.size}">
+                                        <input name="size" type="hidden" value="${param.size}"/>
+                                    </c:if>
+                                </form:form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
+            <c:if test="${empty auditor}">
+                <br/>
+                <tr><td>Seleccione un auditor</td></tr>
+            </c:if>
+            <c:if test="${not empty auditor}">
+                <c:if test="${empty ocupacionauditors}">
+                    <div style="font-weight:bold;">Actividades</div>
+                    <br/>
+                    <tr><td>No hay actividades registradas para este auditor</td></tr>
+                </c:if>
+                <br/>
+                <br/>                
+
+                <spring:url value="/ocupacionauditor/form" var="agregar_ocupacion_auditor_url">
+                    <spring:param name="idAuditor" value="${auditor.id}"/>
+                    <spring:param name="idPlan" value="${planAnual.id}"/>
+                </spring:url>
+                <input type="button" value="Agregar Actividad" onclick="document.location='${agregar_ocupacion_auditor_url}'"/>
+
+                <spring:url value="/plananual/${planAnual.id}" var="volver_plananual"/>
+                <input type="button" value="Volver" onclick="document.location='${volver_plananual}'"/>
+            </c:if>
+            <c:if test="${empty auditor}">
+                    <br/>
+                    <br/>
+                    <spring:url value="/plananual/${planAnual.id}" var="volver_plananual"/>
+                    <input type="button" value="Volver" onclick="document.location='${volver_plananual}'"/>
+            </c:if>
+                     <br/>
+                     <br/>
+            <div id="accordion" class="accordion">
+            <h3><a href="#">Reportes</a></h3>
+            <div>
+               <spring:url value="/reporte/prepare" var="url" />
+                <script type="text/javascript"><![CDATA[
+                    function prepare(key){
+                        var url = '${url}';
+                            $.ajax({
+                                type: 'get',
+                                url: url + '?key=' + key,
+                                async: false
+                            });
+                            document.forms['form'].submit();
+                    }
+                ]]>
+                </script>
+                <spring:url value="/reporte/renderDirect/" var="form_url"/>
+                <form:form id="form" action="${form_url}" method="get" modelAttribute="parametros" enctype="multipart/form-data">
+                    <div>
+                        <input type="hidden" name="elements[0].valor" value="${planAnual.anoFiscal}"/>
+                    </div>
+                    <ul>
+                        <li>
+                            <a onclick="prepare('ocupacionAuditor')" >Carga de Trabajo de Auditores</a>
+                        </li>
+                        
+                    </ul>
+                </form:form>
+            </div>
+            </div>
+        </c:if>
+    </div>
+    <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+</script>
+</div>

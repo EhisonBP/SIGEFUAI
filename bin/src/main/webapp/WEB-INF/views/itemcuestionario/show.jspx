@@ -1,0 +1,56 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.itemcuestionario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty itemCuestionario}">
+            <div id="roo_itemCuestionario_pregunta">
+                <label for="_pregunta_id">Pregunta:</label>
+                <div class="box" id="_pregunta_id">
+                    <c:out value="${itemCuestionario.pregunta}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_respuesta">
+                <label for="_respuesta_id">Respuesta:</label>
+                <div class="box" id="_respuesta_id">
+                    <c:out value="${itemCuestionario.respuesta}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_filedata">
+                <label for="_filedata_id">Filedata:</label>
+                <div class="box" id="_filedata_id">
+                    <c:out value="${itemCuestionario.filedata}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_fileExtension">
+                <label for="_fileExtension_id">File Extension:</label>
+                <div class="box" id="_fileExtension_id">
+                    <c:out value="${itemCuestionario.fileExtension}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_fileName">
+                <label for="_fileName_id">File Name:</label>
+                <div class="box" id="_fileName_id">
+                    <c:out value="${itemCuestionario.fileName}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_itemCuestionario_cuestionario">
+                <label for="_cuestionario_id">Cuestionario:</label>
+                <div class="box" id="_cuestionario_id">
+                    <c:out value="${itemCuestionario.cuestionario}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty itemCuestionario}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

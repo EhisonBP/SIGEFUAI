@@ -1,0 +1,550 @@
+<div xmlns:toolstag="urn:jsptagdir:/WEB-INF/tags"
+	xmlns:tools="http://edwardrayl.com/taglibs/tools"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:roo="urn:jsptagdir:/WEB-INF/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags">
+
+	<script type="text/javascript">
+		tinyMCE
+				.init({
+					mode : "exact",
+					plugins : "paste",
+					elements : "_alcance_id, _objetivo_id, _enfoque_id, _metodo_id, _comentarios_id  ",
+					theme : "simple"
+
+				});
+	</script>
+
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+		dojo.require('dijit.form.SimpleTextarea');
+		dojo.require('dijit.form.FilteringSelect');
+		dojo.require('dijit.form.DateTextBox');
+	</script>
+	<div id="x_title_div">
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'x_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : 'Editar Actuacion'
+				}
+			}));
+		</script>
+		<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
+		<form:form id="" action="${form_url}" method="put"
+			modelAttribute="actuacion">
+			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+
+			<c:if test="${tools:contains(camposPermitidos, 'codigo')}">
+				<div id="roo_actuacion_codigo">
+					<label for="_codigo_id">Código:</label>
+					<c:if test="${! empty actuacion.actuacion}">
+						<c:out value="${actuacion.actuacion.codigoCompleto}" />.</c:if>
+					<c:out value="${actuacion.correlativo}" />
+					-
+					<c:out value="${actuacion.codigoPlanificacion}" />
+					-
+					<div style="display: inline" id="codigo">&#160;</div>
+					-
+					<c:out value="${anoFiscal}" />
+					-
+					<form:input cssStyle="width:170px" id="_codigo_id" maxlength="30"
+						path="codigo" size="0" />
+					<br />
+					<form:errors cssClass="errors" id="_codigo_error_id" path="codigo" />
+					<spring:message arguments="Codigo" code="field.invalid"
+						var="field_invalid" />
+					<spring:message code="field.required" var="field_required" />
+					<spring:message argumentSeparator=","
+						arguments="Codigo,(${field_required})"
+						code="field.simple.validation" var="field_validation" />
+					<script type="text/javascript">
+						Spring
+								.addDecoration(new Spring.ElementDecoration(
+										{
+											elementId : '_codigo_id',
+											widgetType : 'dijit.form.ValidationTextBox',
+											widgetAttrs : {
+												promptMessage : 'Introduzca un sufijo (opcional)',
+												invalidMessage : '${field_invalid}',
+												required : false
+											}
+										}));
+					</script>
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'nombre')}">
+				<div id="roo_actuacion_nombre">
+					<label for="_nombre_id">Nombre:</label>
+					<form:input cssStyle="width:250px" id="_nombre_id" maxlength="199"
+						path="nombre" size="0" />
+					<br />
+					<form:errors cssClass="errors" id="_nombre_error_id" path="nombre" />
+					<spring:message arguments="Nombre" code="field.invalid"
+						var="field_invalid" />
+					<spring:message code="field.required" var="field_required" />
+					<spring:message argumentSeparator=","
+						arguments="Nombre,(${field_required})"
+						code="field.simple.validation" var="field_validation" />
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : '_nombre_id',
+							widgetType : 'dijit.form.ValidationTextBox',
+							widgetAttrs : {
+								promptMessage : '${field_validation}',
+								invalidMessage : '${field_invalid}',
+								required : true
+							}
+						}));
+					</script>
+				</div>
+				<br />
+			</c:if>
+
+
+			<c:if test="${tools:contains(camposPermitidos, 'claseActuacion')}">
+				<div id="roo_actuacion_claseActuacion">
+					<c:if test="${not empty claseactuacions}">
+						<label for="_claseActuacion_id">Tipo:</label>
+						<form:select cssStyle=" width:250px" id="_claseActuacion_id"
+							path="claseActuacion">
+							<form:options itemValue="id" items="${claseactuacions}"
+								itemLabel="nombre" />
+						</form:select>
+						<script type="text/javascript">
+							function actualizarCodigo() {
+								var combo = document
+										.getElementById("_claseActuacion_id");
+
+								if (combo.selectedIndex == undefined) {
+									var text = combo.value.substr(0, 2);
+									document.getElementById("codigo").innerHTML = text
+											.toUpperCase();
+								} else {
+									var text = combo.options[combo.selectedIndex].text
+											.substr(0, 2);
+									document.getElementById("codigo").innerHTML = text
+											.toUpperCase();
+								}
+							}
+
+							function mostrarNombreProyecto() {
+								var combo = document
+										.getElementById("_claseActuacion_id");
+
+								var div = document
+										.getElementById("roo_actuacion_nomreproyecto");
+
+								if (combo.selectedIndex == undefined) {
+									if (combo.value == 'Operativa') {
+										div.style.visibility = 'visible';
+									} else {
+										div.style.visibility = 'hidden';
+									}
+								} else {
+									if (combo.options[combo.selectedIndex].text == 'Operativa') {
+										div.style.visibility = 'visible';
+									} else {
+										div.style.visibility = 'hidden';
+									}
+
+								}
+							}
+
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_claseActuacion_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true,
+									onChange : function(newValue) {
+										actualizarCodigo();
+										mostrarNombreProyecto();
+									}
+								}
+							}));
+						</script>
+					</c:if>
+				</div>
+				<br />
+			</c:if>
+
+			<div id="roo_actuacion_nomreproyecto">
+				<label for="_nombreProyecto_id">Nombre Proyecto:</label>
+				<form:input cssStyle="width:250px" id="_nombreProyecto_id"
+					maxlength="199" path="nombreProyecto" size="0" />
+				<br />
+				<form:errors cssClass="errors" id="_nombreProyecto_error_id"
+					path="nombreProyecto" />
+				<spring:message arguments="Nombre Proyecto" code="field.invalid"
+					var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator="," arguments="Nombre Proyecto,"
+					code="field.simple.validation" var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_nombreProyecto_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							required : false
+						}
+					}));
+				</script>
+				<br />
+			</div>
+
+			<c:if test="${tools:contains(camposPermitidos, 'alcance')}">
+				<div id="roo_actuacion_alcance">
+					<label for="_alcance_id">Alcance:</label>
+					<form:input cssStyle="width:250px" id="_alcance_id" path="alcance" />
+					<br />
+					<form:errors cssClass="errors" id="_alcance_error_id"
+						path="alcance" />
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'mesDesde')}">
+				<div id="roo_actuacion_mesDesde">
+					<label for="_mesDesde_id">Desde:</label>
+					<form:select cssStyle="width:250px" id="_mesDesde_id"
+						path="mesDesde">
+						<form:option value="0">-- Seleccione el mes --</form:option>
+						<form:option value="1">Enero</form:option>
+						<form:option value="2">Febrero</form:option>
+						<form:option value="3">Marzo</form:option>
+						<form:option value="4">Abril</form:option>
+						<form:option value="5">Mayo</form:option>
+						<form:option value="6">Junio</form:option>
+						<form:option value="7">Julio</form:option>
+						<form:option value="8">Agosto</form:option>
+						<form:option value="9">Septiembre</form:option>
+						<form:option value="10">Octubre</form:option>
+						<form:option value="11">Noviembre</form:option>
+						<form:option value="12">Diciembre</form:option>
+					</form:select>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : '_mesDesde_id',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								hasDownArrow : true
+							}
+						}));
+					</script>
+					<form:errors cssClass="errors" id="_mesDesde_error_id"
+						path="mesDesde" />
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'mesHasta')}">
+				<div id="roo_actuacion_mesHasta">
+					<label for="_mesHasta_id">Hasta:</label>
+					<form:select cssStyle="width:250px" id="_mesHasta_id"
+						path="mesHasta">
+						<form:option value="0">-- Seleccione el mes --</form:option>
+						<form:option value="1">Enero</form:option>
+						<form:option value="2">Febrero</form:option>
+						<form:option value="3">Marzo</form:option>
+						<form:option value="4">Abril</form:option>
+						<form:option value="5">Mayo</form:option>
+						<form:option value="6">Junio</form:option>
+						<form:option value="7">Julio</form:option>
+						<form:option value="8">Agosto</form:option>
+						<form:option value="9">Septiembre</form:option>
+						<form:option value="10">Octubre</form:option>
+						<form:option value="11">Noviembre</form:option>
+						<form:option value="12">Diciembre</form:option>
+					</form:select>
+					<script type="text/javascript">
+						Spring.addDecoration(new Spring.ElementDecoration({
+							elementId : '_mesHasta_id',
+							widgetType : 'dijit.form.FilteringSelect',
+							widgetAttrs : {
+								hasDownArrow : true
+							}
+						}));
+					</script>
+					<form:errors cssClass="errors" id="_mesHasta_error_id"
+						path="mesHasta" />
+				</div>
+				<br />
+			</c:if>
+
+			<sec:authorize
+				ifAnyGranted="ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+				<c:if
+					test="${tools:contains(camposPermitidos, 'mesDesdeTentativo')}">
+					<div id="roo_actuacion_mesDesde">
+						<label for="_mesDesde_id">Desde:</label>
+						<form:select cssStyle="width:250px" id="_mesDesde_id"
+							path="mesDesdeTentativo">
+							<form:option value="0">-- Seleccione el mes --</form:option>
+							<form:option value="1">Enero</form:option>
+							<form:option value="2">Febrero</form:option>
+							<form:option value="3">Marzo</form:option>
+							<form:option value="4">Abril</form:option>
+							<form:option value="5">Mayo</form:option>
+							<form:option value="6">Junio</form:option>
+							<form:option value="7">Julio</form:option>
+							<form:option value="8">Agosto</form:option>
+							<form:option value="9">Septiembre</form:option>
+							<form:option value="10">Octubre</form:option>
+							<form:option value="11">Noviembre</form:option>
+							<form:option value="12">Diciembre</form:option>
+						</form:select>
+						<br />
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_mesDesde_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true
+								}
+							}));
+						</script>
+						<form:errors cssClass="errors" id="_mesDesde_error_id"
+							path="mesDesdeTentativo" />
+					</div>
+					<br />
+				</c:if>
+
+				<c:if
+					test="${tools:contains(camposPermitidos, 'mesHastaTentativo')}">
+					<div id="roo_actuacion_mesHasta">
+						<label for="_mesHasta_id">Hasta:</label>
+						<form:select cssStyle="width:250px" id="_mesHasta_id"
+							path="mesHastaTentativo">
+							<form:option value="0">-- Seleccione el mes --</form:option>
+							<form:option value="1">Enero</form:option>
+							<form:option value="2">Febrero</form:option>
+							<form:option value="3">Marzo</form:option>
+							<form:option value="4">Abril</form:option>
+							<form:option value="5">Mayo</form:option>
+							<form:option value="6">Junio</form:option>
+							<form:option value="7">Julio</form:option>
+							<form:option value="8">Agosto</form:option>
+							<form:option value="9">Septiembre</form:option>
+							<form:option value="10">Octubre</form:option>
+							<form:option value="11">Noviembre</form:option>
+							<form:option value="12">Diciembre</form:option>
+						</form:select>
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_mesHasta_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true
+								}
+							}));
+						</script>
+						<form:errors cssClass="errors" id="_mesHasta_error_id"
+							path="mesHastaTentativo" />
+					</div>
+					<br />
+				</c:if>
+			</sec:authorize>
+
+			<c:if test="${tools:contains(camposPermitidos, 'objetivo')}">
+				<div id="roo_actuacion_objetivo">
+					<label for="_objetivo_id">Objetivo General:</label>
+					<form:input cssStyle="width:250px" id="_objetivo_id"
+						path="objetivo" />
+					<br />
+					<form:errors cssClass="errors" id="_objetivo_error_id"
+						path="objetivo" />
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'enfoque')}">
+				<div id="roo_actuacion_enfoque">
+					<label for="_enfoque_id">Enfoque:</label>
+					<form:input cssStyle="width:250px" id="_enfoque_id" path="enfoque" />
+					<br />
+					<form:errors cssClass="errors" id="_enfoque_error_id"
+						path="enfoque" />
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'metodo')}">
+				<div id="roo_actuacion_metodo">
+					<label for="_metodo_id">Métodos, Procedimientos y
+						Técnicas:</label>
+					<form:input cssStyle="width:250px" id="_metodo_id" path="metodo" />
+					<br />
+					<form:errors cssClass="errors" id="_metodo_error_id" path="metodo" />
+				</div>
+				<br />
+			</c:if>
+
+			<div id="roo_actuacion_unidades">
+				<c:if test="${not empty unidads}">
+					<label for="_unidades_id">Dependencias Sujetas a Control:</label>
+					<form:select cssStyle="width:250px" id="_unidades_id"
+						path="unidades">
+						<form:options itemValue="id" items="${unidads}"
+							itemLabel="nombre" />
+					</form:select>
+				</c:if>
+			</div>
+			<br />
+			<c:if test="${tools:contains(camposPermitidos, 'responsable')}">
+				<div id="roo_actuacion_responsable">
+					<c:if test="${not empty auditors}">
+						<label for="_responsable_id">Supervisor Responsable:</label>
+						<form:select cssStyle="width:250px" id="_responsable_id"
+							path="responsable">
+							<form:options itemValue="id" items="${auditors}" />
+						</form:select>
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_responsable_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true
+								}
+							}));
+						</script>
+					</c:if>
+				</div>
+				<br />
+			</c:if>
+			<sec:authorize
+				ifAnyGranted="ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+					<div id="roo_actuacion_responsableAuditor">
+						<c:if test="${not empty auditors}">
+							<label for="_responsableAuditor_id">Auditor Responsable:</label>
+							<form:select cssStyle="width:250px" id="_responsableAuditor_id"
+								path="responsableAuditor">
+								<form:options itemValue="id" items="${auditores}" />
+							</form:select>
+							<script type="text/javascript">
+								Spring
+										.addDecoration(new Spring.ElementDecoration(
+												{
+													elementId : '_responsableAuditor_id',
+													widgetType : 'dijit.form.FilteringSelect',
+													widgetAttrs : {
+														hasDownArrow : true
+													}
+												}));
+							</script>
+						</c:if>
+					</div>
+					<br />
+			</sec:authorize>
+			<c:if test="${tools:contains(camposPermitidos, 'estadoActuacion')}">
+				<div id="roo_actuacion_estadoActuacion">
+					<label for="_estadoActuacion_id">Estatus:</label>
+					<div class="labelBox" id="_estadoActuacion_id">
+						<c:out value="${actuacion.estadoActuacion.nombre}" />
+					</div>
+				</div>
+				<br />
+			</c:if>
+			<c:if test="${tools:contains(camposPermitidos, 'unidadDeMedida')}">
+				<div id="roo_actuacion_unidadDeMedida">
+					<c:if test="${not empty unidaddemedidas}">
+						<label for="_unidadDeMedida_id">Unidad De Medida:</label>
+						<form:select cssStyle="width:250px" id="_unidadDeMedida_id"
+							path="unidadDeMedida">
+							<form:options itemValue="id" items="${unidaddemedidas}"
+								itemLabel="nombre" />
+						</form:select>
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_unidadDeMedida_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true
+								}
+							}));
+						</script>
+					</c:if>
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'porProcesos')}">
+				<div id="roo_actuacion_porProcesos">
+					<label for="_porProcesos_id">Bajo Riesgos:</label>
+					<form:checkbox id="_porProcesos_id" path="porProcesos"
+						onchange="mostrarOcultarCheckBox()" />
+					<script type="text/javascript">
+						function mostrarOcultarCheckBox() {
+							var checkbox = document
+									.getElementById("_porProcesos_id");
+							var div = document
+									.getElementById("roo_actuacion_procesos");
+							if (checkbox.checked == true) {
+								div.style.visibility = 'visible';
+							} else {
+								div.style.visibility = 'hidden';
+							}
+						}
+					</script>
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'procesos')}">
+				<div id="roo_actuacion_procesos">
+					<c:if test="${not empty procesoes}">
+						<label for="_procesos_id">Procesos:</label>
+						<form:select cssStyle="width:250px" id="_procesos_id"
+							path="procesos">
+							<form:options itemValue="id" items="${procesoes}"
+								itemLabel="descripcion" htmlEscape="false" />
+						</form:select>
+					</c:if>
+				</div>
+				<br />
+			</c:if>
+
+			<c:if test="${tools:contains(camposPermitidos, 'comentarios')}">
+				<div id="roo_actuacion_comentarios">
+					<label for="_comentarios_id">Comentarios:</label>
+					<form:textarea cssStyle="width:250px" id="_comentarios_id"
+						path="comentarios" />
+					<br />
+					<form:errors cssClass="errors" id="_comentarios_error_id"
+						path="comentarios" />
+				</div>
+				<br />
+			</c:if>
+
+			<div class="submit" id="roo_actuacion_submit">
+				<spring:message code="button.update" var="update_button" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<input id="proceed" type="submit" value="${update_button}" /> <input
+					type="button" value="Cancelar"
+					onclick="history.go( -1 );return true;" />
+			</div>
+			<form:hidden id="_id_id" path="id" />
+			<form:hidden id="_version_id" path="version" />
+		</form:form>
+		<script type="text/javascript">
+			actualizarCodigo();
+			mostrarNombreProyecto();
+			mostrarOcultarCheckBox();
+		</script>
+	</div>
+</div>

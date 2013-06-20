@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="plananual/list">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plananual/show">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plananual/create">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plananual/update">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plananual/actualizarEstatus">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/actualizarEstatus.jspx"/>
+    </definition>
+    <definition extends="default" name="plananual/duplicarPlan">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/duplicarPlan.jspx"/>
+    </definition>
+<definition extends="default" name="plananual/findPlanAnualsByRif">
+        <put-attribute name="body" value="/WEB-INF/views/plananual/findPlanAnualsByRif.jspx"/>
+    </definition>
+</tiles-definitions>

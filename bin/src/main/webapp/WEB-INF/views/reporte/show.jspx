@@ -1,0 +1,56 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.reporte" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty reporte}">
+            <div id="roo_reporte_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${reporte.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_reporte_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${reporte.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_reporte_filedata">
+                <label for="_filedata_id">Filedata:</label>
+                <div class="box" id="_filedata_id">
+                    <c:out value="${reporte.filedata}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_reporte_extension">
+                <label for="_extension_id">Extension:</label>
+                <div class="box" id="_extension_id">
+                    <c:out value="${reporte.extension}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_reporte_reporte">
+                <label for="_reporte_id">Reporte:</label>
+                <div class="box" id="_reporte_id">
+                    <c:out value="${reporte.reporte}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_reporte_clave">
+                <label for="_clave_id">Clave:</label>
+                <div class="box" id="_clave_id">
+                    <c:out value="${reporte.clave}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty reporte}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

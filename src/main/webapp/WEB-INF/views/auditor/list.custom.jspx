@@ -1,0 +1,218 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:roo="urn:jsptagdir:/WEB-INF/tags"
+	xmlns:spring="http://www.springframework.org/tags">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+	</script>
+	<div id="x_title_div">
+		<spring:message code="label.auditor" var="entity_label" />
+		<spring:message code="label.auditors" var="entity_label_plural" />
+		<spring:message arguments="${entity_label_plural}"
+			code="entity.list.all" var="title_msg" />
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'x_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : 'Lista de Usuarios'
+				}
+			}));
+			$(function() {
+				$("#accordion").accordion({
+
+					collapsible : true,
+					active : false
+				});
+			});
+		</script>
+
+		<div id="accordion">
+			<h3>
+				<a href="#">Auditores:</a>
+			</h3>
+			<div>
+				<c:if test="${not empty auditors}">
+					<table id="menuTable1" width="300">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Cedula</th>
+								<th>Correo</th>
+								<th>Teléfono de Oficina</th>
+								<th>Celular</th>
+								<th />
+								<th />
+							</tr>
+						</thead>
+						<c:forEach items="${auditors}" var="auditor">
+							<tr>
+							<!-- /////// -->
+							<c:if test="${auditor.estadoAuditor.nombre == 'Inactivo'}"> <!-- Validacion  == 'Inactivo' -->
+								<td style="background-color: rgba(255, 0, 0, 0.31);"><!-- Nombre -->
+								<c:out value="${fn:substring(auditor.nombre, 0, 20)}" />
+								</td>
+							</c:if>
+							<c:if test="${auditor.estadoAuditor.nombre == 'Activo'}"> <!-- Validacion  == 'Activo' -->
+							    <td><!-- Nombre -->
+								<c:out value="${fn:substring(auditor.nombre, 0, 20)}" />
+								</td>
+							</c:if>
+							<!-- /////// -->
+							<!-- /////// -->
+							<c:if test="${auditor.estadoAuditor.nombre == 'Inactivo'}"> <!-- Validacion  == 'Inactivo' -->
+								<td style="background-color: rgba(255, 0, 0, 0.31);"><!-- apellido -->
+								<c:out value="${fn:substring(auditor.apellido, 0, 20)}" />
+								</td>
+							</c:if>
+							<c:if test="${auditor.estadoAuditor.nombre == 'Activo'}"> <!-- Validacion  == 'Activo' -->	
+								<td><!-- apellido -->
+								<c:out value="${fn:substring(auditor.apellido, 0, 20)}" />
+								</td>
+							</c:if>
+							<!-- /////// -->
+							<!-- /////// -->
+							<c:if test="${auditor.estadoAuditor.nombre == 'Inactivo'}"> <!-- Validacion  == 'Inactivo' -->	
+								<td style="background-color: rgba(255, 0, 0, 0.31);"><!-- cedula -->
+								<c:out value="${fn:substring(auditor.cedula, 0, 10)}" />
+								</td>
+							</c:if>
+							<c:if test="${auditor.estadoAuditor.nombre == 'Activo'}"> <!-- Validacion  == 'Activo' -->
+								<td><!-- cedula -->
+								<c:out value="${fn:substring(auditor.cedula, 0, 10)}" />
+								</td>
+							</c:if>
+							<!-- /////// -->
+							<!-- /////// -->
+							<c:if test="${auditor.estadoAuditor.nombre == 'Inactivo'}"> <!-- Validacion  == 'Inactivo' -->	
+								<td style="background-color: rgba(255, 0, 0, 0.31);"><!-- correo -->
+								<c:out value="${fn:substring(auditor.correo, 0, 30)}" />
+								</td>
+							</c:if>
+							<c:if test="${auditor.estadoAuditor.nombre == 'Activo'}"> <!-- Validacion  == 'Activo' -->	
+								<td><!-- correo -->
+								<c:out value="${fn:substring(auditor.correo, 0, 30)}" />
+								</td>
+							</c:if>	
+							<!-- /////// -->
+							<!-- /////// -->
+							<c:if test="${auditor.estadoAuditor.nombre == 'Inactivo'}"> <!-- Validacion  == 'Inactivo' -->	
+								<td style="background-color: rgba(255, 0, 0, 0.31);"><!-- telefono -->
+								<c:out value="${fn:substring(auditor.telefono, 0, 13)}" />
+								</td>
+							</c:if>
+							<c:if test="${auditor.estadoAuditor.nombre == 'Activo'}"> <!-- Validacion  == 'Activo' -->
+							    <td><!-- telefono -->
+								<c:out value="${fn:substring(auditor.telefono, 0, 13)}" />
+								</td>
+							</c:if>			
+							<!-- /////// -->
+							<!-- /////// -->
+							<c:if test="${auditor.estadoAuditor.nombre == 'Inactivo'}"> <!-- Validacion  == 'Inactivo' -->	
+								<td style="background-color: rgba(255, 0, 0, 0.31);"> <!-- telefono -->
+								<c:out value="${fn:substring(auditor.celular, 0, 13)}" />
+								</td>
+								</c:if>
+							<c:if test="${auditor.estadoAuditor.nombre == 'Activo'}"> <!-- Validacion  == 'Activo' -->	
+								<td> <!-- telefono -->
+								<c:out value="${fn:substring(auditor.celular, 0, 13)}" />
+								</td>
+							</c:if>
+							<!-- /////// -->
+								<td><spring:url value="/auditor/${auditor.id}"
+										var="show_form_url" /> <spring:url
+										value="/static/images/show.png" var="show_image_url" /> <form:form
+										id="" action="${show_form_url}" method="get">
+										<spring:message arguments="${entity_label}" code="entity.show"
+											var="show_label" />
+										<input alt="${show_label}" class="image"
+											src="${show_image_url}" title="${show_label}" type="image"
+											value="${show_label}" />
+									</form:form></td>
+								<td><spring:url value="/auditor/${auditor.id}/form"
+										var="update_form_url" /> <spring:url
+										value="/static/images/update.png" var="update_image_url" /> <form:form
+										id="" action="${update_form_url}" method="get">
+										<spring:message arguments="${entity_label}"
+											code="entity.update" var="update_label" />
+										<input alt="${update_label}" class="image"
+											src="${update_image_url}" title="${update_label}"
+											type="image" value="${update_label}" />
+									</form:form></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
+			</div>
+			<h3>
+				<a href="#">Auditados:</a>
+			</h3>
+			<div>
+				<c:if test="${not empty auditadoes}">
+					<table id="menuTable2" width="300">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Cédula</th>
+								<th>Login</th>
+								<th />
+								<th />
+							</tr>
+						</thead>
+						<c:forEach items="${auditadoes}" var="auditado">
+							<tr>
+								<td><c:out value="${fn:substring(auditado.nombre, 0, 10)}" />
+								</td>
+								<td><c:out
+										value="${fn:substring(auditado.apellido, 0, 10)}" />
+								</td>
+								<td><c:out value="${fn:substring(auditado.cedula, 0, 10)}" />
+								</td>
+								<td><c:out value="${fn:substring(auditado.login, 0, 10)}" />
+								</td>
+								<td><spring:url value="/auditado/${auditado.id}"
+										var="show_form_url" /> <spring:url
+										value="/static/images/show.png" var="show_image_url" /> <form:form
+										id="" action="${show_form_url}" method="get">
+										<spring:message arguments="${entity_label}" code="entity.show"
+											var="show_label" />
+										<input alt="${show_label}" class="image"
+											src="${show_image_url}" title="${show_label}" type="image"
+											value="${show_label}" />
+									</form:form>
+								</td>
+								<td><spring:url value="/auditado/${auditado.id}/form"
+										var="update_form_url" /> <spring:url
+										value="/static/images/update.png" var="update_image_url" /> <form:form
+										id="" action="${update_form_url}" method="get">
+										<spring:message arguments="${entity_label}"
+											code="entity.update" var="update_label" />
+										<input alt="${update_label}" class="image"
+											src="${update_image_url}" title="${update_label}"
+											type="image" value="${update_label}" />
+									</form:form>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
+			</div>
+		</div>
+	</div>
+	<span class="new"> <spring:url value="/auditor/form"
+			var="create_url" /> <a href="${create_url}"> <spring:url
+				value="/static/images/add.png" var="create_img_url" /> <spring:message
+				arguments="${entity_label}" code="global.menu.new" var="add_message" />
+			<img alt="${add_message}" src="${create_img_url}"
+			title="${add_message}" /> </a> </span>
+	<script type="text/javascript">
+		$('#menuTable1').tablePagination({});
+		$('#menuTable2').tablePagination({});
+	</script>
+</div>

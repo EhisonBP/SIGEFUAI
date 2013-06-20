@@ -1,0 +1,207 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        $(function() {
+            $( "#accordion" ).accordion({
+
+                collapsible: true,
+                active: false
+            });
+        });
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.reporte" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty reporte}">
+            <c:if test="${not empty reporte.reporte}">
+                <div id="ru">
+                    <label for="_id">Nombre:</label>
+                    <div class="box" id="_uid">
+                        <spring:url value="/reporte/${reporte.reporte.id}" var="url"/>
+                        <a href="${url}" >${reporte.nombre}</a>
+                    </div>
+                </div>
+                <br/>
+            </c:if>
+            <c:if test="${empty reporte.reporte}">
+                <div id="roo_reporte_nombre">
+                    <label for="_nombre_id">Nombre:</label>
+                    <div class="box" id="_nombre_id">
+                        <c:out value="${reporte.nombre}"/>
+                    </div>
+                </div>
+                <br/>
+            </c:if>
+            <div id="roo_reporte_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${reporte.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <c:if test="${empty reporte.clave}">
+                <div id="roo_reporte_clave">
+                    <label for="_clave_id">Clave:</label>
+                    <div class="box" id="_clave_id">
+                        <c:out value="N/A"/>
+                    </div>
+                </div>
+                <br/>
+            </c:if>
+            <c:if test="${not empty reporte.clave}">
+                <div id="roo_reporte_clave">
+                    <label for="_clave_id">Clave:</label>
+                    <div class="box" id="_clave_id">
+                        <c:out value="${reporte.clave}"/>
+                    </div>
+                </div>
+                <br/>
+            </c:if>
+            <br/>            
+        </c:if>
+        <div id="accordion">
+            <h3><a href="#">Parámetros</a></h3>
+            <div>
+                <c:if test="${empty parametros}">
+                    <div style="font-style: italic"> El reporte no tiene parámetros </div>
+                </c:if>
+                <c:if test="${not empty parametros}">
+                    <table id="menuTable2" width="300">
+                        <thead>
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Tipo de Dato</th>
+                                <th/>
+                                <th/>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <c:forEach items="${parametros}" var="parametro">
+                            <tr>
+                                <td>
+                                    <c:out value="${parametro.parametro}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${parametro.tipoParametro}"/>
+                                </td>
+
+                                <td>
+                                    <spring:url value="/parametro/${parametro.id}" var="show_form_url"/>
+                                    <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                    <form:form id="" action="${show_form_url}" method="get">
+                                        <input name="idReporte" type="hidden" value="${reporte.id}"/>
+                                        <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                        <input alt="${show_label}" class="image" src="${show_image_url}" title="Consultar Parámetro" type="image" value="${show_label}"/>
+                                    </form:form>
+                                </td>
+                                <td>
+                                    <spring:url value="/parametro/${parametro.id}/form" var="update_form_url"/>
+                                    <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                    <form:form id="" action="${update_form_url}" method="get">
+                                        <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                        <input alt="${update_label}" class="image" src="${update_image_url}" title="Editar Parámetro" type="image" value="${update_label}"/>
+                                    </form:form>
+                                </td>
+                                <td>
+                                    <spring:url value="/parametro/delete/${parametro.id}" var="delete_parametro_url"/>
+                                    <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                    <form:form id="" action="${delete_parametro_url}" method="DELETE">
+                                        <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                        <input alt="${delete_label}" class="image" src="${delete_image_url}" title="Eliminar Parámetro" type="image" value="${delete_label}"/>
+
+                                    </form:form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                    <br/>
+                </c:if>
+                <br/>
+                <spring:url value="/parametro/form" var="parametro_create_url">
+                    <spring:param name="idReporte" value="${reporte.id}" > </spring:param>
+                </spring:url>
+                <input type="button" value="Nuevo" onclick="document.location='${parametro_create_url}'"/>
+            </div>
+
+            <h3><a href="#">Sub-Reportes</a></h3>
+            <div>
+                <c:if test="${not empty subReportes}">
+                    <table id="menuTable1" width="300">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th/>
+                                <th/>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <c:forEach items="${subReportes}" var="reporte">
+                            <tr>
+                                <td>
+                                    <c:out value="${reporte.nombre}"/>
+                                </td>
+                                <td>
+                                     <div style="overflow: scroll; height: 100px; width: 450px; ">
+                                        <c:out escapeXml="false" value="${reporte.descripcion}"/>
+                                     </div>
+                                </td>
+                                <td>
+                                    <spring:url value="/reporte/${reporte.id}" var="show_form_url"/>
+                                    <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                    <form:form id="" action="${show_form_url}" method="get">
+                                        <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                        <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                    </form:form>
+                                </td>
+                                <td>
+                                    <spring:url value="/reporte/${reporte.id}/form" var="update_form_url"/>
+                                    <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                    <form:form id="" action="${update_form_url}" method="get">
+                                        <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                        <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                    </form:form>
+                                </td>
+                                <td>
+                                    <spring:url value="/reporte/${reporte.id}" var="delete_form_url"/>
+                                    <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                    <form:form id="" action="${delete_form_url}" method="DELETE">
+                                        <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                        <input alt="${delete_label}" class="image" src="${delete_image_url}" title="${delete_label}" type="image" value="${delete_label}"/>
+                                        <c:if test="${not empty param.page}">
+                                            <input name="page" type="hidden" value="${param.page}"/>
+                                        </c:if>
+                                        <c:if test="${not empty param.size}">
+                                            <input name="size" type="hidden" value="${param.size}"/>
+                                        </c:if>
+                                    </form:form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:if>
+                <c:if test="${empty subReportes}">
+                    <spring:message text="No se encontraron Sub-Reportes"/>
+                </c:if>
+                <br/>
+                <br/>
+                <spring:url value="/reporte/form" var="reporte_url">
+                    <spring:param name="idReporte" value="${reporte.id}"/>
+                </spring:url>
+                <input type="button" value="Agregar Sub-Reporte" onclick="document.location='${reporte_url}'"/>
+                <br/>
+            </div>
+
+        </div>
+        <br/>
+        <input type="button" value="Listar Reportes" onclick="document.location = '../reporte'"/>
+        <c:if test="${empty reporte}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+
+
+        </c:if>
+
+    </div>
+</div>

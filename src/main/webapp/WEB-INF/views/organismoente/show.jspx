@@ -1,0 +1,77 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.organismoente" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty organismoEnte}">
+            <div id="roo_organismoEnte_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${organismoEnte.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_acronimo">
+                <label for="_acronimo_id">Acronimo:</label>
+                <div class="box" id="_acronimo_id">
+                    <c:out value="${organismoEnte.acronimo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_tipo_rif">
+                <label for="_tipo_rif_id">Tipo_rif:</label>
+                <div class="box" id="_tipo_rif_id">
+                    <c:out value="${organismoEnte.tipo_rif}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_rif">
+                <label for="_rif_id">Rif:</label>
+                <div class="box" id="_rif_id">
+                    <c:out value="${organismoEnte.rif}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_id_organismo_padre">
+                <label for="_id_organismo_padre_id">Id_organismo_padre:</label>
+                <div class="box" id="_id_organismo_padre_id">
+                    <c:out value="${organismoEnte.id_organismo_padre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_fechaCreacion">
+                <label for="_fechaCreacion_id">Fecha Creacion:</label>
+                <div class="box" id="_fechaCreacion_id">
+                    <fmt:formatDate pattern="${organismoEnte_fechaCreacion_date_format}" value="${organismoEnte.fechaCreacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_fechaModificacion">
+                <label for="_fechaModificacion_id">Fecha Modificacion:</label>
+                <div class="box" id="_fechaModificacion_id">
+                    <fmt:formatDate pattern="${organismoEnte_fechaModificacion_date_format}" value="${organismoEnte.fechaModificacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_estatus">
+                <label for="_estatus_id">Estatus:</label>
+                <div class="box" id="_estatus_id">
+                    <c:out value="${organismoEnte.estatus}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_organismoEnte_id_tipo_organismo">
+                <label for="_id_tipo_organismo_id">Id_tipo_organismo:</label>
+                <div class="box" id="_id_tipo_organismo_id">
+                    <c:out value="${organismoEnte.id_tipo_organismo}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty organismoEnte}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

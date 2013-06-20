@@ -1,0 +1,94 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.ocupacionauditor" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty ocupacionAuditor}">
+            <div id="roo_ocupacionAuditor_planAnual">
+                <label for="_planAnual_id">Plan Anual:</label>
+                <div class="box" id="_planAnual_id">
+                    <c:out escapeXml="false" value="${ocupacionAuditor.planAnual.anoFiscal}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_actividadAuditor">
+                <label for="_actividadAuditor_id">Actividad Auditor:</label>
+                <div class="box" id="_actividadAuditor_id">
+                    <spring:url value="/${tipoDeActividad}/${ocupacionAuditor.actividadAuditor.id}" var="url_actividad"/>
+                    <a href="${url_actividad}" >${ocupacionAuditor.actividadAuditor.descripcionGeneral}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_auditor">
+                <label for="_auditor_id">Auditor:</label>
+                <div class="box" id="_auditor_id">
+                    <c:out value="${ocupacionAuditor.auditor}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_cargoAuditor">
+                <label for="_cargoAuditor_id">Cargo Auditor:</label>
+                <div class="box" id="_cargoAuditor_id">
+                    <c:out value="${ocupacionAuditor.cargoAuditor.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_horas">
+                <label for="_horas_id">Horas:</label>
+                <div class="box" id="_horas_id">
+                    <c:out value="${ocupacionAuditor.horas}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_inicio">
+                <label for="_inicio_id">Inicio:</label>
+                <div class="box" id="_inicio_id">
+                    <fmt:formatDate pattern="${ocupacionAuditor_inicio_date_format}" value="${ocupacionAuditor.inicio}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_fin">
+                <label for="_fin_id">Fin:</label>
+                <div class="box" id="_fin_id">
+                    <fmt:formatDate pattern="${ocupacionAuditor_fin_date_format}" value="${ocupacionAuditor.fin}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_observaciones">
+                <label for="_observaciones_id">Observaciones:</label>
+                <div class="box" id="_observaciones_id">
+                    <c:out escapeXml="false" value="${ocupacionAuditor.observaciones}"/>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div id="roo_ocupacionAuditor_unidadDeMedida">
+                <label for="_unidadDeMedida_id">Unidad De Medida:</label>
+                <div class="box" id="_unidadDeMedida_id">
+                    <c:out value="${ocupacionAuditor.unidadDeMedida}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ocupacionAuditor_porcentajeCompletado">
+                <label for="_porcentajeCompletado_id">Porcentaje Completado:</label>
+                <div class="box" id="_porcentajeCompletado_id">
+                    <c:out value="${ocupacionAuditor.porcentajeCompletado}"/>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </c:if>
+        <c:if test="${empty ocupacionAuditor}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+
+        <spring:url value="/ocupacionauditor/" var="volver">
+            <spring:param name="idPlan" value="${ocupacionAuditor.planAnual.id}"/>
+            <spring:param name="auditor" value="${ocupacionAuditor.auditor.id}"/>
+        </spring:url>
+        <input type="button" value="Volver" onclick="document.location='${volver}'"/>
+
+    </div>
+</div>

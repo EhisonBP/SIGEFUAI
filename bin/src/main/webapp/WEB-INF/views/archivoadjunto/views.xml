@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="archivoadjunto/list">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="archivoadjunto/show">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="archivoadjunto/create">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="archivoadjunto/update">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/index">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/index.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByActividadActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByActividadActuacion.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByAvanceActuaciones">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByAvanceActuaciones.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByLoginUsuario">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByLoginUsuario.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByAlegato">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByAlegato.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByHallazgo">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByHallazgo.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByRespuesta">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByRespuesta.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesBySeccionDefault">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesBySeccionDefault.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByAvanceActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByAvanceActuacion.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByRequerimiento">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByRequerimiento.jspx"/>
+    </definition>
+<definition extends="default" name="archivoadjunto/findArchivoAdjuntoesByPersonalizacion">
+        <put-attribute name="body" value="/WEB-INF/views/archivoadjunto/findArchivoAdjuntoesByPersonalizacion.jspx"/>
+    </definition>
+</tiles-definitions>

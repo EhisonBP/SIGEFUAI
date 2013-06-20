@@ -1,0 +1,44 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            plugins : "paste",
+            elements : "_descripcion_id",
+            theme : "simple"
+
+        });
+    </script>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="x_title_div">
+        <spring:message code="label.recomendacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Actualizar Recomendación'}})); </script>
+        <spring:url value="/recomendacion/${recomendacion.id}" var="form_url"/>
+        <div id="roo_recomendacion_observacion">
+            <label for="_observacion_id">Hallazgo:</label>
+            <div id="_observacion_id">
+                <spring:url value="/observacion/${recomendacion.observacion.id}" var="url_observacion"/>
+                <a href="${url_observacion}" >AG-${recomendacion.observacion.referencia}</a>
+            </div>
+        </div>
+        <br/>
+        <form:form id="" action="${form_url}" method="put" modelAttribute="recomendacion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_recomendacion_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <form:textarea cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>               
+            </div>            
+            <br/>
+            <div class="submit" id="roo_recomendacion_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

@@ -1,0 +1,245 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.personalizacion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty personalizacion}">
+            <div id="roo_personalizacion_nombreInstitucion">
+                <label for="_nombreInstitucion_id">Nombre Institucion:</label>
+                <div class="box" id="_nombreInstitucion_id">
+                    <c:out value="${personalizacion.nombreInstitucion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_correoSunai">
+                <label for="_correoSunai_id">Correo Sunai:</label>
+                <div class="box" id="_correoSunai_id">
+                    <c:out value="${personalizacion.correoSunai}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_archivoImagen">
+                <label for="_archivoImagen_id">Archivo Imagen:</label>
+                <div class="box" id="_archivoImagen_id">
+                    <c:out value="${personalizacion.archivoImagen}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_nombreTutelar">
+                <label for="_nombreTutelar_id">Nombre Tutelar:</label>
+                <div class="box" id="_nombreTutelar_id">
+                    <c:out value="${personalizacion.nombreTutelar}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_tipoOrganismo">
+                <label for="_tipoOrganismo_id">Tipo Organismo:</label>
+                <div class="box" id="_tipoOrganismo_id">
+                    <c:out value="${personalizacion.tipoOrganismo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_web">
+                <label for="_web_id">Web:</label>
+                <div class="box" id="_web_id">
+                    <c:out value="${personalizacion.web}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_direccion">
+                <label for="_direccion_id">Direccion:</label>
+                <div class="box" id="_direccion_id">
+                    <c:out value="${personalizacion.direccion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_ciudad">
+                <label for="_ciudad_id">Ciudad:</label>
+                <div class="box" id="_ciudad_id">
+                    <c:out value="${personalizacion.ciudad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_estado">
+                <label for="_estado_id">Estado:</label>
+                <div class="box" id="_estado_id">
+                    <c:out value="${personalizacion.estado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_nombreMaximaAutoridad">
+                <label for="_nombreMaximaAutoridad_id">Nombre Maxima Autoridad:</label>
+                <div class="box" id="_nombreMaximaAutoridad_id">
+                    <c:out value="${personalizacion.nombreMaximaAutoridad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cargoMaximaAutoridad">
+                <label for="_cargoMaximaAutoridad_id">Cargo Maxima Autoridad:</label>
+                <div class="box" id="_cargoMaximaAutoridad_id">
+                    <c:out value="${personalizacion.cargoMaximaAutoridad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_telefonoMaster">
+                <label for="_telefonoMaster_id">Telefono Master:</label>
+                <div class="box" id="_telefonoMaster_id">
+                    <c:out value="${personalizacion.telefonoMaster}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_telefonoFax">
+                <label for="_telefonoFax_id">Telefono Fax:</label>
+                <div class="box" id="_telefonoFax_id">
+                    <c:out value="${personalizacion.telefonoFax}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_nombreCompletoAuditorInterno">
+                <label for="_nombreCompletoAuditorInterno_id">Nombre Completo Auditor Interno:</label>
+                <div class="box" id="_nombreCompletoAuditorInterno_id">
+                    <c:out value="${personalizacion.nombreCompletoAuditorInterno}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_condicionAuditorInterno">
+                <label for="_condicionAuditorInterno_id">Condicion Auditor Interno:</label>
+                <div class="box" id="_condicionAuditorInterno_id">
+                    <c:out value="${personalizacion.condicionAuditorInterno}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cedula">
+                <label for="_cedula_id">Cedula:</label>
+                <div class="box" id="_cedula_id">
+                    <c:out value="${personalizacion.cedula}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_profesion">
+                <label for="_profesion_id">Profesion:</label>
+                <div class="box" id="_profesion_id">
+                    <c:out value="${personalizacion.profesion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_tiempoEnElCargo">
+                <label for="_tiempoEnElCargo_id">Tiempo En El Cargo:</label>
+                <div class="box" id="_tiempoEnElCargo_id">
+                    <c:out value="${personalizacion.tiempoEnElCargo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_designadoSegun">
+                <label for="_designadoSegun_id">Designado Segun:</label>
+                <div class="box" id="_designadoSegun_id">
+                    <c:out value="${personalizacion.designadoSegun}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_experienciaAnos">
+                <label for="_experienciaAnos_id">Experiencia Anos:</label>
+                <div class="box" id="_experienciaAnos_id">
+                    <c:out value="${personalizacion.experienciaAnos}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_experienciaMeses">
+                <label for="_experienciaMeses_id">Experiencia Meses:</label>
+                <div class="box" id="_experienciaMeses_id">
+                    <c:out value="${personalizacion.experienciaMeses}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_telefonoOficina">
+                <label for="_telefonoOficina_id">Telefono Oficina:</label>
+                <div class="box" id="_telefonoOficina_id">
+                    <c:out value="${personalizacion.telefonoOficina}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_telefonoMovil">
+                <label for="_telefonoMovil_id">Telefono Movil:</label>
+                <div class="box" id="_telefonoMovil_id">
+                    <c:out value="${personalizacion.telefonoMovil}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_correouai">
+                <label for="_correouai_id">Correouai:</label>
+                <div class="box" id="_correouai_id">
+                    <c:out value="${personalizacion.correouai}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_correoInstitucional">
+                <label for="_correoInstitucional_id">Correo Institucional:</label>
+                <div class="box" id="_correoInstitucional_id">
+                    <c:out value="${personalizacion.correoInstitucional}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_correoPersonal">
+                <label for="_correoPersonal_id">Correo Personal:</label>
+                <div class="box" id="_correoPersonal_id">
+                    <c:out value="${personalizacion.correoPersonal}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cantAuditorInterno">
+                <label for="_cantAuditorInterno_id">Cant Auditor Interno:</label>
+                <div class="box" id="_cantAuditorInterno_id">
+                    <c:out value="${personalizacion.cantAuditorInterno}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cantDirectivos">
+                <label for="_cantDirectivos_id">Cant Directivos:</label>
+                <div class="box" id="_cantDirectivos_id">
+                    <c:out value="${personalizacion.cantDirectivos}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cantCoordinadores">
+                <label for="_cantCoordinadores_id">Cant Coordinadores:</label>
+                <div class="box" id="_cantCoordinadores_id">
+                    <c:out value="${personalizacion.cantCoordinadores}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cantProfesionales">
+                <label for="_cantProfesionales_id">Cant Profesionales:</label>
+                <div class="box" id="_cantProfesionales_id">
+                    <c:out value="${personalizacion.cantProfesionales}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cantTecnicos">
+                <label for="_cantTecnicos_id">Cant Tecnicos:</label>
+                <div class="box" id="_cantTecnicos_id">
+                    <c:out value="${personalizacion.cantTecnicos}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_cantNoProfesionales">
+                <label for="_cantNoProfesionales_id">Cant No Profesionales:</label>
+                <div class="box" id="_cantNoProfesionales_id">
+                    <c:out value="${personalizacion.cantNoProfesionales}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_personalizacion_rif">
+                <label for="_rif_id">Rif:</label>
+                <div class="box" id="_rif_id">
+                    <c:out value="${personalizacion.rif}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty personalizacion}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

@@ -1,0 +1,274 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:sec="http://www.springframework.org/security/tags" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+
+        $(function() {
+            $( ".accordion" ).accordion({
+
+                collapsible: true,
+                active: false
+            });
+        });
+
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.requerimiento" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Requerimiento'}})); </script>
+        <c:if test="${not empty requerimiento}">
+            <div id="roo_actividadGeneral_codigoActuacion">
+                <label for="_codigoActuacion_id">Actuación:</label>
+                <div class="box" id="_codigoActuacion_id">
+                    <spring:url value="/actuacion/${requerimiento.actuacion.id}" var="url_actuacion"/>
+                    <a href="${url_actuacion}" >${requerimiento.actuacion.nombre}</a>
+                </div>
+            </div>
+            <br/>
+            <div style="font-weight: bold"><c:out value="Comunicación de solicitud de información y/o documentos"/></div>
+            <br/>
+            <div id="roo_requerimiento_numeroSolicitud">
+                <label for="_numeroSolicitud_id">Número de Solicitud:</label>
+                <div class="box" id="_numeroSolicitud_id">
+                    <c:out value="${requerimiento.numeroSolicitud}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_fechaSolicitud">
+                <label for="_fechaSolicitud_id">Fecha:</label>
+                <div class="box" id="_fechaSolicitud_id">
+                    <fmt:formatDate pattern="${requerimiento_fechaSolicitud_date_format}" value="${requerimiento.fechaSolicitud}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_unidad">
+                <label for="_unidad_id">Dependencia Sujeta a Control:</label>
+                <div class="box" id="_unidad_id">
+                    <c:out value="${requerimiento.unidad.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_asunto">
+                <label for="_asunto_id">Asunto:</label>
+                <div class="box" id="_asunto_id">
+                    <c:out escapeXml="false" value="${requerimiento.asunto}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_observaciones">
+                <label for="_observaciones_id">Observaciones:</label>
+                <div class="box" id="_observaciones_id">
+                    <c:out escapeXml="false" value="${requerimiento.observaciones}"/>
+                </div>
+            </div>
+            <br/>                        
+            <br/>
+            <div id="roo_requerimiento_estadoRequerimiento">
+                <label for="_estadoRequerimiento_id">Estatus:</label>
+                <div class="box" id="_estadoRequerimiento_id">
+                    <c:out value="${requerimiento.estadoRequerimiento.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_dias">
+                <label for="_dias_id">Tiempo Transcurrido desde la Solicitud:</label>
+                <div class="box" id="_dias_id">
+                    <c:if test="${not empty dias}">
+                        <c:out value="${dias}"/>
+                    </c:if>
+                    <c:if test="${empty dias}">
+                        <c:out value="--"/>
+                    </c:if>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_requerimiento_dias">
+                <label for="_dias_id">Tiempo Transcurrido entre la Solicitud y Respuesta:</label>
+                <div class="box" id="_dias_id">
+                    <c:if test="${not empty diasHabiles}">
+                        <c:out value="${diasHabiles}"/>
+                    </c:if>
+                    <c:if test="${empty diasHabiles}">
+                        <c:out value="--"/>
+                    </c:if>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            
+            <div id="accordionObjetivosEspecificos" class="accordion">
+                <h3><a href="#">Archivos Adjuntos (Memos)</a></h3>
+                <div>
+                    <c:if test="${empty archivosAdjuntosByRequerimiento}">
+                        <div style="font-style: italic"> No se encontraron archivos adjuntos para este requerimiento </div>
+                    </c:if>
+                    <c:if test="${not empty archivosAdjuntosByRequerimiento}">
+
+                        <table id="menuTable1" width="300">
+                            <thead>
+                                <tr><th>Referencia</th>
+                                    <th>Nombre</th>
+                                    <th>Extensión</th>
+                                    <th>Tamaño</th>
+                                    <th/>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                        <th/>
+                                        <th/>
+                                    </sec:authorize>
+                                </tr>
+                            </thead>
+                            <c:forEach items="${archivosAdjuntosByRequerimiento}" var="archivo">
+                                <tr>
+                                    <td>
+                                        <c:out value="${archivo.codigo}"/>
+                                    </td>
+                                    <td>
+                                        <c:out value="${fn:substring(archivo.nombre, 0, 50)}"/>
+                                    </td>
+
+                                    <td>
+                                        <c:out value="${archivo.extension}"/>
+                                    </td>
+
+                                    <td>
+                                        <c:out value="${archivo.filesize}Kb"/>
+                                    </td>
+                                    <td>
+                                        <spring:url value="/archivoadjunto/${archivo.id}" var="show_form_url"></spring:url>
+                                        <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                        <form:form id="" action="${show_form_url}" method="get">
+                                            <input type="hidden" name="idReturn" value="${requerimiento.id}"/>
+                                            <input type="hidden" name="returnURL" value="requerimiento"/>
+                                            <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                            <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                        </form:form>
+                                    </td>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                                        <td><spring:url value="/archivoadjunto/${archivo.id}/form" var="update_form_url"></spring:url>
+                                            <spring:url value="/static/images/update.png" var="update_image_url"></spring:url>
+                                            <form:form id="" action="${update_form_url}" method="get">
+                                                <input type="hidden" name="idReturn" value="${requerimiento.id}"/>
+                                                <input type="hidden" name="returnURL" value="requerimiento"/>
+                                                <spring:message arguments="${entity_label}" code="entity.update" var="update_label"></spring:message>
+                                                <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}" />
+                                            </form:form>
+                                        </td>
+
+                                        <td>
+                                            <spring:url value="/archivoadjunto/${archivo.id}" var="delete_form_url"/>
+
+                                            <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                            <form:form id="" action="${delete_form_url}" method="DELETE">
+                                                <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                                <input alt="${delete_label}" class="image" src="${delete_image_url}" title="${delete_label}" type="image" value="${delete_label}"/>
+                                                <input type="hidden" name="idReturn" value="${requerimiento.id}"/>
+                                                <input type="hidden" name="returnURL" value="requerimiento"/>
+                                                <c:if test="${not empty param.page}">
+                                                    <input name="page" type="hidden" value="${param.page}"/>
+                                                </c:if>
+                                                <c:if test="${not empty param.size}">
+                                                    <input name="size" type="hidden" value="${param.size}"/>
+                                                </c:if>
+                                            </form:form>
+                                        </td>
+                                    </sec:authorize>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:if>
+                    <br/>
+
+                    <!-- ***************** AGREGAR ARCHIVO ADJUNTO ********************* -->
+                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                        <spring:url value="/archivoadjunto/form" var="web_mvc_jsp_create_archivoadjunto_menu_item_url">
+                            <spring:param name="idReturn" value="${requerimiento.id}" > </spring:param>
+                            <spring:param name="returnURL" value="requerimiento" > </spring:param>
+                        </spring:url>
+                        <input type="button" value="Adjuntar Archivo" onclick="document.location='${web_mvc_jsp_create_archivoadjunto_menu_item_url}'"/>
+                    </sec:authorize>
+                </div>
+
+                <h3><a href="#">Respuestas</a></h3>
+                <div><c:if test="${not empty respuestas}">
+                        <table id="menuTable1" width="300">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Fecha</th>
+                                    <th/>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE, ROLE_UNIDAD_AUDITADO">
+                                        <th/>
+                                        <th/>
+                                    </sec:authorize>
+                                </tr>
+                            </thead>
+                            <c:forEach items="${respuestas}" var="respuesta">
+                                <tr>
+                                    <td>
+                                        <c:out value="${fn:substring(respuesta.numero, 0, 10)}"/>
+                                    </td>
+                                    <td>
+                                        <fmt:formatDate pattern="${respuesta_fecha_date_format}" value="${respuesta.fecha}"/>
+                                    </td>
+                                    <td>
+                                        <spring:url value="/respuesta/${respuesta.id}" var="show_form_url"/>
+                                        <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                        <form:form id="" action="${show_form_url}" method="get">
+                                            <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                            <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                        </form:form>
+                                    </td>
+                                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE, ROLE_UNIDAD_AUDITADO">
+                                        <td>
+                                            <spring:url value="/respuesta/${respuesta.id}/form" var="update_form_url"/>
+                                            <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                            <form:form id="" action="${update_form_url}" method="get">
+                                                <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                                <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                            </form:form>
+                                        </td>
+                                        <td>
+                                            <spring:url value="/respuesta/${respuesta.id}" var="delete_form_url"/>
+                                            <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                            <form:form id="" action="${delete_form_url}" method="DELETE">
+                                                <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                                <input alt="${delete_label}" class="image" src="${delete_image_url}" title="${delete_label}" type="image" value="${delete_label}"/>
+                                                <c:if test="${not empty param.page}">
+                                                    <input name="page" type="hidden" value="${param.page}"/>
+                                                </c:if>
+                                                <c:if test="${not empty param.size}">
+                                                    <input name="size" type="hidden" value="${param.size}"/>
+                                                </c:if>
+                                            </form:form>
+                                        </td>
+                                    </sec:authorize>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:if>
+                    <c:if test="${empty respuestas}">
+                        <div id="roo_respuestas">
+                            <div style="font-style: italic"> No se encontraron respuestas</div>
+                        </div>
+                    </c:if>
+                    <br/>
+                    <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE, ROLE_UNIDAD_AUDITADO">
+                        <spring:url value="/respuesta/form" var="web_mvc_jsp_create_respuesta_item_url"/>
+                        <input type="button" value="Agregar Respuesta" onclick="document.location='${web_mvc_jsp_create_respuesta_item_url}?idRequerimiento=${requerimiento.id}'"/>
+                    </sec:authorize>
+                </div>
+            </div>
+            <br/>
+            <spring:url value="/requerimiento/actualizarEstatus/${requerimiento.id}/form" var="actualizar_estatus_url"/>
+            <input type="button" value="Actualizar Estatus" onclick="document.location='${actualizar_estatus_url}'"/>
+
+        </c:if>
+        <c:if test="${empty requerimiento}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+            <br/>
+        </c:if>      
+    </div>
+        <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+</script>
+</div>

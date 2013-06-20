@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="cargoauditor/list">
+        <put-attribute name="body" value="/WEB-INF/views/cargoauditor/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="cargoauditor/show">
+        <put-attribute name="body" value="/WEB-INF/views/cargoauditor/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="cargoauditor/create">
+        <put-attribute name="body" value="/WEB-INF/views/cargoauditor/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="cargoauditor/update">
+        <put-attribute name="body" value="/WEB-INF/views/cargoauditor/update.custom.jspx"/>
+    </definition>
+</tiles-definitions>

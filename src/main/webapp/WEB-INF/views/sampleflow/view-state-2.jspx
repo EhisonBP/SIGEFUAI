@@ -1,0 +1,31 @@
+<div
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:form="http://www.springframework.org/tags/form"
+    >
+	<jsp:output omit-xml-declaration="yes"/>
+	<script type="text/javascript">dojo.require("dijit.TitlePane");</script>
+	<spring:message var="title" code="webflow.state2.title" />
+	<div id="_title">
+		<script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title}'}})); </script>
+		<h1>${title}</h1>
+
+
+
+		<p><spring:message code="webflow.state2.message" /></p>	
+		<form method="post" >
+
+                    <div id="roo_actuacion_codigo">
+                        <label for="_codigo_id">Codigo:</label>
+
+                        El formulario tiene: ${elformulario.dummyText}
+                    </div>
+
+			<div class="submit">
+				<spring:message var="end" code="button.end" />
+				<input type="submit" id="cancel" name="_eventId_cancel" value="${end}"/>	
+			</div>		
+		</form>
+	</div>
+</div>

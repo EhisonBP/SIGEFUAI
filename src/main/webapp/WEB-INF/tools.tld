@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+* tools.tld
+* copyright (c) 2004 by Edward Rayl. All rights reserved.
+-->
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+version="2.0">
+
+<description>EL functions for the Tools project</description>
+<tlib-version>1.0</tlib-version>
+<short-name>tools</short-name>
+<uri>http://edwardrayl.com/taglibs/tools</uri>
+
+<function>
+<description>Función que recibe un entero y retorna un String con esa cantidad de espacios</description>
+<name>obtenerEspacios</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.String obtenerEspacios(int)</function-signature>
+</function>
+
+<function>
+<description>Función que recibe un entero entre 1 y 12 y retorna un String indicando a cuál mes corresponde el entero</description>
+<name>obtenerMes</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.String obtenerMes(int)</function-signature>
+</function>
+
+<function>
+<description>Función que recibe una colección y un objeto retorna un boolean diciendo si el objeto existe en esa colección</description>
+<name>contains</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.Boolean contains(java.lang.String[], java.lang.String)</function-signature>
+</function>
+
+<function>
+<description>Función que recibe una colección de auditores y busca en ella el usuario loggeado</description>
+<name>usuarioEstaAsignado</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.Boolean usuarioEstaAsignado(java.util.Set)</function-signature>
+</function>
+
+<function>
+<description>Función que retorna el nombre del usuario que inició sesión</description>
+<name>usuarioLoggeado</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.String usuarioLoggeado()</function-signature>
+</function>
+
+<function>
+<description>Función que retorna el nombre de la institucion donde esta instalado el sistema</description>
+<name>getNombreInstitucion</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.String getNombreInstitucion()</function-signature>
+</function>
+
+<function>
+<description>Función que retorna el correo electrónico del usuario SUNAI encargado de monitorear la Unidad</description>
+<name>obtenerCorreoSunai</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.String obtenerCorreoSunai()</function-signature>
+</function>
+
+<function>
+<description>Función que retorna la fecha actual en formato DD/MM/YYYY</description>
+<name>getCurrentDate</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.String getCurrentDate()</function-signature>
+</function>
+
+</taglib>

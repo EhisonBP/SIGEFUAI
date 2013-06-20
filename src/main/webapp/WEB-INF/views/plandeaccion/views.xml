@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="plandeaccion/list">
+        <put-attribute name="body" value="/WEB-INF/views/plandeaccion/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plandeaccion/show">
+        <put-attribute name="body" value="/WEB-INF/views/plandeaccion/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plandeaccion/create">
+        <put-attribute name="body" value="/WEB-INF/views/plandeaccion/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="plandeaccion/update">
+        <put-attribute name="body" value="/WEB-INF/views/plandeaccion/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="plandeaccion/findPlanDeAccionsByObservacion">
+        <put-attribute name="body" value="/WEB-INF/views/plandeaccion/findPlanDeAccionsByObservacion.jspx"/>
+    </definition>
+</tiles-definitions>

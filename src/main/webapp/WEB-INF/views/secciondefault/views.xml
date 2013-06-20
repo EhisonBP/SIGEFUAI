@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="secciondefault/list">
+        <put-attribute name="body" value="/WEB-INF/views/secciondefault/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="secciondefault/show">
+        <put-attribute name="body" value="/WEB-INF/views/secciondefault/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="secciondefault/create">
+        <put-attribute name="body" value="/WEB-INF/views/secciondefault/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="secciondefault/update">
+        <put-attribute name="body" value="/WEB-INF/views/secciondefault/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="secciondefault/findSeccionDefaultsBySeccionDefault">
+        <put-attribute name="body" value="/WEB-INF/views/secciondefault/findSeccionDefaultsBySeccionDefault.jspx"/>
+    </definition>
+<definition extends="default" name="secciondefault/findSeccionDefaultsByBiblioteca">
+        <put-attribute name="body" value="/WEB-INF/views/secciondefault/findSeccionDefaultsByBiblioteca.jspx"/>
+    </definition>
+</tiles-definitions>

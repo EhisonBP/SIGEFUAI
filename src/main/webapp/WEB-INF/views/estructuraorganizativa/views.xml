@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="estructuraorganizativa/list">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="estructuraorganizativa/show">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="estructuraorganizativa/create">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="estructuraorganizativa/update">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="estructuraorganizativa/findEstructuraOrganizativasByNombreUnidadEquals">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/findEstructuraOrganizativasByNombreUnidadEquals.jspx"/>
+    </definition>
+<definition extends="default" name="estructuraorganizativa/findEstructuraOrganizativasByRif">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/findEstructuraOrganizativasByRif.jspx"/>
+    </definition>
+<definition extends="default" name="estructuraorganizativa/findEstructuraOrganizativasByVerificarUnidad">
+        <put-attribute name="body" value="/WEB-INF/views/estructuraorganizativa/findEstructuraOrganizativasByVerificarUnidad.jspx"/>
+    </definition>
+</tiles-definitions>

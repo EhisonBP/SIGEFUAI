@@ -1,0 +1,57 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require("dijit.TitlePane")</script>
+    <div id="_title">
+        <spring:message var="app_name" code="application.name" />
+        <spring:message var="title" code="welcome.titlepane" arguments="${app_name}" />
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title}'}})); </script>
+        <h3>Tareas disponibles</h3>
+    </div>
+
+        <c:if test="${not empty unavailable}">
+            <p style="color: red;">El servicio de tareas no esta disponible temporalmente. Por favor intente nuevamente mas tarde o contacte al administrador del sistema.</p>
+        </c:if>
+
+    <table id="menuTable1" width="300">
+        <thead>
+            <tr>
+                <th>Descripcion</th>
+                <th/>
+                <th/>
+                <th/>
+            </tr>
+        </thead>
+        <c:forEach items="${tasks}" var="task">
+            <tr>
+                <td>
+                    <c:out value="${task.description}"/>
+                </td>
+                <td>
+                    <spring:url value="/humantask/${task.id}" var="show_form_url"/>
+                    <spring:url value="/static/images/show.png" var="show_image_url"/>
+                    <form:form id="" action="${show_form_url}" method="get">
+                        <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                        <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                    </form:form>
+                </td>
+                <td>
+                    <spring:url value="/humantask/claim/${task.id}" var="show_form_url"/>
+                    <spring:url value="/static/images/show.png" var="show_image_url"/>
+                    <form:form id="" action="${show_form_url}" method="get">
+                        <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                        <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                    </form:form>
+                </td>
+
+                <td>
+                    <spring:url value="/humantask/complete/${task.id}" var="show_form_url"/>
+                    <spring:url value="/static/images/show.png" var="show_image_url"/>
+                    <form:form id="" action="${show_form_url}" method="get">
+                        <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                        <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                    </form:form>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>

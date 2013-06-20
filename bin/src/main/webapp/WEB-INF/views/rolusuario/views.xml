@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="rolusuario/list">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="rolusuario/show">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="rolusuario/create">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="rolusuario/update">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="rolusuario/findRolUsuariosByNombreEquals">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/findRolUsuariosByNombreEquals.jspx"/>
+    </definition>
+<definition extends="default" name="rolusuario/findRolUsuariosByNombreNotEquals">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/findRolUsuariosByNombreNotEquals.jspx"/>
+    </definition>
+<definition extends="default" name="rolusuario/findRolUsuariosByLife">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/findRolUsuariosByLife.jspx"/>
+    </definition>
+<definition extends="default" name="rolusuario/findRolUsuariosByTipoRol">
+        <put-attribute name="body" value="/WEB-INF/views/rolusuario/findRolUsuariosByTipoRol.jspx"/>
+    </definition>
+</tiles-definitions>

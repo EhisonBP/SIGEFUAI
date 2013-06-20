@@ -1,0 +1,71 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.otraactividad" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Actividad (Otras Actividades)'}})); </script>
+        <c:if test="${not empty otraActividad}">
+            <div id="roo_otraActividad_plan">
+                <label for="_plan_id">Plan Anual:</label>
+                <div class="box" id="_plan_id">                    
+                    <spring:url value="/plananual/${planAnual.id}" var="url_planAnual"/>
+                    <a href="${url_planAnual}" >${planAnual.anoFiscal}</a>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_numero">
+                <label for="_numero_id">Número:</label>
+                <div class="box" id="_numero_id">
+                    <c:out value="${otraActividad.numero}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_descripcionCorta">
+                <label for="_descripcionCorta_id">Descripción Corta:</label>
+                <div class="box" id="_descripcionCorta_id">
+                    <c:out value="${otraActividad.descripcionCorta}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_objetivo">
+                <label for="_objetivo_id">Objetivo General:</label>
+                <div class="box" id="_objetivo_id">
+                    <c:out escapeXml="false" value="${otraActividad.objetivo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_fechaInicio">
+                <label for="_fechaInicio_id">Fecha de Inicio:</label>
+                <div class="box" id="_fechaInicio_id">
+                    <fmt:formatDate pattern="${otraActividad_fechaInicio_date_format}" value="${otraActividad.fechaInicio}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_fechaFin">
+                <label for="_fechaFin_id">Fecha de Finalización:</label>
+                <div class="box" id="_fechaFin_id">
+                    <fmt:formatDate pattern="${otraActividad_fechaFin_date_format}" value="${otraActividad.fechaFin}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_unidad">
+                <label for="_unidad_id">Dependencia:</label>
+                <div class="box" id="_unidad_id">
+                    <c:out value="${otraActividad.unidad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_otraActividad_unidadDeMedida">
+                <label for="_unidadDeMedida_id">Unidad De Medida:</label>
+                <div class="box" id="_unidadDeMedida_id">
+                    <c:out value="${otraActividad.unidadDeMedida.nombre}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty otraActividad}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

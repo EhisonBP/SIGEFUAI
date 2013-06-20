@@ -1,0 +1,96 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.DateTextBox');dojo.require('dijit.form.FilteringSelect');</script>
+    <div id="_title_div">
+        <spring:message code="label.plandeaccion" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.update" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <spring:url value="/plandeaccion/${planDeAccion.id}" var="form_url"/>
+        <form:form action="${form_url}" method="PUT" modelAttribute="planDeAccion">
+            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+            <div id="roo_planDeAccion_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <form:input cssStyle="width:250px" id="_descripcion_id" maxlength="30" path="descripcion" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
+                <spring:message arguments="Descripcion" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Descripcion,(${field_required})" code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_descripcion_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : true}})); </script>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_fechaCierre">
+                <label for="_fechaCierre_id">Fecha Cierre:</label>
+                <form:input cssStyle="width:250px" id="_fechaCierre_id" maxlength="30" path="fechaCierre" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_fechaCierre_error_id" path="fechaCierre"/>
+                <spring:message arguments="Fecha Cierre" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fecha Cierre," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaCierre_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaCierre_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${planDeAccion_fechaCierre_date_format}', required : false}, datePattern : '${planDeAccion_fechaCierre_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_unidad">
+                <c:if test="${not empty unidads}">
+                    <label for="_unidad_id">Unidad:</label>
+                    <form:select cssStyle="width:250px" id="_unidad_id" path="unidad">
+                        <form:options itemValue="id" items="${unidads}"/>
+                    </form:select>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_estadoPlanDeAccion">
+                <c:if test="${not empty estadoplandeaccions}">
+                    <label for="_estadoPlanDeAccion_id">Estado Plan De Accion:</label>
+                    <form:select cssStyle="width:250px" id="_estadoPlanDeAccion_id" path="estadoPlanDeAccion">
+                        <form:options itemValue="id" items="${estadoplandeaccions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlanDeAccion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_observacion">
+                <c:if test="${not empty observacions}">
+                    <label for="_observacion_id">Observacion:</label>
+                    <form:select cssStyle="width:250px" id="_observacion_id" path="observacion">
+                        <form:options itemValue="id" items="${observacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_observacion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_fechaCierre2">
+                <label for="_fechaCierre2_id">Fecha Cierre2:</label>
+                <form:input cssStyle="width:250px" id="_fechaCierre2_id" maxlength="30" path="fechaCierre2" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_fechaCierre2_error_id" path="fechaCierre2"/>
+                <spring:message arguments="Fecha Cierre2" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fecha Cierre2," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaCierre2_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaCierre2_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${planDeAccion_fechaCierre2_date_format}', required : false}, datePattern : '${planDeAccion_fechaCierre2_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div id="roo_planDeAccion_fechaSeguimiento">
+                <label for="_fechaSeguimiento_id">Fecha Seguimiento:</label>
+                <form:input cssStyle="width:250px" id="_fechaSeguimiento_id" maxlength="30" path="fechaSeguimiento" size="0"/>
+                <br/>
+                <form:errors cssClass="errors" id="_fechaSeguimiento_error_id" path="fechaSeguimiento"/>
+                <spring:message arguments="Fecha Seguimiento" code="field.invalid" var="field_invalid"/>
+                <spring:message code="field.required" var="field_required"/>
+                <spring:message argumentSeparator="," arguments="Fecha Seguimiento," code="field.simple.validation" var="field_validation"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaSeguimiento_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaSeguimiento_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${planDeAccion_fechaSeguimiento_date_format}', required : false}, datePattern : '${planDeAccion_fechaSeguimiento_date_format}'}})); </script>
+            </div>
+            <br/>
+            <div class="submit" id="roo_planDeAccion_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="${update_button}"/>
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+        </form:form>
+    </div>
+</div>

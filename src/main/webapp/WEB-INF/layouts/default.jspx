@@ -1,0 +1,763 @@
+                                           
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+
+
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:tiles="http://tiles.apache.org/tags-tiles"
+    xmlns:form="http://www.springframework.org/tags/form"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:roo="urn:jsptagdir:/WEB-INF/tags" 
+    xmlns:tools="http://edwardrayl.com/taglibs/tools"
+    xmlns:sec="http://www.springframework.org/security/tags"
+    >
+
+    <!--<jsp:output doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
+                doctype-root-element="html"
+                doctype-system="http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"
+                omit-xml-declaration="yes"/>-->
+
+    <jsp:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+                doctype-root-element="html"
+                doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+                omit-xml-declaration="yes"/>
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <!--Doctype -->
+
+
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <meta name="description" content="SIGEFUAI - Sistema de Información Gerencial de Fortalecimiento de las Unidades de Auditoría Interna" />
+        <meta name="keywords" content="SIGEFUAI, Sistema, Información, Gerencial, Fortalecimiento, Unidades, Auditoría, Interna" />
+        <meta name="author" content="CNTI" />
+        
+        <!-- SE ELIMINA POR ERRORES W3C
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        -->
+        <spring:theme code="styleSheet" var="roo_css"/>
+        <c:if test="${empty param.print}">
+            <spring:url value="/${roo_css}" var="roo_css_url"/>
+
+            <spring:url value="/resources/dojo-release-1.5.0/dojo/dojo.js" var="dojo_url"/>
+            <spring:url value="/resources/dojo-release-1.5.0/dijit/themes/tundra/tundra.css" var="tundra_url"/>
+            <spring:url value="/resources/dojo-release-1.5.0/spring/Spring.js" var="spring_url"/>
+            <spring:url value="/resources/dojo-release-1.5.0/spring/Spring-Dojo.js" var="spring_dojo_url"/>
+            <spring:url value="/resources/tinymce2/jscripts/tiny_mce/tiny_mce.js" var="tinymce_url"/>
+            <spring:url value="/resources/jquery/js/jquery-1.4.2.min.js" var="jquery_url"/>
+            <spring:url value="/resources/jquery/js/jquery-ui-1.8.6.custom.min.js" var="jqueryui_url"/>
+            <spring:url value="/resources/jquery/css/smoothness/jquery-ui-1.8.6.custom.css" var="jqueryccs_url"/>
+            <spring:url value="/resources/tiny_mce/plugins/table/table.htm" var="tinymce_plugins_url"/>
+            <spring:url value="/resources/pagination/jquery.tablePagination.0.2.min.js" var="pagination_url"/>
+            <spring:url value="/resources/js/wyswygCustom.js" var="wyswygCustom" />
+            <spring:url value="/resources/js/breadcrumb.js" var="breadcrumb_url" />
+            <spring:url value="/resources/js/readCookie.js" var="readCookie_url" />
+
+            <spring:url value="/static/images/first.gif" var="paginacion_first_url" />
+            <spring:url value="/static/images/last.gif" var="paginacion_last_url" />
+            <spring:url value="/static/images/next.gif" var="paginacion_next_url" />
+            <spring:url value="/static/images/prev.gif" var="paginacion_prev_url" />
+
+            <spring:url value="/comentario" var="urlComentario" />
+
+            <script type="text/javascript">
+                var paginacion_first_url = '${paginacion_first_url}';
+                var paginacion_last_url = '${paginacion_last_url}';
+                var paginacion_next_url = '${paginacion_next_url}';
+                var paginacion_prev_url = '${paginacion_prev_url}';
+                var urlComentario = '${urlComentario}';
+            </script>
+
+            <spring:url value="/static/images/favicon.ico" var="favicon" />
+            <link rel="stylesheet" type="text/css" media="screen" href="${roo_css_url}"/><!-- //required for FF3 and Opera -->
+            <link rel="stylesheet" type="text/css" href="${tundra_url}"/><!-- //required for FF3 and Opera -->
+            <link rel="stylesheet" type="text/css" href="${jqueryccs_url}"/><!-- //required for FF3 and Opera -->
+            <link rel="SHORTCUT ICON" href="${favicon}" />
+
+            <script src="${readCookie_url}" type="text/javascript" ><!-- //required for FF3 and Opera --></script>
+            <script type="text/javascript"><![CDATA[
+                var djConfig={locale:readCookie('locale')};
+            ]]>
+            </script>
+            
+            <script src="${dojo_url}" type="text/javascript" ><!-- //required for FF3 and Opera --></script>
+            <script src="${spring_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${spring_dojo_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${tinymce_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${jquery_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${jqueryui_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${tinymce_plugins_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${pagination_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>            
+            <script src="${wyswygCustom}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+            <script src="${breadcrumb_url}" type="text/javascript"><!-- //required for FF3 and Opera --></script>
+
+            <script type="text/javascript">dojo.require("dojo.parser");</script>
+
+    
+        </c:if>
+        <c:if test="${not empty param.print}">
+            <spring:url value="/static/styles/print.css" var="roo_css_url"/>
+            <link rel="stylesheet" type="text/css" media="print" href="${roo_css_url}"/><!-- //required for FF3 and Opera -->
+            <link rel="stylesheet" type="text/css" media="screen" href="${roo_css_url}"/><!-- //required for FF3 and Opera -->
+        </c:if>
+
+        <spring:message code="application.name" var="app_name"/>
+        <title><spring:message code="welcome.h3" arguments="${app_name}" /></title>
+        
+    </head>
+    <c:if test="${not empty param.print}">
+        <c:set var="onBodyLoad" value="window.print(); window.close();"/>
+    </c:if>
+    <body class="tundra spring" onload="${onBodyLoad}" style="padding-top: 2%;">
+
+        <div id="wrapper">
+
+            <c:if test="${empty param.print}">
+                <tiles:insertAttribute name="menu" ignore="true"/>
+
+                <div id="main">
+                   <c:if test="${pageContext.request.userPrincipal != null}">
+                        <!-- <spring:url value="/personalizacion/logo/" var="logo_url" />
+                        <div style="position: absolute; margin-top: -10%"><img src="${logo_url}" alt="logo_institucion" width="100" height="35"/></div>
+-->
+                        <!--<div style="text-align: left">
+                            <script type="text/javascript"><![CDATA[                                
+                                breadcrumbs();
+                            ]]></script>
+                        </div>  -->
+                        <div style="text-align: right"><c:out value="Bienvenido, ${tools:usuarioLoggeado()}"/></div>
+                    </c:if>
+<!--  aaa -->
+<script type="text/javascript">
+            //Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Plan de Trabajo Anual'}}));
+            $(function() {
+                $( "#accordion1" ).accordion({
+                    collapsible: true,
+                    autoHeight: false,
+                    //active: true
+                });
+            });
+        </script>
+<c:if test="${pageContext.request.userPrincipal != null}">
+<div id="accordion1">
+<h3 style="color: blue;"><a href="#"><b>Seleccione el Tipo de Operación de su Interés:</b> </a></h3>  
+ <div class="menuT">
+			<table>
+				<sec:authorize ifAnyGranted="ROLE_ADMIN"> <!-- ADMINISTRADOR DEL SISTEMA (SUNAI) – SUN-04 -->
+                   <tr>
+				    <td>
+				    <!-- Cargar Estado -->
+					<spring:url value="/estado/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/MapaEstados.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Estado"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Estado</label>
+				    </td>
+				    <td>
+				    <!-- Cargar Codigo Area -->
+					<spring:url value="/codigoarea/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/Telefono.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Codigo Area"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Codigo Area</label>
+				    </td>
+				    <td>
+				    <!-- Cargar Tipo de Organismo -->
+					<spring:url value="/tipoorganismo/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/tipoorganismo.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Tipo de Organismo"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Tipo de Organismo</label>
+				    </td>
+				    <td>
+				    <!-- Cargar Organismo -->
+					<spring:url value="/organismoente/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/gobierno.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Organismo"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Organismos</label>
+				    </td>
+				   </tr>
+				   <tr>
+				    <td>
+				    <!-- Cargar Tipo Rol -->
+					<spring:url value="/tiporol/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/tipopersona.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Tipos de Roles"/>
+                       </a>
+                       <br></br>
+                        <label>Tipos de Roles</label>
+				    </td>
+				    <td>
+				    <!-- Cargar Tipo Persona Rif -->
+					<spring:url value="/tipopersonarif/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/tipopersona.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Tipo Persona Rif"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Tipo Persona Rif</label>
+				    </td>
+				    <td>
+				    <!-- Cargar Usuarios Administrativos -->
+					<spring:url value="/usuario/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/newUser.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Usuarios"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Usuarios </label>
+				    </td>
+				     <td>
+				    <!-- Cargar Roles de Usuario -->
+					<spring:url value="/rolusuario/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/tipopersona.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Roles de Usuario"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Roles de Usuario</label>
+				    </td>
+				   </tr>
+				   <tr>
+				     <td>
+				   <!-- Cargar Estado de Plan anual -->
+					<spring:url value="/estadoplan/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/tipopersona.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Estado de Plan anual"/>
+                       </a>
+                       <br></br>
+                        <label>Estado de Plan anual</label>
+				     </td>
+				      <td>
+				        <!--  Estado de Actuaciones -->
+					<spring:url value="/estadoactuacion/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/tipopersona.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Estado de Actuaciones"/>
+                       </a>
+                       <br></br>
+                        <label>Estado de Actuaciones</label>
+				      </td>
+				       <td>
+				      <!--  Reglas de Negocio -->
+					<spring:url value="/droolsrule/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/drools.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Reglas de Negocio"/>
+                       </a>
+                       <br></br>
+                        <label>Reglas de Negocio</label>
+				       </td>
+				          <td>
+				          <!--  Flujo de Trabajo -->
+					<spring:url value="/jbpmprocess/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/flow.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Flujo de Trabajo"/>
+                       </a>
+                       <br></br>
+                        <label>Flujo de Trabajo</label>
+				           </td>
+				   </tr>
+				   <tr>
+				   <td>
+				   <!--  Entrada de Bitacora -->
+					<spring:url value="/entradabitacora/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/auditoria.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Historial del Sistema"/>
+                       </a>
+                       <br></br>
+                        <label>Historial del Sistema</label>
+				   </td>
+				   <td>
+				   <!--  Cargar Ciudad -->
+					<spring:url value="/ciudad/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/MapaEstados.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Ciudad"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Ciudad</label>
+				   </td>
+				   <td>
+				   <!--  Cargar Municipios -->
+					<spring:url value="/municipios/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/MapaEstados.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Municipios"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Municipios</label>
+				   </td>
+				   <td>
+				   <!--  Cargar Reportes -->
+					<spring:url value="/reporte/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/reportes.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Reportes"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Reportes</label>
+				   </td>
+				   </tr>
+				</sec:authorize>
+				<sec:authorize ifAnyGranted="ROLE_SUNAI_COORDINADOR"><!-- Al Supervisor le faltan listal los PA x Inst-->
+				<tr>
+				  <td>
+				    <!-- Cargar Instruir PLan -->
+					<spring:url value="/instruirplan/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/instruirplan.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Instruir PLan"/>
+                       </a>
+                       <br></br>
+                        <label>Instruir PLan</label>
+				  </td>
+				  
+				    <td>
+				  <!-- Consultar Plan -->
+					<spring:url value="/plananual/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Consultar Plan"/>
+                       </a>
+                       <br></br>
+                        <label>Consultar PLan</label>
+				   </td>
+			
+				    <td>
+				  <!-- Consultar Plan -->
+					<spring:url value="/personalizacion/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/auditoria.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Unidades de Auditoria Interne Registradas"/>
+                       </a>
+                       <br></br>
+                        <label>Fichas de Identificación de las UAI</label>
+				   </td>
+				  				  
+
+				</tr>
+	           </sec:authorize><sec:authorize ifAnyGranted="ROLE_SUNAI_SUPERVISOR"><!-- Al Supervisor le faltan listal los PA x Inst-->
+				<tr>
+				  
+				  
+				    <td>
+				  <!-- Consultar Plan -->
+					<spring:url value="/plananual/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Consultar Plan"/>
+                       </a>
+                       <br></br>
+                        <label>Consultar PLan</label>
+				   </td>
+
+				    <td>
+				  <!-- Consultar Plan -->
+					<spring:url value="/personalizacion/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/auditoria.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Unidades de Auditoria Interne Registradas"/>
+                       </a>
+                       <br></br>
+                        <label>Fichas de Identificación de las UAI</label>
+				   </td>				  
+
+				</tr>
+	           </sec:authorize>
+	           <sec:authorize ifAnyGranted="ROLE_SUNAI_SUPERINTENDENTE">
+	           <tr>
+				    <td>
+				  <!-- Consultar PLan -->
+					<spring:url value="/plananual/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Consultar Plan"/>
+                       </a>
+                       <br></br>
+                        <label>Consultar PLan</label>
+				   </td>
+				   
+				    <td>
+				  <!-- Consultar Plan -->
+					<spring:url value="/personalizacion/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/auditoria.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Unidades de Auditoria Interne Registradas"/>
+                       </a>
+                       <br></br>
+                        <label>Fichas de Identificación de las UAI</label>
+				   </td>
+	             
+	             
+	           </tr>
+	           </sec:authorize>
+	           <sec:authorize ifAnyGranted="ROLE_SUNAI_ANALISTA">
+	           <tr>
+	              <td>
+	              <!-- Consultar PLan -->
+					<spring:url value="/plananual/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Consultar Plan"/>
+                       </a>
+                       <br></br>
+                        <label>Consultar PLan</label>
+	              </td>
+	           </tr>
+	           </sec:authorize>
+	           <sec:authorize ifAnyGranted="ROLE_ADMIN_INSTITUCION">
+	           <tr>
+	              <td>
+                        <!-- Cargar Estructura Organizativa -->
+					<spring:url value="/estructuraorganizativa/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/estructorganizativa.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Estructura Organizativa"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Estructura Organizativa</label>
+	             </td>
+	             <td>
+                        <!-- Cargar Estructura de cargos -->
+					<spring:url value="/estructuracargos/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/estructuraCargos.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Estructura de Cargos"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Estructura de Cargos</label>
+	             </td>
+	             <td>
+                        <!-- Cargar Usuarios de UAI -->
+					<spring:url value="/auditor/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/newUser.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Usuarios de UAI"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Usuarios de UAI</label>
+	             </td>
+	             <td>
+                        <!-- Modificar Organismo Ente -->
+					<spring:url value="/organismoente/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/gobierno.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Modificar Organismo Ente"/>
+                       </a>
+                       <br></br>
+                        <label>Modificar Organismo Ente</label>
+	             </td>
+	           </tr>
+	           <tr>
+	            <td>
+	                    <!--  Cargar Autoridad Maxima -->
+					<spring:url value="/autoridadmaxima/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/autoridadMaxima.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Cargar Municipios"/>
+                       </a>
+                       <br></br>
+                        <label>Cargar Autoridad Maxima</label>
+                 </td>
+                  <td>
+                  <!-- Vacio -->
+                  </td>
+                  <td>
+                  <!-- Vacio -->
+                  </td>
+                  <td>
+                  <!-- Vacio -->
+                  </td>       
+	           </tr>
+	           </sec:authorize>
+	           <sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE,ROLE_UNIDAD_COORDINADOR,ROLE_UNIDAD_AUDITOR">
+	           <tr>
+	             <td>
+	              <!-- Crear Actuaciones -->
+					<spring:url value="/actuacion/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Listar Actuaciones"/>
+                       </a>
+                       <br></br>
+                        <label>Listar Actuaciones</label>
+	             </td>
+	             <td>
+	              <!-- Crear Otras Actividades -->
+					<spring:url value="/otraactividad/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Listar Otras Actividades"/>
+                       </a>
+                       <br></br>
+                        <label>Listar Otras Actividades</label>
+	             </td>
+	             <td>
+	              <!-- Plan de Trabajo -->
+					<spring:url value="/plananual/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Plan de Trabajo"/>
+                       </a>
+                       <br></br>
+                        <label>Plan de Trabajo</label>
+	             </td>
+	             <td>
+	             <!-- Reportes -->
+					<spring:url value="/reporte/listuser" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/reportes.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Reportes"/>
+                       </a>
+                       <br></br>
+                        <label>Reportes</label>
+	             </td>
+	           </tr>
+	            </sec:authorize>
+	            
+	            <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITADO">
+	            <spring:url value="/auditado/actividades" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="Tareas"/>
+                       </a>
+			<br></br>
+                        <label>Tareas</label>
+	            </sec:authorize> 
+	            <!--  <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+	            <tr>
+	            <td>
+	              < PLan anual 
+					<spring:url value="/plananual/" var="create_url"/>
+                       <a href="${create_url}">
+                           <spring:url value="/static/images/listar.png" var="create_img_url"/>
+                           <spring:message arguments="${entity_label}" code="global.menu.new" var="add_message"/>
+                           <img alt="${add_message}" src="${create_img_url}" title="${add_message}"/>
+                       </a>
+                       <br></br>
+                        <label>Plan de Trabajo</label>
+	             </td>
+	            </tr>
+	            </sec:authorize> 
+	            -->
+			</table>
+		</div>
+		
+
+</div>
+
+</c:if>	
+<!-- aaa -->
+                   <!--   <c:if test="${not empty tasks}">
+
+                        <script type="text/javascript"><![CDATA[
+                            $(function() {
+                                $( "#accordion3" ).accordion({collapsible: true, active: 0});
+                            });
+                        ]]></script>
+                        <div id="accordion3">
+                            <h3><a href="#">Tareas pendientes para este elemento:</a></h3>
+
+                            <div>
+
+                                <c:if test="${not empty unavailable}">
+                                    <p style="color: red;">El servicio de tareas no esta disponible temporalmente. Por favor intente nuevamente mas tarde o contacte al administrador del sistema.</p>
+                                </c:if>
+
+                                <table id="tasksTable" width="300">
+                                    <thead>
+                                        <tr>
+                                            <th>Descripcion</th>
+                                            <th>Cerrar tarea</th>
+                                        </tr>
+                                    </thead>
+                                    <c:forEach items="${tasks}" var="task">
+                                        <tr>
+                                            <td>
+                                                <c:out escapeXml="false" value="${task.name}"/>
+                                            </td>
+                                            <td>
+                                                <script type="text/javascript"><![CDATA[
+
+                                            function confirmation() {
+                                                var answer = confirm("¿Está seguro/a marcar la tarea como realizada?")
+                                                if (answer){
+                                                    document.getElementById('elForm').submit();
+                                                }
+                                            }
+
+                                                ]]></script>
+                                                <spring:url value="/humantask/complete/${task.id}" var="show_form_url"/>
+                                                <spring:url value="/static/images/check.png" var="show_image_url"/>
+                                                <form:form id="elForm" action="${show_form_url}" method="post">
+                                                    <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                                    <a onclick="confirmation(); return false;" href="#" ><img alt="Marcar tarea como REALIZADA" src="${show_image_url}" title="Marcar tarea como REALIZADA"/></a>
+                                                    </form:form>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                    </c:if> -->
+
+
+
+                    <tiles:insertAttribute name="body" />
+
+
+                    <c:if test="${pageContext.request.userPrincipal != null}">
+
+                        <script type="text/javascript"><![CDATA[
+                    function imprimir() {
+                        var url = window.location.href;
+                        if (url.indexOf("?", 0) >= 0) {
+                            url = url + "\u0026" + "print=1";
+                        } else {
+                            url = url + "?print=1";
+                        }
+                        var w = window.open(url, "print", "status=0,toolbar=0,location=0,menubar=0,directories=0,resizable=0,scroolbars=0,height=10,width=10");
+
+                    }
+
+                ]]>
+                        </script>
+                        <spring:url value="/static/images/printer.png" var="printer_url"/>
+                        <div style="text-align: right"><a href="javascript:imprimir()"><img alt="Imprimir" src="${printer_url}"/> Imprimir esta pantalla</a></div>
+                            </c:if>
+
+
+
+
+                    <c:if test="${not empty objetoComentable}">
+
+                        <script type="text/javascript"><![CDATA[
+            $(function() {
+                $( "#accordion2" ).accordion({collapsible: true, active: false});
+            });
+                        ]]></script>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE,ROLE_UNIDAD_COORDINADOR,ROLE_UNIDAD_AUDITOR">
+                        <div id="accordion2">
+                            <h3><a href="#">Comentarios:</a></h3>
+                            <div>
+                                <div id="comentarios"></div>
+                            </div>
+                        </div>
+                        </sec:authorize>
+                        <script type="text/javascript"><![CDATA[
+            $.ajax({
+                type: 'get',
+                url: urlComentario + '?id=${objetoComentable.id}\u0026tipo=${objetoComentable.class.canonicalName}',
+                success: function(data){
+                    var div = document.getElementById("comentarios");
+                    div.innerHTML = data;
+                },
+                async: false
+            });
+        ]]>
+                        </script>
+
+                        <spring:url value="/comentario" var="urlComentario" />
+                        <script type="text/javascript"><![CDATA[
+    function enviar(){
+        var urlComentario = '${urlComentario}';
+        $.ajax({
+            type: 'post',
+            url: urlComentario,
+            data: 'id=${objetoComentable.id}\u0026tipo=${objetoComentable.class.canonicalName}\u0026redaccionComentario=' + document.getElementById('_redaccionComentario_id').value,
+            success: function(data){
+                var div = document.getElementById("comentarios");
+                div.innerHTML = data;
+            },
+            async: false
+        });
+
+    }
+
+]]>
+                        </script>
+                    </c:if>
+
+
+                </div>
+                    
+                    <hr/>
+                <div style="color: gray; text-align: right; font-size: 10pt;"><p>Versión del producto: ${pageContext.servletContext.servletContextName}</p></div>
+            </c:if>
+
+
+            <c:if test="${not empty param.print}">
+
+                <hr/>
+                <h1>SIGEFUAI</h1>
+                <c:if test="${pageContext.request.userPrincipal != null}">
+                    <spring:url value="/personalizacion/logo/" var="logo_url" />
+                    <div style="float: right"><img src="${logo_url}" alt="logo_institucion" width="100" height="35"/></div>
+                    </c:if>
+                <h2><c:out value="${tools:getNombreInstitucion()}"/></h2>
+                <br/>
+                <p>Generado por: <c:out value="${tools:usuarioLoggeado()}"/></p>
+                <p>Fecha: <c:out value="${tools:getCurrentDate()}"/></p>
+                <hr/>
+                <tiles:insertAttribute name="body" />
+                <hr/>
+                <p>Información de carácter confidencial propiedad de la institución.</p>
+                 <p>GNU</p>
+                <p>Versión del producto: ${pageContext.servletContext.servletContextName}</p>
+
+            </c:if>
+
+        </div>
+    </body>
+</html>

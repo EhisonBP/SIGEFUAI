@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="itemplanificacionactuacion/list">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemplanificacionactuacion/show">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemplanificacionactuacion/create">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemplanificacionactuacion/update">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="itemplanificacionactuacion/findItemPlanificacionActuacionsByPlanAnual">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/findItemPlanificacionActuacionsByPlanAnual.jspx"/>
+    </definition>
+<definition extends="default" name="itemplanificacionactuacion/findItemPlanificacionActuacionsByActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/findItemPlanificacionActuacionsByActuacion.jspx"/>
+    </definition>
+<definition extends="default" name="itemplanificacionactuacion/findItemPlanificacionActuacionsByOtraActividad">
+        <put-attribute name="body" value="/WEB-INF/views/itemplanificacionactuacion/findItemPlanificacionActuacionsByOtraActividad.jspx"/>
+    </definition>
+</tiles-definitions>

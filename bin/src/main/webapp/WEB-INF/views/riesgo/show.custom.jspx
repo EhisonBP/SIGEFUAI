@@ -1,0 +1,148 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+        
+        $(function() {
+            $( ".accordion" ).accordion({
+
+                collapsible: true,
+                active: false
+            });
+        });
+        
+    </script>
+    <div id="_title_div">
+    <spring:message code="label.riesgo" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Mostrar Riesgo'}})); </script>
+        <c:if test="${not empty codigoCompletoPrueba}">
+            <div id="roo_prueba_codigo">
+                <label>Prueba:</label>
+                <spring:url value="/prueba/${idPrueba}" var="url_return"/>
+                <div class="box">
+                    <a href="${url_return}">${codigoCompletoPrueba}</a>
+                </div>
+            </div>
+        </c:if>
+        <div id="roo_proceso_codigo">
+            <label>Proceso:</label>
+            <spring:url value="/proceso/${idProceso}" var="url_return2"/>
+            <div class="box">
+                <a href="${url_return2}">${codigoCompletoProceso}</a>
+            </div>
+        </div>
+        <div id="roo_riesgo_clasificacionRiesgo">
+            <label for="_clasificacionRiesgo_id">Impacto Patrimonial:</label>
+            <div class="box" id="_clasificacionRiesgo_id">
+                <c:out value="${riesgo.clasificacionRiesgo.nombre}"/>
+            </div>
+        </div>
+        <br/>
+        <div id="roo_riesgo_frecuenciaOcurrenciaRiesgo">
+            <label for="_frecuenciaOcurrenciaRiesgo_id">Frecuencia de Ocurrencia:</label>
+            <div class="box" id="_frecuenciaOcurrenciaRiesgo_id">
+                <c:out value="${riesgo.frecuenciaOcurrenciaRiesgo.nombre}"/>
+            </div>
+        </div>
+        <br/>
+
+        <c:if test="${not empty riesgo}">
+            <div id="roo_riesgo_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${riesgo.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+
+        </c:if>
+
+
+        <!-- ************************* TABLA DE TECNICAS DE CONTROL ********************************** -->
+        <div class="accordion">
+            <h3><a href="#">Técnicas de Control</a></h3>
+            <div>
+                <c:if test="${empty tecnicasByRiesgo}">
+                    <div style="font-style: italic"> No se encontraron técnicas de control asociadas al riesgo </div>
+                </c:if>
+                <c:if test="${not empty tecnicasByRiesgo}">
+                    <table id="menuTable1" width="300">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Descripción</th>
+                                <th>Efectividad del Control</th>
+                                <th/>
+                                <th/>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <c:forEach items="${tecnicasByRiesgo}" var="tecnica">
+                            <tr>
+                                <td>
+                                    <c:out value="${tecnica.referencia}"/>
+                                </td>
+                                <td>
+                                     <div style="overflow: scroll; height: 100px; width: 450px; ">
+                                        <c:out escapeXml="false" value="${tecnica.descripcion}"/>
+                                     </div>
+                                </td>
+                                <td>
+                                     <div style="overflow: scroll; height: 100px; width: 450px; ">
+                                    <c:out escapeXml="false" value="${tecnica.efectividadTecnicaControl.nombre}"/>
+                                     </div>
+                                </td>
+                                <td>
+                                    <spring:url value="/tecnicadecontrol/${tecnica.id}" var="show_form_url"/>
+                                    <spring:url value="/static/images/show.png" var="show_image_url"/>
+                                    <form:form id="" action="${show_form_url}" method="get">
+                                        <input name="idPrueba" type="hidden" value="${idPrueba}"/>
+                                        <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                        <input alt="${show_label}" class="image" src="${show_image_url}" title="${show_label}" type="image" value="${show_label}"/>
+                                    </form:form>
+                                </td>
+                                <td>
+                                    <spring:url value="/tecnicadecontrol/${tecnica.id}/form" var="update_form_url"/>
+                                    <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                    <form:form id="" action="${update_form_url}" method="get">
+                                        <input name="idPrueba" type="hidden" value="${idPrueba}"/>
+                                        <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                        <input alt="${update_label}" class="image" src="${update_image_url}" title="${update_label}" type="image" value="${update_label}"/>
+                                    </form:form>
+                                </td>
+
+                                <td>
+                                    <spring:url value="/tecnicadecontrol/${tecnica.id}" var="delete_form_url"/>
+                                    <spring:url value="/static/images/delete.png" var="delete_image_url"/>
+                                    <form:form id="" action="${delete_form_url}" method="DELETE">
+                                        <input name="idPrueba" type="hidden" value="${idPrueba}"/>
+                                        <spring:message arguments="${entity_label}" code="entity.delete" var="delete_label"/>
+                                        <input alt="${delete_label}" class="image" src="${delete_image_url}" title="${delete_label}" type="image" value="${delete_label}"/>
+                                                                                
+                                    </form:form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:if>
+                <br/>
+
+                <!--*************************** AGREGAR TECNICA DE CONTROL ***************************************-->
+
+                <spring:url value="/tecnicadecontrol/form" var="web_mvc_jsp_create_tecnicadecontrol_menu_item_url">
+                    <spring:param name="idRiesgo"  value="${riesgo.id}"></spring:param>
+                    <spring:param name="idPrueba"  value="${idPrueba}"></spring:param>
+                </spring:url>
+                <input type="button" value="Agregar Técnica de Control" onclick="document.location='${web_mvc_jsp_create_tecnicadecontrol_menu_item_url}'"/>
+
+            </div>
+        </div>
+        <c:if test="${empty riesgo}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+    <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+</script>
+</div>

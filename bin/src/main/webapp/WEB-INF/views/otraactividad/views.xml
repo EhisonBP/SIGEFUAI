@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="otraactividad/list">
+        <put-attribute name="body" value="/WEB-INF/views/otraactividad/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="otraactividad/show">
+        <put-attribute name="body" value="/WEB-INF/views/otraactividad/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="otraactividad/create">
+        <put-attribute name="body" value="/WEB-INF/views/otraactividad/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="otraactividad/update">
+        <put-attribute name="body" value="/WEB-INF/views/otraactividad/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="otraactividad/findOtraActividadsByRif">
+        <put-attribute name="body" value="/WEB-INF/views/otraactividad/findOtraActividadsByRif.jspx"/>
+    </definition>
+</tiles-definitions>

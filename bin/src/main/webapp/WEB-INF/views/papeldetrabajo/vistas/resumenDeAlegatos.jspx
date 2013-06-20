@@ -1,0 +1,71 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:sec="http://www.springframework.org/security/tags" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="x_title_div">
+        <spring:message code="label.alegato" var="entity_label"/>
+        <spring:message code="label.alegatoes" var="entity_label_plural"/>
+        <spring:message arguments="${entity_label_plural}" code="entity.list.all" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Análisis de Alegatos'}})); </script>
+        <div id="roo_actividadGeneral_codigoActuacion">
+            <label for="_actuacion_id" style="width: 70px">Actuación:</label>
+            <div id="_actuacion_id">
+                <spring:url value="/actuacion/${actuacion.id}" var="url_actuacion"/>
+                <a href="${url_actuacion}" >${actuacion.nombre}</a>
+            </div>
+        </div>
+        <br/>
+        <c:if test="${not empty alegatoes}">
+            <table id="menuTable1" width="300">
+                <thead>
+                    <tr>
+                        
+                        <th>Hallazgo</th>
+                        <th>Descripción y Análisis del Alegato</th>
+                        <th/>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                            <th/>
+                        </sec:authorize>
+                    </tr>
+                </thead>
+                <c:forEach items="${alegatoes}" var="alegato">
+                    <tr>
+
+                        
+                        <td>
+                            <c:out value="${alegato.observacion.descripcionCorta}"/>
+                        </td>
+                        <td>
+                            <c:out escapeXml="false" value="${alegato.descripcion}"/>
+                        </td>
+                        
+                        <td>
+                            <spring:url value="/alegato/${alegato.id}" var="show_form_url"/>
+                            <spring:url value="/static/images/show.png" var="show_image_url"/>
+                            <form:form id="" action="${show_form_url}" method="get">
+                                <spring:message arguments="${entity_label}" code="entity.show" var="show_label"/>
+                                <input alt="${show_label}" class="image" src="${show_image_url}" title="Mostrar Alegato" type="image" value="${show_label}"/>
+                            </form:form>
+                        </td>
+                        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                            <td>
+                                <spring:url value="/alegato/${alegato.id}/form" var="update_form_url"/>
+                                <spring:url value="/static/images/update.png" var="update_image_url"/>
+                                <form:form id="" action="${update_form_url}" method="get">
+                                    <spring:message arguments="${entity_label}" code="entity.update" var="update_label"/>
+                                    <input alt="${update_label}" class="image" src="${update_image_url}" title="Actualizar Alegato" type="image" value="${update_label}"/>
+                                </form:form>
+                            </td>
+                        </sec:authorize>
+                    </tr>
+                </c:forEach>
+                
+            </table>
+        </c:if>
+        <c:if test="${empty alegatoes}">
+            <spring:message arguments="alegatos" code="entity.not.found"/>
+        </c:if>
+    </div>
+            <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+</script>
+</div>

@@ -1,0 +1,42 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.autoridadmaxima" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty autoridadMaxima}">
+            <div id="roo_autoridadMaxima_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${autoridadMaxima.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_autoridadMaxima_cedula">
+                <label for="_cedula_id">Cedula:</label>
+                <div class="box" id="_cedula_id">
+                    <c:out value="${autoridadMaxima.cedula}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_autoridadMaxima_effectTypes">
+                <label for="_effectTypes_id">Effect Types:</label>
+                <div class="box" id="_effectTypes_id">
+                    <c:out value="${autoridadMaxima.effectTypes}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_autoridadMaxima_cargoAutoridad">
+                <label for="_cargoAutoridad_id">Cargo Autoridad:</label>
+                <div class="box" id="_cargoAutoridad_id">
+                    <c:out value="${autoridadMaxima.cargoAutoridad}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty autoridadMaxima}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

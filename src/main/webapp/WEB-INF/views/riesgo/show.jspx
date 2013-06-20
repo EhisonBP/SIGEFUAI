@@ -1,0 +1,56 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.riesgo" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty riesgo}">
+            <div id="roo_riesgo_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${riesgo.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_riesgo_proceso">
+                <label for="_proceso_id">Proceso:</label>
+                <div class="box" id="_proceso_id">
+                    <c:out value="${riesgo.proceso}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_riesgo_inactivo">
+                <label for="_inactivo_id">Inactivo:</label>
+                <div class="box" id="_inactivo_id">
+                    <c:out value="${riesgo.inactivo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_riesgo_referencia">
+                <label for="_referencia_id">Referencia:</label>
+                <div class="box" id="_referencia_id">
+                    <c:out value="${riesgo.referencia}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_riesgo_clasificacionRiesgo">
+                <label for="_clasificacionRiesgo_id">Clasificacion Riesgo:</label>
+                <div class="box" id="_clasificacionRiesgo_id">
+                    <c:out value="${riesgo.clasificacionRiesgo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_riesgo_frecuenciaOcurrenciaRiesgo">
+                <label for="_frecuenciaOcurrenciaRiesgo_id">Frecuencia Ocurrencia Riesgo:</label>
+                <div class="box" id="_frecuenciaOcurrenciaRiesgo_id">
+                    <c:out value="${riesgo.frecuenciaOcurrenciaRiesgo}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty riesgo}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

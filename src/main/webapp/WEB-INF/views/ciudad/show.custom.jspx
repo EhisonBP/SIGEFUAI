@@ -1,0 +1,48 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.ciudad" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty ciudad}">
+            <div id="roo_ciudad_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${ciudad.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ciudad_id_estado">
+                <label for="_id_estado_id">Estado:</label>
+                <div class="box" id="_id_estado_id">
+                    <c:out value="${ciudad.id_estado.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ciudad_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${ciudad.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_ciudad_estatus">
+                <label for="_estatus_id">Estatus:</label>
+                <div class="box" id="_estatus_id">
+                    <c:out value="${ciudad.estatus.nombre}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <spring:url value="/ciudad/" var="create_url"/>
+       <a href="${create_url}">
+       <spring:url value="/static/images/volver.png" var="create_img_url"/>
+       <spring:message arguments="Volver" code="global.menu.new" var="add_message"/>
+       <img alt="${add_message}" src="${create_img_url}" title="Volver"/>
+        </a>
+        <c:if test="${empty ciudad}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

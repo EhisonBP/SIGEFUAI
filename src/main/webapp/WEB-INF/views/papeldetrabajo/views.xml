@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="papeldetrabajo/list">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/show">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/create">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/update">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/update.custom.jspx"/>
+    </definition>
+<definition extends="default" name="papeldetrabajo/findPapelDeTrabajoesByCodigoActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/findPapelDeTrabajoesByCodigoActuacion.jspx"/>
+    </definition>
+<definition extends="default" name="papeldetrabajo/findPapelDeTrabajoesByActividadActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/findPapelDeTrabajoesByActividadActuacion.jspx"/>
+    </definition>
+<definition extends="default" name="papeldetrabajo/findPapelDeTrabajoesByCodigoEquals">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/findPapelDeTrabajoesByCodigoEquals.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/controlDeRequerimientos">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/controlDeRequerimientos.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/resumenDeHallazgos">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/resumenDeHallazgos.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/resumenDeAlegatos">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/resumenDeAlegatos.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/cedulaDeHallazgo">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/cedulaDeHallazgos.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/resumenDeAccionesCorrectivas">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/resumenDeAccionesCorrectivas.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/pruebasDeLaActuacion">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/pruebasDeLaActuacion.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/conclusionGeneral">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/conclusionGeneral.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/recursosHumanosUtilizados">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/recursosHumanosUtilizados.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/cuestionarios">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/cuestionarios.jspx"/>
+    </definition>
+    <definition extends="default" name="papeldetrabajo/cuestionariosRespondidos">
+        <put-attribute name="body" value="/WEB-INF/views/papeldetrabajo/vistas/cuestionariosRespondidos.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,119 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.archivoadjunto" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty archivoAdjunto}">
+            <div id="roo_archivoAdjunto_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${archivoAdjunto.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_descripcion">
+                <label for="_descripcion_id">Descripcion:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out value="${archivoAdjunto.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_actividadActuacion">
+                <label for="_actividadActuacion_id">Actividad Actuacion:</label>
+                <div class="box" id="_actividadActuacion_id">
+                    <c:out value="${archivoAdjunto.actividadActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_codigo">
+                <label for="_codigo_id">Codigo:</label>
+                <div class="box" id="_codigo_id">
+                    <c:out value="${archivoAdjunto.codigo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_filedata">
+                <label for="_filedata_id">Filedata:</label>
+                <div class="box" id="_filedata_id">
+                    <c:out value="${archivoAdjunto.filedata}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_extension">
+                <label for="_extension_id">Extension:</label>
+                <div class="box" id="_extension_id">
+                    <c:out value="${archivoAdjunto.extension}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_filesize">
+                <label for="_filesize_id">Filesize:</label>
+                <div class="box" id="_filesize_id">
+                    <c:out value="${archivoAdjunto.filesize}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_loginUsuario">
+                <label for="_loginUsuario_id">Login Usuario:</label>
+                <div class="box" id="_loginUsuario_id">
+                    <c:out value="${archivoAdjunto.loginUsuario}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_respuesta">
+                <label for="_respuesta_id">Respuesta:</label>
+                <div class="box" id="_respuesta_id">
+                    <c:out value="${archivoAdjunto.respuesta}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_requerimiento">
+                <label for="_requerimiento_id">Requerimiento:</label>
+                <div class="box" id="_requerimiento_id">
+                    <c:out value="${archivoAdjunto.requerimiento}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_alegato">
+                <label for="_alegato_id">Alegato:</label>
+                <div class="box" id="_alegato_id">
+                    <c:out value="${archivoAdjunto.alegato}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_hallazgo">
+                <label for="_hallazgo_id">Hallazgo:</label>
+                <div class="box" id="_hallazgo_id">
+                    <c:out value="${archivoAdjunto.hallazgo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_seccionDefault">
+                <label for="_seccionDefault_id">Seccion Default:</label>
+                <div class="box" id="_seccionDefault_id">
+                    <c:out value="${archivoAdjunto.seccionDefault}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_avanceActuacion">
+                <label for="_avanceActuacion_id">Avance Actuacion:</label>
+                <div class="box" id="_avanceActuacion_id">
+                    <c:out value="${archivoAdjunto.avanceActuacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_personalizacion">
+                <label for="_personalizacion_id">Personalizacion:</label>
+                <div class="box" id="_personalizacion_id">
+                    <c:out value="${archivoAdjunto.personalizacion}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty archivoAdjunto}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

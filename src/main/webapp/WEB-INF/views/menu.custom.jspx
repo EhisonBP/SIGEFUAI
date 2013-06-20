@@ -1,0 +1,631 @@
+
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:sec="http://www.springframework.org/security/tags" xmlns:spring="http://www.springframework.org/tags" id="menuBig" >
+<jsp:output omit-xml-declaration="yes"/>
+
+    <script type="text/javascript">
+        dojo.require("dijit.MenuBar");
+        dojo.require("dijit.MenuBarItem");
+        dojo.require("dijit.PopupMenuBarItem");
+        dojo.require("dijit.Menu");
+        dojo.require("dijit.MenuItem");
+        dojo.require("dijit.PopupMenuItem");
+
+        var pMenuBar;
+        dojo.addOnLoad(function() {
+
+            pMenuBar = new dijit.MenuBar({});
+
+        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE, ROLE_SUNAI_SUPERVISOR, ROLE_SUNAI_COORDINADOR, ROLE_ADMIN">
+                // PLAN ANUAL
+                var pSubSubMenu_PlanAnual = new dijit.Menu({});
+
+            <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                    pSubSubMenu_PlanAnual.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+                <spring:url value="/plananual/form" var="web_mvc_jsp_create_plananual_menu_item_url"/>
+                                document.location = '${web_mvc_jsp_create_plananual_menu_item_url}';
+                            }
+                        }));
+            </sec:authorize>
+
+                    pSubSubMenu_PlanAnual.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/plananual?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_plananual_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_plananual_menu_item_url}';
+                        }
+                    }));
+
+                    // ACTIVIDAD GENERICA DE AUDITOR
+                    var pSubSubMenu_ActividadGenerica = new dijit.Menu({});
+
+            <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                    pSubSubMenu_ActividadGenerica.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+                <spring:url value="/actividadgenerica/form" var="web_mvc_jsp_create_actividadgenerica_menu_item_url"/>
+                                document.location = '${web_mvc_jsp_create_actividadgenerica_menu_item_url}';
+                            }
+                        }));
+            </sec:authorize>
+    
+                    pSubSubMenu_ActividadGenerica.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/actividadgenerica?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_actividadgenerica_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_actividadgenerica_menu_item_url}';
+                        }
+                    }));
+
+                    // AUDITADO
+                    var pSubSubMenu_Auditados = new dijit.Menu({});
+                    pSubSubMenu_Auditados.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/auditado/form" var="web_mvc_jsp_create_auditado_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_auditado_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_Auditados.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/auditado" var="web_mvc_jsp_list_auditado_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_auditado_menu_item_url}';
+                        }
+                    }));
+
+                    // AUDITOR
+                    var pSubSubMenu_Auditores = new dijit.Menu({});
+                    pSubSubMenu_Auditores.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/auditor/form" var="web_mvc_jsp_create_auditor_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_auditor_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_Auditores.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/auditor" var="web_mvc_jsp_list_auditor_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_auditor_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO ACTUACION
+                    var pSubSubMenu_EstadoActuacion = new dijit.Menu({});
+                    pSubSubMenu_EstadoActuacion.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estadoactuacion/form" var="web_mvc_jsp_create_estadoactuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estadoactuacion_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoActuacion.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estadoactuacion?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estadoactuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estadoactuacion_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO ACTIVIDAD
+                    var pSubSubMenu_EstadoActividad = new dijit.Menu({});
+                    pSubSubMenu_EstadoActividad.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estadoactividadactuacion/form" var="web_mvc_jsp_create_estadoactividadactuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estadoactividadactuacion_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoActividad.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estadoactividadactuacion?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estadoactividadactuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estadoactividadactuacion_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO PLAN ANUAL
+                    var pSubSubMenu_EstadoPlan = new dijit.Menu({});
+                    pSubSubMenu_EstadoPlan.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estadoplan/form" var="web_mvc_jsp_create_estadoplan_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estadoplan_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoPlan.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estadoplan?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estadoplan_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estadoplan_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO PLAN DE ACCION
+                    var pSubSubMenu_EstadoPlanDeAccion = new dijit.Menu({});
+                    pSubSubMenu_EstadoPlanDeAccion.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estadoplandeaccion/form" var="web_mvc_jsp_create_estadoplandeaccion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estadoplandeaccion_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoPlanDeAccion.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estadoplandeaccion?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estadoplandeaccion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estadoplandeaccion_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO OBSERVACION
+                    var pSubSubMenu_EstadoObservacion = new dijit.Menu({});
+                    pSubSubMenu_EstadoObservacion.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estadoobservacion/form" var="web_mvc_jsp_create_estadoobservacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estadoobservacion_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoObservacion.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estadoobservacion?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estadoobservacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estadoobservacion_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO AUDITOR
+                    var pSubSubMenu_EstadoAuditor = new dijit.Menu({});
+                    pSubSubMenu_EstadoAuditor.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estadoauditor/form" var="web_mvc_jsp_create_estadoauditor_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estadoauditor_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoAuditor.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estadoauditor?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estadoauditor_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estadoauditor_menu_item_url}';
+                        }
+                    }));
+
+                    //CATEGORIA ACTUACION
+                    var pSubSubMenu_CategoriaActuacion = new dijit.Menu({});
+                    pSubSubMenu_CategoriaActuacion.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/claseactuacion/form" var="web_mvc_jsp_create_claseactuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_claseactuacion_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_CategoriaActuacion.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/claseactuacion?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_claseactuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_claseactuacion_menu_item_url}';
+                        }
+                    }));
+
+                    //TIPO UNIDAD
+                    var pSubSubMenu_TipoUnidad = new dijit.Menu({});
+                    pSubSubMenu_TipoUnidad.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/tipounidad/form" var="web_mvc_jsp_create_tipounidad_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_tipounidad_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_TipoUnidad.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/tipounidad?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_tipounidad_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_tipounidad_menu_item_url}';
+                        }
+                    }));
+
+                    //UNIDAD DE MEDIDA
+                    var pSubSubMenu_UnidadMedida = new dijit.Menu({});
+                    pSubSubMenu_UnidadMedida.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/unidaddemedida/form" var="web_mvc_jsp_create_unidadmedida_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_unidadmedida_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_UnidadMedida.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/unidaddemedida?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_unidadmedida_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_unidadmedida_menu_item_url}';
+                        }
+                    }));
+
+                    //BIBLIOTECA
+                    var pSubSubMenu_Biblioteca = new dijit.Menu({});
+                    pSubSubMenu_Biblioteca.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/biblioteca/form" var="web_mvc_jsp_create_biblioteca_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_biblioteca_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_Biblioteca.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/biblioteca?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_biblioteca_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_biblioteca_menu_item_url}';
+                        }
+                    }));
+
+                    //CARGO AUDITOR
+                    var pSubSubMenu_CargoAuditor = new dijit.Menu({});
+                    pSubSubMenu_CargoAuditor.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/cargoauditor/form" var="web_mvc_jsp_create_cargoauditor_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_cargoauditor_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_CargoAuditor.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/cargoauditor?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_cargoauditor_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_cargoauditor_menu_item_url}';
+                        }
+                    }));
+
+                    //PROCESO
+                    var pSubSubMenu_Proceso = new dijit.Menu({});
+                    pSubSubMenu_Proceso.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/proceso/form" var="web_mvc_jsp_create_proceso_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_proceso_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_Proceso.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/proceso?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_proceso_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_proceso_menu_item_url}';
+                        }
+                    }));
+
+
+                    //REPORTES
+                    var pSubSubMenu_Reporte = new dijit.Menu({});
+                    pSubSubMenu_Reporte.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/reporte/form" var="web_mvc_jsp_create_reporte_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_reporte_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_Reporte.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/reporte?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_reporte_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_reporte_menu_item_url}';
+                        }
+                    }));
+
+
+                    //UNIDAD
+                    var pSubSubMenu_Unidad = new dijit.Menu({});
+                    pSubSubMenu_Unidad.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/unidad/form" var="web_mvc_jsp_create_unidad_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_unidad_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_Unidad.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/unidad?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_unidad_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_unidad_menu_item_url}';
+                        }
+                    }));
+
+                    //ESTADO REQUERIMIENTO
+                    var pSubSubMenu_EstadoRequerimiento = new dijit.Menu({});
+                    pSubSubMenu_EstadoRequerimiento.addChild(new dijit.MenuItem({
+                        label: "Nuevo",
+                        onClick: function() {
+            <spring:url value="/estatusrequerimiento/form" var="web_mvc_jsp_create_estatusrequerimiento_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_create_estatusrequerimiento_menu_item_url}';
+                        }
+                    }));
+                    pSubSubMenu_EstadoRequerimiento.addChild(new dijit.MenuItem({
+                        label: "Listar",
+                        onClick: function() {
+            <spring:url value="/estatusrequerimiento?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_estatusrequerimiento_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_estatusrequerimiento_menu_item_url}';
+                        }
+                    }));
+
+                    var pSubMenu_Archivo = new dijit.Menu({});
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Archivos Adjuntos",
+                        onClick: function() {
+            <spring:url value="/archivoadjunto/list" var="archivoadjunto_list"/>
+                            document.location = '${archivoadjunto_list}';
+                        }
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Auditados",
+                        popup: pSubSubMenu_Auditados
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Bitácora de Modificaciones",
+                        onClick: function() {
+            <spring:url value="/entradabitacora" var="entradabitacora_list"/>
+                            document.location = '${entradabitacora_list}';
+                        }
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Cargos de Auditor",
+                        popup: pSubSubMenu_CargoAuditor
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Datos Básicos de la UAI",
+                        onClick: function() {
+            <spring:url value="/personalizacion/1" var="personalization"/>
+                            document.location = '${personalization}';
+                        }
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Dependencias Sujetas a Control",
+                        popup: pSubSubMenu_Unidad
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Actividad (Actuaciones)",
+                        popup: pSubSubMenu_EstadoActividad
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Actuación",
+                        popup: pSubSubMenu_EstadoActuacion
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Auditor",
+                        popup: pSubSubMenu_EstadoAuditor
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Hallazgo",
+                        popup: pSubSubMenu_EstadoObservacion
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Plan Anual",
+                        popup: pSubSubMenu_EstadoPlan
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Plan De Acción",
+                        popup: pSubSubMenu_EstadoPlanDeAccion
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Estatus de Requerimiento",
+                        popup: pSubSubMenu_EstadoRequerimiento
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Procesos",
+                        popup: pSubSubMenu_Proceso
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Reportes",
+                        popup: pSubSubMenu_Reporte
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Tipos de Actuación",
+                        popup: pSubSubMenu_CategoriaActuacion
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Tipos de Dependencia",
+                        popup: pSubSubMenu_TipoUnidad
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Unidades de Medida",
+                        popup: pSubSubMenu_UnidadMedida
+                    }));
+                    pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                        label: "Usuarios",
+                        popup: pSubSubMenu_Auditores
+                    }));
+                    <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                        pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                            label: "Procesos de negocio",
+                            onClick: function() {
+                                    <spring:url value="/jbpmprocess" var="jbpmprocess_list"/>
+                                    document.location = '${jbpmprocess_list}';
+                                }
+                            }));
+                        pSubMenu_Archivo.addChild(new dijit.MenuItem({
+                            label: "Reglas de negocio",
+                            onClick: function() {
+                                <spring:url value="/droolsrule" var="droolsrule_list"/>
+                                document.location = '${droolsrule_list}';
+                            }
+                        }));
+                    </sec:authorize>
+                    <sec:authorize ifAnyGranted="">
+                    var pSubMenu_Planificacion = new dijit.Menu({});
+                    pSubMenu_Planificacion.addChild(new dijit.MenuItem({
+                        label: "Plan Anual",
+                        popup: pSubSubMenu_PlanAnual
+                    }));
+
+                    pSubMenu_Planificacion.addChild(new dijit.MenuItem({
+                        label: "Actividades Genéricas de Auditores",
+                        popup: pSubSubMenu_ActividadGenerica
+                    }));
+                    
+
+                    pMenuBar.addChild(new dijit.MenuBarItem({
+                        label: "Tareas",
+                        onClick: function() {
+                    <spring:url value="/humantask/list" var="tareas"/>
+                            document.location = '${tareas}';
+                        }
+                    }));
+ 
+ 
+                    pMenuBar.addChild(new dijit.MenuBarItem({
+                        label: "Plan de Trabajo Anual",
+                        onClick: function() {
+            <spring:url value="/plananual?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_plananual_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_plananual_menu_item_url}';
+                        }
+                    }));
+                    
+                    var pSubMenu_Actuacion = new dijit.Menu({});
+
+            <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                    pSubMenu_Actuacion.addChild(new dijit.MenuItem({
+                        label: "Actuaciones",
+                        onClick: function() {
+            <spring:url value="/actuacion?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_actuacion_menu_item_url"/> document.location = '${web_mvc_jsp_list_actuacion_menu_item_url}';
+                        }
+                    }));
+            </sec:authorize>
+
+                    pSubMenu_Actuacion.addChild(new dijit.MenuItem({
+                        label: "Otras Actividades",
+                        onClick: function() {
+            <spring:url value="/otraactividad?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_otraactividad_menu_item_url"/> document.location = '${web_mvc_jsp_list_otraactividad_menu_item_url}';
+                        }
+                    }));
+
+                    pMenuBar.addChild(new dijit.PopupMenuBarItem({
+                        label: "Actuaciones",
+                        popup: pSubMenu_Actuacion
+                    }));
+
+                    pMenuBar.addChild(new dijit.MenuBarItem({
+                        label: "Consulta",
+                        onClick: function() {
+            <spring:url value="/actuacion/search" var="web_mvc_jsp_search_actuacion_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_search_actuacion_menu_item_url}';
+                        }
+                    }));
+
+                    pMenuBar.addChild(new dijit.MenuBarItem({
+                        label: "Biblioteca",
+                        onClick: function() {
+                        	<spring:url value="/biblioteca?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_biblioteca_menu_item_url"/>
+                            document.location = '${web_mvc_jsp_list_biblioteca_menu_item_url}';
+                        }
+                    }));
+
+                  
+    
+        </sec:authorize>
+    
+        <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITADO">
+                pMenuBar.addChild(new dijit.MenuBarItem({
+                    label: "Ver Actividades Pendientes",
+                    onClick: function() {
+            <spring:url value="/auditado/actividades" var="auditado_actividades"/>
+                            document.location = '${auditado_actividades}';
+                        }
+                    }));
+        </sec:authorize>
+        </sec:authorize>
+
+        <c:if test="${pageContext.request.userPrincipal == null}">
+                pMenuBar.addChild(new dijit.MenuBarItem({
+                    label: "Iniciar Sesión",
+                    onClick: function() {
+            <spring:url value="/login" var="login"/>
+                            document.location = '${login}';
+                        }
+                    }));
+        </c:if>
+          <!-- TAREAS PARA ROLE SUNAI GERENTE-->
+	<c:if test="${pageContext.request.userPrincipal != null}">
+	<sec:authorize ifAnyGranted="ROLE_SUNAI_SUPERINTENDENTE, ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE, ROLE_SUNAI_SUPERVISOR, ROLE_SUNAI_COORDINADOR, ROLE_SUNAI_ANALISTA">
+    pMenuBar.addChild(new dijit.MenuBarItem({
+        label: "Tareas",
+        onClick: function() {
+    <spring:url value="/humantask/list" var="tareas"/>
+            document.location = '${tareas}';
+        }
+    }));
+    </sec:authorize>
+    pMenuBar.addChild(new dijit.MenuBarItem({
+                    label: "Ayuda",
+                    onClick: function() {
+                            <spring:url value="/static/manual/manual.pdf" var="manual"/>
+                            window.open('${manual}');
+                        }
+                    }));
+        </c:if>
+        <!-- BIBLIOTECA PARA ROLE UAI-->
+      //BIBLIOTECA
+      	<sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE,">
+      	pMenuBar.addChild(new dijit.MenuBarItem({
+            label: "Biblioteca",
+            onClick: function() {
+            	<spring:url value="/biblioteca?page=${empty param.page ? 1 : param.page}&amp;amp;size=${empty param.size ? 10 : param.size}" var="web_mvc_jsp_list_biblioteca_menu_item_url"/>
+                document.location = '${web_mvc_jsp_list_biblioteca_menu_item_url}';
+            }
+        }));
+ 
+        </sec:authorize>
+
+        
+        <c:if test="${pageContext.request.userPrincipal != null}">
+                pMenuBar.addChild(new dijit.MenuBarItem({
+                    label: "Cerrar Sesión",
+                    onClick: function() {
+            <spring:url value="/static/j_spring_security_logout" var="logout"/>
+                            document.location = '${logout}';
+                        }
+                    }));
+        </c:if>
+
+                pMenuBar.placeAt("menu");
+                pMenuBar.startup();
+
+<sec:authorize ifAnyGranted="ROLE_SUNAI_SUPERINTENDENTE, ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE, ROLE_SUNAI_SUPERVISOR, ROLE_SUNAI_COORDINADOR, ROLE_SUNAI_ANALISTA, ROLE_ADMIN_INSTITUCION, ROLE_ADMIN ">
+                pMenuBarConfiguracion = new dijit.MenuBar({});
+                pMenuBarConfiguracion.addChild(new dijit.MenuBarItem({
+                    label: "Cambiar Perfil",
+                    onClick: function() {
+            <spring:url value="/auditor/modificarPerfil/form" var="auditor"/>
+                            document.location = '${auditor}';
+                        }
+                    }));
+                </sec:authorize>
+<sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITADO">
+
+pMenuBarConfiguracion = new dijit.MenuBar({});
+                pMenuBarConfiguracion.addChild(new dijit.MenuBarItem({
+                    label: "Cambiar Perfil",
+                    onClick: function() {
+            <spring:url value="/auditado/modificarPerfil/form" var="auditado"/>
+                            document.location = '${auditado}';
+                        }
+                    }));
+                </sec:authorize>
+                pMenuBarConfiguracion.placeAt("menuConfiguracion");
+                pMenuBarConfiguracion.startup();
+
+            }); 
+    </script>
+    <table>
+        <tr>
+            <td>
+                <div id="menu" style="width: 100%; display: inline-table;"></div>
+            </td>
+           
+                <td width="100px">
+                    <div id="menuConfiguracion" style="width: 100%; display: inline-table;"></div>
+                </td>
+            
+        </tr>
+    </table>
+</div>

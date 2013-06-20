@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="itemcuestionario/list">
+        <put-attribute name="body" value="/WEB-INF/views/itemcuestionario/list.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemcuestionario/show">
+        <put-attribute name="body" value="/WEB-INF/views/itemcuestionario/show.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemcuestionario/create">
+        <put-attribute name="body" value="/WEB-INF/views/itemcuestionario/create.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemcuestionario/update">
+        <put-attribute name="body" value="/WEB-INF/views/itemcuestionario/update.custom.jspx"/>
+    </definition>
+    <definition extends="default" name="itemcuestionario/findItemCuestionariosByCuestionario">
+        <put-attribute name="body" value="/WEB-INF/views/itemcuestionario/findItemCuestionariosByCuestionario.jspx"/>
+    </definition>
+    <definition extends="default" name="itemcuestionario/responder">
+        <put-attribute name="body" value="/WEB-INF/views/itemcuestionario/responder.jspx"/>
+    </definition>
+</tiles-definitions>

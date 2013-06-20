@@ -1,0 +1,98 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.datosorganismoente" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty datosOrganismoEnte}">
+            <div id="roo_datosOrganismoEnte_rif">
+                <label for="_rif_id">Rif:</label>
+                <div class="box" id="_rif_id">
+                    <c:out value="${datosOrganismoEnte.rif}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_pagina_web">
+                <label for="_pagina_web_id">Pagina_web:</label>
+                <div class="box" id="_pagina_web_id">
+                    <c:out value="${datosOrganismoEnte.pagina_web}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_direcion">
+                <label for="_direcion_id">Direcion:</label>
+                <div class="box" id="_direcion_id">
+                    <c:out value="${datosOrganismoEnte.direcion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_estado">
+                <label for="_estado_id">Estado:</label>
+                <div class="box" id="_estado_id">
+                    <c:out value="${datosOrganismoEnte.estado}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_ciudad">
+                <label for="_ciudad_id">Ciudad:</label>
+                <div class="box" id="_ciudad_id">
+                    <c:out value="${datosOrganismoEnte.ciudad}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_municipios">
+                <label for="_municipios_id">Municipios:</label>
+                <div class="box" id="_municipios_id">
+                    <c:out value="${datosOrganismoEnte.municipios}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_telefono_master">
+                <label for="_telefono_master_id">Telefono_master:</label>
+                <div class="box" id="_telefono_master_id">
+                    <c:out value="${datosOrganismoEnte.telefono_master}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_fax">
+                <label for="_fax_id">Fax:</label>
+                <div class="box" id="_fax_id">
+                    <c:out value="${datosOrganismoEnte.fax}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_fechaCreacion">
+                <label for="_fechaCreacion_id">Fecha Creacion:</label>
+                <div class="box" id="_fechaCreacion_id">
+                    <fmt:formatDate pattern="${datosOrganismoEnte_fechaCreacion_date_format}" value="${datosOrganismoEnte.fechaCreacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_fechaModificacion">
+                <label for="_fechaModificacion_id">Fecha Modificacion:</label>
+                <div class="box" id="_fechaModificacion_id">
+                    <fmt:formatDate pattern="${datosOrganismoEnte_fechaModificacion_date_format}" value="${datosOrganismoEnte.fechaModificacion}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_estatus">
+                <label for="_estatus_id">Estatus:</label>
+                <div class="box" id="_estatus_id">
+                    <c:out value="${datosOrganismoEnte.estatus}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_datosOrganismoEnte_codigoArea">
+                <label for="_codigoArea_id">Codigo Area:</label>
+                <div class="box" id="_codigoArea_id">
+                    <c:out value="${datosOrganismoEnte.codigoArea}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty datosOrganismoEnte}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
+    <div id="_title_div">
+        <spring:message code="label.comentario" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+        <c:if test="${not empty comentario}">
+            <div id="roo_comentario_id">
+                <label for="_id_id">Id:</label>
+                <div class="box" id="_id_id">
+                    <c:out value="${comentario.id}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_comentario_tipo">
+                <label for="_tipo_id">Tipo:</label>
+                <div class="box" id="_tipo_id">
+                    <c:out value="${comentario.tipo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_comentario_redaccionComentario">
+                <label for="_redaccionComentario_id">Redaccion Comentario:</label>
+                <div class="box" id="_redaccionComentario_id">
+                    <c:out value="${comentario.redaccionComentario}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_comentario_usuario">
+                <label for="_usuario_id">Usuario:</label>
+                <div class="box" id="_usuario_id">
+                    <c:out value="${comentario.usuario}"/>
+                </div>
+            </div>
+            <br/>
+        </c:if>
+        <c:if test="${empty comentario}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+</div>

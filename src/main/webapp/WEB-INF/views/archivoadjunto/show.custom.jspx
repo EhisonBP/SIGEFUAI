@@ -1,0 +1,187 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:roo="urn:jsptagdir:/WEB-INF/tags" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" >
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+        dojo.require('dijit.TitlePane');
+           
+        function renderizar(id){
+            window.open('../archivoadjunto/render/'+id);
+            //self.setTimeout("refrescar()", 2000);
+        }
+        function checkout(id){
+            window.open('../archivoadjunto/checkout/'+id);
+            self.setTimeout("refrescar()", 2000);
+        }
+
+        function refrescar()
+        {
+            window.location.reload();
+        }
+
+        $(function() {
+            $( "#accordion" ).accordion({
+
+                collapsible: true,
+                active: false
+            });
+        });
+
+        /*function confirmation() {
+	var answer = confirm("No seleccionó ningún archivo, se mantendrá la última versión guardada. ¿ Está seguro/a que desea continuar ?")
+	if (answer){
+		window.location='../archivoadjunto/checkin/';
+	}*/
+    </script>
+    <div id="x_title_div">
+        <spring:message code="label.archivoadjunto" var="entity_label"/>
+        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
+        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
+
+        <div>
+            <c:if test="${returnURL eq 'prueba' }">
+                <label>Prueba:</label>   
+            </c:if>
+            <c:if test="${returnURL eq 'papeldetrabajo' }">
+                <label>Sección:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'observacion' }">
+                <label>Hallazgo:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'respuesta' }">
+                <label>Respuesta:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'personalizacion' }">
+                <label>Personalización:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'requerimiento' }">
+                <label>Requerimiento:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'alegato' }">
+                <label>Alegato:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'secciondefault' }">
+                <label>Sección Básica:</label>
+            </c:if>
+            <c:if test="${returnURL eq 'avanceactuacion' }">
+                <label>Avance:</label>
+            </c:if>
+            <div class="box">
+                <spring:url value="/${returnURL}/${idReturn}" var="url_return"/>
+                <a href="${url_return}" >${codigoCompleto}</a>
+            </div>
+        </div>
+        <br/>
+        <c:if test="${not empty archivoAdjunto}">
+            <div id="roo_archivoAdjunto_codigo">
+                <label for="_codigo_id">Referencia:</label>
+                <div class="box" id="_codigo_id">
+                    <c:out value="${archivoAdjunto.codigo}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_nombre">
+                <label for="_nombre_id">Nombre:</label>
+                <div class="box" id="_nombre_id">
+                    <c:out value="${archivoAdjunto.nombre}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_descripcion">
+                <label for="_descripcion_id">Descripción:</label>
+                <div class="box" id="_descripcion_id">
+                    <c:out escapeXml="false" value="${archivoAdjunto.descripcion}"/>
+                </div>
+            </div>
+            <br/>
+
+            <div id="roo_archivoAdjunto_extension">
+                <label for="_extension_id">Extensión:</label>
+                <div class="box" id="_extension_id">
+                    <c:out value="${archivoAdjunto.extension}"/>
+                </div>
+            </div>
+            <br/>
+            <div id="roo_archivoAdjunto_filesize">
+                <label for="_filesize_id">Tamaño:</label>
+                <div class="box" id="_filesize_id">
+                    <c:out value="${archivoAdjunto.filesize}Kb"/>
+                </div>
+            </div>
+            <br/>
+
+            <div id="accordion">
+                <h3><a href="#">Historial de modificaciones</a></h3>
+                <div>
+                    <c:if test="${empty historialCambiosByArchivoAdjunto}">
+                        <div style="font-style: italic"> No se han realizado modificaciones al archivo </div>
+                    </c:if>
+                    <c:if test="${not empty historialCambiosByArchivoAdjunto}">
+                        <table id="menuTable1" width="300">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Accion</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <c:forEach items="${historialCambiosByArchivoAdjunto}" var="historialCambios">
+                                <tr>
+                                    <td>
+                                        <c:out value="${fn:substring(historialCambios.usuario, 0, 10)}"/>
+                                    </td>
+                                    <td>
+                                        <c:out value="${fn:substring(historialCambios.accion, 0, 50)}"/>
+                                    </td>
+                                    <td>
+                                        <fmt:formatDate pattern="${historialCambios_fecha_date_format}" value="${historialCambios.fecha}"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+
+
+
+            <c:if test="${!checkin}">
+                <div>
+                    <br/>
+                    <input type="button"  value="Abrir Archivo" onclick="renderizar(${archivoAdjunto.id})"/><input type="button"  value="Editar Archivo" onclick="checkout(${archivoAdjunto.id})"/>
+                </div>
+                <br/>
+            </c:if>
+
+
+            <c:if test="${checkin}">
+                <spring:url value="/archivoadjunto/checkin" var="form_url"/>
+                <form:form id="" action="${form_url}" method="post" modelAttribute="archivoAdjunto" enctype="multipart/form-data">
+                    <div id="roo__file">
+                        <br/>
+                        <label>Ruta:</label>
+                        <input type="file" id="ruta" size="50px" name="filedata" class="submit"/>     
+                    </div>
+                    <br/>
+                    <div>
+                        <p style="color: red;font-weight: bold">Recuerde subir la nueva versión de este archivo, de lo contrario ningún otro usuario podrá tener acceso al mismo </p>
+
+                    </div>
+                    <br/>
+                    <div class="submit" id="roo_archivoAdjunto_submit">
+                        <spring:message code="button.save" var="save_button"/>
+                        <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                        <input id="proceed" type="submit" value="${save_button}" />
+                    </div>
+                </form:form>
+            </c:if>
+
+
+
+        </c:if>
+        <c:if test="${empty archivoAdjunto}">
+            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
+        </c:if>
+    </div>
+    <script type="text/javascript">
+        $('#menuTable1').tablePagination({});
+    </script>
+</div>
