@@ -27,7 +27,7 @@
             </div>
             <br/>            
             <div id="roo_planAnual_descripcion">
-                <label for="_descripcion_id">Comentarios:</label>
+                <label for="_descripcion_id">Descripci&#243;n:</label>
                 <form:input cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
                 <br/>
                 <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>                                

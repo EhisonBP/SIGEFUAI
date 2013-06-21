@@ -24,22 +24,19 @@ package ve.co.bsc.sigai.web;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
-import org.drools.runtime.process.ProcessInstance;
-import org.jbpm.task.query.TaskSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,17 +46,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import ve.co.bsc.sigai.domain.Actuacion;
-import ve.co.bsc.sigai.domain.Auditor;
 import ve.co.bsc.sigai.domain.EstadoPlan;
 import ve.co.bsc.sigai.domain.ItemPlanificacionActuacion;
 import ve.co.bsc.sigai.domain.OrganismoEnte;
 import ve.co.bsc.sigai.domain.OtraActividad;
 import ve.co.bsc.sigai.domain.PlanAnual;
-import ve.co.bsc.sigai.domain.RolUsuario;
-import ve.co.bsc.sigai.domain.Usuario;
 import ve.co.bsc.sigai.service.HumanTaskService;
 import ve.co.bsc.sigai.service.JbpmService;
-import ve.co.bsc.sigai.service.exception.ServiceTemporarilyUnavailableException;
 import ve.co.bsc.util.Util;
 
 /*
@@ -125,6 +118,15 @@ public class PlanAnualController {
 		EstadoPlan estadoPlanEnProceso = EstadoPlan.findEstadoPlan(new Long(1));
 		planAnual.setEstadoPlan(estadoPlanEnProceso);
 
+		List<PlanAnual> list = PlanAnual.findAllPlanAnuals();
+		for (PlanAnual anual : list) {
+			if (anual.getAnoFiscal() == planAnual.getAnoFiscal()) {
+
+				result.addError(new ObjectError("anoFiscal",
+						"Este plan anual se encuentra registrado en el sistema"));
+			}
+		}
+
 		if (planAnual == null) {
 			throw new IllegalArgumentException("A planAnual is required");
 		}
@@ -181,52 +183,10 @@ public class PlanAnualController {
 			}
 		}
 
-		// Listo
-		List<Auditor> todos = Auditor.findAllAuditors();
-		List<Auditor> ListCoordinadores = new LinkedList<Auditor>();
-		List<Auditor> ListAuditores = new LinkedList<Auditor>();
-		Util util = new Util();
-
-		if (util.rolUsuarioLoggeado().equals("[UNIDAD_COORDINADOR]")
-				|| util.rolUsuarioLoggeado().equals("[UNIDAD_AUDITOR]")
-				|| util.rolUsuarioLoggeado().equals("[UNIDAD_GERENTE]")) {
-
-			for (Auditor a : todos) {
-				List<Usuario> usuarios = Usuario.findUsuariosByLogin(
-						a.getLogin()).getResultList();
-				for (Usuario u : usuarios) {
-					for (RolUsuario r : u.getRoles()) {
-						if (r.getNombre().equals("ROLE_UNIDAD_COORDINADOR")) {
-							if (a.getId_OrganismoEnte().getRif() == util
-									.obtenerRif()) {
-								ListCoordinadores.add(a);// Lista los
-															// Coordinadores
-								break;
-							}
-						} else {
-							if (r.getNombre().equals("ROLE_UNIDAD_AUDITOR")) {
-								if (a.getId_OrganismoEnte().getRif() == util
-										.obtenerRif()) {
-									ListAuditores.add(a);// Listo Los Auditores
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
 		Calendar FechaActual = Calendar.getInstance();
 		int mes = FechaActual.get(Calendar.MONTH);
 		int a = FechaActual.get(Calendar.YEAR);
 
-		// Listo Los Coordinadores
-		modelMap.addAttribute("coordinadores", ListCoordinadores);
-		// Lista los Coordinadores
-		/****   ****/
-		// Listo Los Auditores
-		modelMap.addAttribute("auditores", ListAuditores);
 		// Listo Los Auditores
 		modelMap.addAttribute("actuacions", actuacions);
 		modelMap.addAttribute("otrasActividades", otrasActividades);
@@ -234,15 +194,6 @@ public class PlanAnualController {
 		modelMap.addAttribute("objetoComentable", planAnual);
 		modelMap.addAttribute("fechaActual", mes + 1);
 		modelMap.addAttribute("anoActual", a);
-
-		try {
-			List<TaskSummary> tasks = humanTaskService
-					.getCorrelatedTasksAssignedAsPotentialOwnerToCurrentUser(planAnual);
-			modelMap.addAttribute("tasks", tasks);
-		} catch (ServiceTemporarilyUnavailableException e) {
-			modelMap.addAttribute("tasks", new LinkedList<TaskSummary>());
-			modelMap.addAttribute("unavailable", e);
-		}
 
 		logger.debug("solicitando revision de plan en motor de reglas");
 		jbpmService.executeRulesStateless(planAnual);
@@ -258,6 +209,16 @@ public class PlanAnualController {
 			@Valid @ModelAttribute("planAnual") PlanAnual planAnual,
 			BindingResult result, ModelMap modelMap, SessionStatus status,
 			HttpServletRequest request) {
+
+		Util util = new Util();
+		Query query = PlanAnual.findPlanAnualsByRif(util.traerIdRif());
+		List<PlanAnual> list = query.getResultList();
+		for (PlanAnual anual : list) {
+			if (anual.getAnoFiscal() == planAnual.getAnoFiscal()) {
+				result.addError(new ObjectError("anoPlan",
+						"Este Año Fiscal ya se encuentra Registrado"));
+			}
+		}
 
 		if (planAnual == null) {
 			throw new IllegalArgumentException("A planAnual is required");
@@ -319,102 +280,6 @@ public class PlanAnualController {
 		modelMap.addAttribute("estadoplans", EstadoPlan.findAllEstadoPlans());
 
 		return "plananual/actualizarEstatus";
-	}
-
-	@RequestMapping(value = "/plananual/duplicarPlan/{id}", method = RequestMethod.GET)
-	public String duplicarPlanForm(@PathVariable("id") Long id,
-			ModelMap modelMap, HttpServletRequest request) {
-
-		if (id == null) {
-			throw new IllegalArgumentException("An Identifier is required");
-		}
-
-		// *************** DUPLICANDO PLANANUAL ***************
-		PlanAnual planOriginal = PlanAnual.findPlanAnual(id);
-		PlanAnual planNuevo = (PlanAnual) planOriginal.clone();
-		planNuevo.setEstadoPlan(EstadoPlan.findEstadoPlan(new Long(1)));
-		planNuevo.persist();
-		Util.registrarEntradaEnBitacora(planNuevo, "A partir del plan "
-				+ planOriginal.toStringLimitado() + "se creó el plan ",
-				request.getRemoteAddr());
-		modelMap.addAttribute("planAnual", planNuevo);
-		// ****************************************************
-
-		// ********************** NUEVO ARSEN ******************
-		// inicia el workflow para este plan anual
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("plan", planNuevo);
-		ProcessInstance proc = jbpmService.startProcess(
-				"ve.co.bsc.sigai.domain.bpm.lifecycle.PlanAnual", params,
-				planNuevo);
-		// *****************************************************
-
-		// ****** DUPLICANDO ITEMPLANIFICACIONACTUACIONS ******
-		List<ItemPlanificacionActuacion> itemsOriginales = ItemPlanificacionActuacion
-				.findItemPlanificacionActuacionsByPlanAnual(planOriginal)
-				.getResultList();
-		for (int i = 0; i < itemsOriginales.size(); i++) {
-			// **** DUPLICANDO ITEMPLANIFICACIONACTUACIONS ****
-			ItemPlanificacionActuacion itemOriginal = itemsOriginales.get(i);
-			ItemPlanificacionActuacion itemNuevo = (ItemPlanificacionActuacion) itemOriginal
-					.clone();
-			itemNuevo.setPlanAnual(planNuevo);
-			// ************************************************
-			if (itemOriginal.getActuacion() != null) {
-				// *********** DUPLICANDO ACTUACION ***********
-				Actuacion actuacionOriginal = itemOriginal.getActuacion();
-				Actuacion actuacionNueva = (Actuacion) actuacionOriginal
-						.clone();
-				actuacionNueva.persist();
-				Util.registrarEntradaEnBitacora(
-						actuacionNueva,
-						"A partir de la actuación "
-								+ actuacionOriginal.toStringLimitado()
-								+ "se creó el actuacion ",
-						request.getRemoteAddr());
-				itemNuevo.setActuacion(actuacionNueva);
-				// ********************************************
-
-				// *****************NUEVO ARSEN*****************
-				// inicia el workflow para esta actuacion
-				Map<String, Object> parameters = new HashMap<String, Object>();
-				parameters.put("actuacion", actuacionNueva);
-				ProcessInstance p = jbpmService.startProcess(
-						"ve.co.bsc.sigai.domain.bpm.lifecycle.Actuacion",
-						parameters, actuacionNueva);
-				// *********************************************
-			}
-
-			if (itemOriginal.getOtraActividad() != null) {
-				// *********** DUPLICANDO OTRAACTIVIDAD ***********
-				OtraActividad otraActividadOriginal = itemOriginal
-						.getOtraActividad();
-				OtraActividad otraActividadNueva = (OtraActividad) otraActividadOriginal
-						.clone();
-				otraActividadNueva.setDescripcionCorta(otraActividadOriginal
-						.getDescripcionCorta());
-				otraActividadNueva.persist();
-				itemNuevo.setOtraActividad(otraActividadNueva);
-				// ********************************************
-			}
-
-			itemNuevo.persist();
-
-			// Map<String, Object> parameters = new HashMap<String, Object>();
-			// parameters.put("plan", itemNuevo);
-			// ProcessInstance p =
-			// jbpmService.startProcess("ve.co.bsc.sigai.domain.bpm.lifecycle.PlanAnual",
-			// parameters, itemNuevo);
-
-			Util.registrarEntradaEnBitacora(
-					itemNuevo,
-					"A partir de la planificacion  "
-							+ itemOriginal.toStringLimitado()
-							+ "se creó la planificacion ",
-					request.getRemoteAddr());
-		}
-
-		return "plananual/duplicarPlan";
 	}
 
 	@RequestMapping(value = "/plananual/{id}", method = RequestMethod.DELETE)

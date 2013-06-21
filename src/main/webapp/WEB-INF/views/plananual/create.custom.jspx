@@ -58,7 +58,7 @@
 			</div>
 			<br />
 			<div id="roo_planAnual_descripcion">
-				<label for="_descripcion_id">Comentarios:</label>
+				<label for="_descripcion_id">Descripci&#243;n:</label>
 				<form:textarea cssStyle="width:520px; height: 200px;"
 					id="_descripcion_id" path="descripcion" />
 				<br />

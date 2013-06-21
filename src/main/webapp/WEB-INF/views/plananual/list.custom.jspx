@@ -30,28 +30,32 @@
 					<tr>
 						<th>Año Fiscal</th>
 						<th>Institucion</th>
-						<th>Estado del Plan</th>
-						<th></th>
-						<th></th>
-
+						<th>Estado Plan</th>
+						<sec:authorize
+							ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+							<th></th>
+							<th></th>
+						</sec:authorize>
 					</tr>
 				</thead>
 				<c:forEach items="${plananuals}" var="planAnual">
 					<tr>
 						<td><c:out value="${planAnual.anoFiscal}" /></td>
 						<td><c:out value="${planAnual.rif.acronimo}" /></td>
-						<td><c:out
-								value="${fn:substring(planAnual.estadoPlan.nombre, 0, 30)}" />
-						</td>
-						<td><spring:url value="/plananual/${planAnual.id}"
-								var="show_form_url" /> <spring:url
-								value="/static/images/show.png" var="show_image_url" /> <form:form
-								id="form1" action="${show_form_url}" method="get">
-								<spring:message arguments="${entity_label}" code="entity.show"
-									var="show_label" />
-								<input alt="${show_label}" class="image" src="${show_image_url}"
-									title="${show_label}" type="image" value="${show_label}" />
-							</form:form></td>
+						<td><c:out value="${fn:substring(planAnual.estadoPlan.nombre, 0, 20)}"/></td>
+						<sec:authorize
+							ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+							<td><spring:url value="/plananual/${planAnual.id}"
+									var="show_form_url" /> <spring:url
+									value="/static/images/show.png" var="show_image_url" /> <form:form
+									id="form1" action="${show_form_url}" method="get">
+									<spring:message arguments="${entity_label}" code="entity.show"
+										var="show_label" />
+									<input alt="${show_label}" class="image"
+										src="${show_image_url}" title="${show_label}" type="image"
+										value="${show_label}" />
+								</form:form></td>
+						</sec:authorize>
 						<sec:authorize
 							ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
 							<td><spring:url value="/plananual/${planAnual.id}/form"
@@ -74,14 +78,17 @@
 				code="entity.not.found" />
 		</c:if>
 	</div>
-	<span class="new"> <spring:url value="/plananual/form"
-			var="create_url" /> <a href="${create_url}"> <spring:url
-				value="/static/images/add.png" var="create_img_url" /> <spring:message
-				arguments="${entity_label}" code="global.menu.new" var="add_message" />
-			<img alt="${add_message}" src="${create_img_url}"
-			title="${add_message}" />
-	</a>
-	</span>
+	<sec:authorize
+		ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+		<span class="new"> <spring:url value="/plananual/form"
+				var="create_url" /> <a href="${create_url}"> <spring:url
+					value="/static/images/add.png" var="create_img_url" /> <spring:message
+					arguments="${entity_label}" code="global.menu.new"
+					var="add_message" /> <img alt="${add_message}"
+				src="${create_img_url}" title="${add_message}" />
+		</a>
+		</span>
+	</sec:authorize>
 	<script type="text/javascript">
 		$('#menuTable').tablePagination({});
 	</script>

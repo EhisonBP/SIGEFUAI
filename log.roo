@@ -1206,16 +1206,3 @@ exit
 perform clean
 perform eclipse
 perform package
-// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-06-20 13:45:25
-perform clean
-perform assembly
-perform eclipse
-perform tests
-perform tests
-perform tests
-perform tests
-perform tests
-perform tests
-perform clean
-perform clean
-perform package

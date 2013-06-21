@@ -1,49 +1,965 @@
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
-    <jsp:output omit-xml-declaration="yes"/>
-    <script type="text/javascript">dojo.require('dijit.TitlePane');</script>
-    <div id="_title_div">
-        <spring:message code="label.plananual" var="entity_label"/>
-        <spring:message arguments="${entity_label}" code="entity.show" var="title_msg"/>
-        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: '${title_msg}'}})); </script>
-        <c:if test="${not empty planAnual}">
-            <div id="roo_planAnual_estadoPlan">
-                <label for="_estadoPlan_id">Estado Plan:</label>
-                <div class="box" id="_estadoPlan_id">
-                    <c:out value="${planAnual.estadoPlan}"/>
-                </div>
-            </div>
-            <br/>
-            <div id="roo_planAnual_descripcion">
-                <label for="_descripcion_id">Descripcion:</label>
-                <div class="box" id="_descripcion_id">
-                    <c:out value="${planAnual.descripcion}"/>
-                </div>
-            </div>
-            <br/>
-            <div id="roo_planAnual_anoFiscal">
-                <label for="_anoFiscal_id">Ano Fiscal:</label>
-                <div class="box" id="_anoFiscal_id">
-                    <c:out value="${planAnual.anoFiscal}"/>
-                </div>
-            </div>
-            <br/>
-            <div id="roo_planAnual_accionesPermitidas">
-                <label for="_accionesPermitidas_id">Acciones Permitidas:</label>
-                <div class="box" id="_accionesPermitidas_id">
-                    <c:out value="${planAnual.accionesPermitidas}"/>
-                </div>
-            </div>
-            <br/>
+<div xmlns:toolstag="urn:jsptagdir:/WEB-INF/tags"
+	xmlns:tools="http://edwardrayl.com/taglibs/tools"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags">
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+		dojo.require('dijit.form.FilteringSelect');
+		dojo.require('dijit.form.DateTextBox');
+	</script>
+	<div id="x_title_div">
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'x_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : 'Plan de Trabajo Anual'
+				}
+			}));
+			$(function() {
+				$("#accordion").accordion({
+
+					collapsible : true,
+					active : false
+				});
+			});
+		</script>
+		<!-- Script para el mensaje de validacion al actualizar estatus
+		<script type="text/javascript">
+        function confirmation(id) {
+            var answer = confirm("¿ Está seguro/a que desea actualizar el estatus del Plan Anual ?")
+            if (answer){
+                window.location = '../../plananual/' + id;
+            }
+        }
+
+    </script>-->
+		<c:if test="${not empty planAnual}">
+			
             <div id="roo_planAnual_rif">
-                <label for="_rif_id">Rif:</label>
+                <label for="_rif_id">Intitucion:</label>
                 <div class="box" id="_rif_id">
-                    <c:out value="${planAnual.rif}"/>
+                    <c:out value="${planAnual.rif.nombre}"/>
                 </div>
             </div>
+			<br />
+			<br />
+			<div id="roo_planAnual_anoFiscal">
+				<label for="_anoFiscal_id">Año Fiscal:</label>
+				<div class="box" id="_anoFiscal_id">
+					<c:out value="${planAnual.anoFiscal}" />
+				</div>
+			</div>
+			<br />
+			<div id="roo_planAnual_estadoPlanShow">
+				<label for="_estadoPlan_idShow">Estatus:</label>
+				<div class="box" id="_estadoPlan_idShow">
+					<c:out value="${planAnual.estadoPlan.nombre}" />
+				</div>
+			</div>
+			<br />
+			<div id="roo_planAnual_descripcion">
+				<label for="_descripcion_id">Comentarios:</label>
+				<div class="box" id="_descripcion_id">
+					<c:out escapeXml="false" value="${planAnual.descripcion}" />
+				</div>
+			</div>
+			<br />
+			<br />
+			<div id="accordion">
+				<h3>
+					<a href="#">Actuaciones:</a>
+				</h3>
+				<div>
+					<c:if test="${not empty actuacions}">
+						<table id="menuTable" width="300">
+							<thead>
+								<tr>
+
+									<th>Código</th>
+									<th>Nombre</th>
+									<th>Tipo</th>
+									<th>Estado</th>
+									<th />
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<th />
+										<th />
+									</sec:authorize>
+								</tr>
+							</thead>
+							<c:forEach items="${actuacions}" var="actuacion">
+								<tr>
+
+					<td>	
+						<c:out value="${fn:substring(actuacion.codigoCompleto, 0, 20)}" />
+					</td>
+					<td>
+						<c:out value="${fn:substring(actuacion.nombre, 0, 20)}" />
+					</td>
+					<td>
+						<c:out value="${fn:substring(actuacion.claseActuacion.nombre, 0, 10)}" />
+					</td>
+					
+					<td align="center">
+					<c:choose>
+					 <!--Amarillo: Cuando la Actuacion no se inicia en la fecha tentativa -->
+					<c:when test="${(fechaActual > actuacion.mesDesdeTentativo and actuacion.mesDesdeReal == null and anoActual >= actuacion.anoFiscal) or ((anoActual - actuacion.anoFiscal) > 0 and actuacion.mesDesdeReal == null)}">
+					  
+                                          <spring:url value="/static/images/amarillo48x48.png" var="amarillo" />
+					  <spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+                                          <img src="${amarillo}" alt="${update_label}" title="No se a iniciado la actuación en la fecha planificada." width="40" height="40"/>	
+					    
+					</c:when>
+					 <c:otherwise>
+                                         <!-- Rojo: Si la actuacion no se finaliza en la fecha tentativa -->
+                                            <c:if test="${(fechaActual > actuacion.mesHastaTentativo and actuacion.mesHastaReal == null and anoActual >= actuacion.anoFiscal) or ((anoActual - actuacion.anoFiscal) > 0 and actuacion.mesHastaReal == null)}">
+
+                                                <spring:url value="/static/images/rojo48x48.png" var="rojo" />
+					  <spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+                                          <img src="${rojo}" alt="${update_label}" title="No se a culminada la actuación en la fecha planificada." width="40" height="40"/>
+                                            
+                                            </c:if>
+					 </c:otherwise>
+					</c:choose>
+                                        <!-- Verde: Si la Actuacion se encuentra entre las fechas planificadas  -->	
+					<c:if test="${
+(fechaActual >= actuacion.mesDesdeTentativo and fechaActual &lt;= actuacion.mesHastaTentativo and actuacion.mesDesdeReal != null and actuacion.anoFiscal == anoActual)
+or (actuacion.mesDesdeTentativo >= fechaActual and actuacion.anoFiscal == anoActual)
+or (fechaActual > actuacion.mesHastaTentativo and actuacion.mesHastaReal and actuacion.anoFiscal == anoActual) 
+or (actuacion.anoFiscal > anoActual and actuacion.mesDesdeReal == null and actuacion.mesHastaReal == null) 
+or (anoActual > actuacion.anoFiscal and actuacion.mesDesdeReal != null and actuacion.mesHastaReal != null)}">
+
+                                          <spring:url value="/static/images/verde48x48.png" var="verde" />
+					  <spring:message arguments="${entity_label}" code="entity.show"
+									var="show_label" />
+                                          <img src="${verde}" alt="${update_label}" title="${actuacion.estadoActuacion.nombre}" width="40" height="40"/>                                         
+
+                                         </c:if>
+  
+                                 </td>
+									<td><spring:url value="/actuacion/${actuacion.id}"
+											var="show_form_url" /> <spring:url
+											value="/static/images/show.png" var="show_image_url" /> <form:form
+											id="" action="${show_form_url}" method="get">
+											<spring:message arguments="${entity_label}"
+												code="entity.show" var="show_label" />
+											<input alt="${show_label}" class="image"
+												src="${show_image_url}" title="Mostrar Actuación"
+												type="image" value="${show_label}" />
+										</form:form></td>
+
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<c:if test="${tools:contains(accionesPermitidas, 'editar')}">
+											<td><spring:url value="/actuacion/${actuacion.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actuación"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/actuacion/${actuacion.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actuación"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<c:if test="${tools:contains(accionesPermitidas, 'editar2')}">
+											<td><spring:url value="/actuacion/${actuacion.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actuación"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/actuacion/${actuacion.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actuación"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+										<c:if test="${tools:contains(accionesPermitidas, 'AsiCoordinador')}">
+											<td><spring:url value="/actuacion/${actuacion.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actuación"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/actuacion/${actuacion.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actuación"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+										<c:if test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+											<td><spring:url value="/actuacion/${actuacion.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actuación"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/actuacion/${actuacion.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actuación"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+					<c:if test="${empty actuacions}">
+						<spring:message text="No se encontraron actuaciones" />
+						<br />
+					</c:if>
+					<br />
+				
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
+						<c:if test="${tools:contains(accionesPermitidas, 'editar2')}">
+							<spring:url value="/actuacion/form"
+								var="web_mvc_jsp_create_actuacion_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actuación"
+								onclick="document.location='${web_mvc_jsp_create_actuacion_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
+						<c:if test="${tools:contains(accionesPermitidas, 'editar')}">
+							<spring:url value="/actuacion/form"
+								var="web_mvc_jsp_create_actuacion_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actuación"
+								onclick="document.location='${web_mvc_jsp_create_actuacion_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+						<c:if
+							test="${tools:contains(accionesPermitidas, 'AsiCoordinador')}">
+							<spring:url value="/actuacion/form"
+								var="web_mvc_jsp_create_actuacion_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+
+							<input type="button" value="Crear Actuación"
+								onclick="document.location='${web_mvc_jsp_create_actuacion_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+					<!-- CREAR ACTUACIONES MIENTRAS EL ESTADO DEL PLAN ESTE EN "Asignar Actuaciones" -->
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+						<c:if
+							test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+							<spring:url value="/actuacion/form"
+								var="web_mvc_jsp_create_actuacion_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+
+							<input type="button" value="Crear Actuación"
+								onclick="document.location='${web_mvc_jsp_create_actuacion_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+			
+					<!--  <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+						<c:if
+							test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+							<spring:url value="/otraactividad/form"
+								var="web_mvc_jsp_create_otraactividad_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actividad"
+								onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>-->
+				</div>
+
+				<h3>
+					<a href="#">Otras Actividades:</a>
+				</h3>
+				<div>
+					<c:if test="${not empty otrasActividades}">
+						<table id="menuTable2" width="300">
+							<thead>
+								<tr>
+									<th>Número</th>
+									<th>Objetivo General</th>
+									<th>Unidad</th>
+									<th />
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<th />
+										<th />
+									</sec:authorize>
+								</tr>
+							</thead>
+							<c:forEach items="${otrasActividades}" var="otra">
+								<tr>
+
+									<td><c:out value="${fn:substring(otra.numero, 0, 5)}" />
+									</td>
+									<td>
+										<div style="overflow: scroll; height: 100px; width: 450px;">
+											<c:out escapeXml="false" value="${otra.objetivo}" />
+										</div></td>
+									<td><c:out
+											value="${fn:substring(otra.unidad.nombre, 0, 35)}" /></td>
+									<td><spring:url value="/otraactividad/${otra.id}"
+											var="show_form_url" /> <spring:url
+											value="/static/images/show.png" var="show_image_url" /> <form:form
+											id="" action="${show_form_url}" method="get">
+											<input name="idPlanAnual" type="hidden"
+												value="${planAnual.id}" />
+											<spring:message arguments="${entity_label}"
+												code="entity.show" var="show_label" />
+											<input alt="${show_label}" class="image"
+												src="${show_image_url}" title="Mostrar Actividad"
+												type="image" value="${show_label}" />
+										</form:form></td>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<c:if test="${tools:contains(accionesPermitidas, 'editar')}">
+											<td><spring:url value="/otraactividad/${otra.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actividad"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/otraactividad/${otra.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actividad"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<c:if test="${tools:contains(accionesPermitidas, 'editar2')}">
+											<td><spring:url value="/otraactividad/${otra.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actividad"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/otraactividad/${otra.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actividad"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+										<c:if test="${tools:contains(accionesPermitidas, 'AsiCoordinador')}">
+											<td><spring:url value="/otraactividad/${otra.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actividad"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/otraactividad/${otra.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actividad"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+										<c:if test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+											<td><spring:url value="/otraactividad/${otra.id}/form"
+													var="update_form_url" /> <spring:url
+													value="/static/images/update.png" var="update_image_url" />
+												<form:form id="" action="${update_form_url}" method="get">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.update" var="update_label" />
+													<input alt="${update_label}" class="image"
+														src="${update_image_url}" title="Actualizar Actividad"
+														type="image" value="${update_label}" />
+												</form:form></td>
+											<td><spring:url value="/otraactividad/${otra.id}"
+													var="delete_form_url" /> <spring:url
+													value="/static/images/delete.png" var="delete_image_url" />
+												<form:form id="" action="${delete_form_url}" method="DELETE">
+													<input name="idPlanAnual" type="hidden"
+														value="${planAnual.id}" />
+													<spring:message arguments="${entity_label}"
+														code="entity.delete" var="delete_label" />
+													<input alt="${delete_label}" class="image"
+														src="${delete_image_url}" title="Eliminar Actividad"
+														type="image" value="${delete_label}" />
+													<c:if test="${not empty param.page}">
+														<input name="page" type="hidden" value="${param.page}" />
+													</c:if>
+													<c:if test="${not empty param.size}">
+														<input name="size" type="hidden" value="${param.size}" />
+													</c:if>
+												</form:form></td>
+										</c:if>
+									</sec:authorize>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+					<c:if test="${empty otrasActividades}">
+						<spring:message text="No se encontraron actividades" />
+						<br />
+					</c:if>
+					<br />
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
+						<c:if test="${tools:contains(accionesPermitidas, 'editar2')}">
+							<spring:url value="/otraactividad/form"
+								var="web_mvc_jsp_create_otraactividad_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actividad"
+								onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+										<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
+						<c:if test="${tools:contains(accionesPermitidas, 'editar')}">
+							<spring:url value="/otraactividad/form"
+								var="web_mvc_jsp_create_otraactividad_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actividad"
+								onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+						<c:if
+							test="${tools:contains(accionesPermitidas, 'AsiCoordinador')}">
+							<spring:url value="/otraactividad/form"
+								var="web_mvc_jsp_create_otraactividad_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actividad"
+								onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+
+					<!--  <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+						<c:if
+							test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+							<spring:url value="/otraactividad/form"
+								var="web_mvc_jsp_create_otraactividad_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actividad"
+								onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>-->
+		<!-- CREAR OTRAS ACTIVIDADES MIENTRAS EL ESTADO DEL PLAN ESTE EN "Asignar Actuaciones" -->
+					<sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+						<c:if
+							test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+							<spring:url value="/otraactividad/form"
+								var="web_mvc_jsp_create_otraactividad_menu_item_url">
+								<spring:param name="idPlanAnual" value="${planAnual.id}" />
+							</spring:url>
+							<input type="button" value="Crear Actividad"
+								onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+						</c:if>
+					</sec:authorize>
+				</div>
+
+			</div>
+			<br />
+			<sec:authorize
+				ifAnyGranted="ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+				<c:if test="${tools:contains(accionesPermitidas, 'editar')}">
+					<spring:url value="/ocupacionauditor" var="listByAuditor_url">
+						<spring:param name="idPlan" value="${planAnual.id}" />
+					</spring:url>
+					<input type="button" value="Planificar Actividades"
+						onclick="document.location='${listByAuditor_url}'" />
+				</c:if>
+			</sec:authorize>
+
+			<!--   <sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+                <c:if test="${tools:contains(accionesPermitidas, 'duplicar')}">
+                    <spring:url value="/plananual/duplicarPlan/${planAnual.id}" var="duplicar_plan_url"/>
+                    <input type="button" value="Duplicar Plan" onclick="document.location='${duplicar_plan_url}'"/>
+                </c:if>
+            </sec:authorize>
+            -->
+             <sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR">
+				<c:if
+					test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+					
+					<h1>Recuerde enviar la tarea desde su bandeja de tareas</h1>
+					
+				</c:if>
+			</sec:authorize>
+<!-- MODIFICAR ESTATUS DEL PLAN ANUAL MIENTRAS EL ESTATUS SEA ""Asignar Actuaciones"" -->
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+				<c:if
+					test="${tools:contains(accionesPermitidas, 'AsiAuditado')}">
+		<div>
+			<br/>
+			<h1>SELECIONE SI APRUEBA O NO LA PLANIFICACION DEL PLAN ANUAL</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan">
+                            <option value="105">NO APRUEBO</option>
+				            <option value="117">APRUEBO</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <h2>NOTA:</h2>
+            <ul>
+             <li>Si aprueba le llegara a la bandeja de tareas al Gerente</li>
+             <li>Si rechaza le llegara a la bandeja de tareas al auditor para la replanificacion</li>
+            </ul>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+	</div>						
+				</c:if>
+			</sec:authorize>
+			<sec:authorize ifAnyGranted="ROLE_SUNAI_ANALISTA">
+				<c:if
+					test="${tools:contains(accionesPermitidas, 'actualizarEstatus')}">
+					<div>
+			<br/>
+			<h1>SELECIONE SI APRUEBA O NO LA PLANIFICACION DEL PLAN ANUAL DE LA INSTITUCION</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan">
+                            <option value="116">NO APRUEBO</option>
+				            <option value="117">PRE-APRUEBO</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <h2>NOTA:</h2>
+            <ul>
+             <li>Si aprueba le llegara a la bandeja de tareas al Supervisor de la SUNAI</li>
+             <li>Si rechaza le llegara a la bandeja de tareas al Gerente de la Institucion para la replanificacion</li>
+            </ul>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+	</div>		
+				</c:if>
+			</sec:authorize>
+			
+            <sec:authorize ifAnyGranted="ROLE_SUNAI_SUPERVISOR">
+				<c:if
+					test="${tools:contains(accionesPermitidas, 'PreAprobadoAnalista')}">
+					<div>
+			<br/>
+			<h1>SELECIONE SI APRUEBA O NO LA PLANIFICACION DEL PLAN ANUAL DE LA INSTITUCION</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan">
+                            <option value="7">NO APRUEBO</option>
+				            <option value="117">PRE-APRUEBO</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+           <h2>NOTA:</h2>
+            <ul>
+             <li>Si aprueba le llegara a la bandeja de tareas al Coordinador de la SUNAI</li>
+             <li>Si rechaza le llegara a la bandeja de tareas al Gerente de la Institucion para la replanificacion</li>
+            </ul>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+	</div>		
+				</c:if>
+			</sec:authorize>
+			
+			<sec:authorize ifAnyGranted="ROLE_SUNAI_COORDINADOR">
+				<c:if test="${tools:contains(accionesPermitidas, 'Presunai')}">
+					<div>
+			<br/>
+			<h1>SELECIONE SI APRUEBA O NO LA PLANIFICACION DEL PLAN ANUAL DE LA INSTITUCION</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan">
+                            <option value="111">NO APRUEBO</option>
+				            <option value="117">APRUEBO</option>
+				            <option value="113">APRUEBO Y SOLICITO FISICO</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <h2>NOTA:</h2>
+            <ul>
+             <li>Si aprueba le llegara a la bandeja de tareas al Superintendente de la SUNAI</li>
+             <li>Si rechaza le llegara a la bandeja de tareas al Gerente de la Institucion para la replanificacion</li>
+             <li>Si Apruebas y solicitas fisico la tarea le llegara al Gerente de la Institucion</li>
+            </ul>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+	</div>		
+				</c:if>
+			</sec:authorize>
+
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+				<c:if test="${tools:contains(accionesPermitidas, 'AsiCoordinador')}">
+<!-- MODIFICAR ESTATUS DEL PLAN ANUAL MIENTRAS EL ESTATUS SEA "Asignar Plan Coordinador" || 
+ estadoSimple == "Asignar Actuaciones" || 
+ estadoSimple == "Rechazado Coordinador" || 
+ estadoSimple == "Rechazado Gerente"  -->
+			<div>
+			<br/>
+			<h1>SELECIONE A QUIEN ENVIARA LA TAREA</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan">
+                            <option value="101">Enviar al Gerente Para Su Revision</option>
+				            <option value="117">Enviar al Auditor</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <script type="text/javascript">
+                            function mostrarResponsable2() {
+							var combo = document.getElementById("_estadoPlan_id");
+							div = document.getElementById('roo_planAnual_responsable');
+
+							if (combo.selectedIndex == undefined) {
+								if (combo.value == 'Enviar al Auditor') {
+									div.style.display = '';
+								} else {
+									div.style.display = 'none';
+								}
+							} else {
+								if (combo.options[combo.selectedIndex].text == 'Enviar al Auditor') {
+									div.style.display = '';
+								} else {
+									div.style.display = 'none';
+								}
+							}
+						}
+                            Spring.addDecoration(new Spring.ElementDecoration({
+    							elementId : '_estadoPlan_id',
+    							widgetType : 'dijit.form.FilteringSelect',
+    							widgetAttrs : {
+    								hasDownArrow : true,
+    								onChange : function(newValue) {
+    									mostrarResponsable2();
+    								}
+    							}
+    						}));
+						</script>
+               <br/>
+            <div id="roo_planAnual_responsable" style="display: none;">
+            <h1>SELECIONE QUIEN SERA EL AUDITOR RESPONSABLE</h1> 
+                <c:if test="${not empty auditores}">
+                    <!--<label for="_responsable_id">Responsable:</label>-->
+                    <form:select cssStyle="width:250px" id="_responsable_id" path="responsable2">
+                        <form:options itemValue="id" items="${auditores}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_responsable_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
             <br/>
-        </c:if>
-        <c:if test="${empty planAnual}">
-            <spring:message arguments="${entity_label}" code="entity.not.found.single"/>
-        </c:if>
-    </div>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+		</div>
+		
+		          </c:if>
+<!-- MODIFICAR ESTATUS DEL PLAN ANUAL MIENTRAS EL ESTATUS SEA "En Elaboracion" or "En proceso"  -->
+			</sec:authorize>
+<!-- MODIFICAR ESTATUS DEL PLAN ANUAL MIENTRAS EL ESTATUS SEA "Pre aprobado Coordinador"  -->
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
+				<c:if test="${tools:contains(accionesPermitidas, 'PreCoordinador')}">
+					<div>
+			<br/>
+			<h1>SELECIONE SI APRUEBA O NO LA PLANIFICACION DEL PLAN ANUAL</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan">
+                            <option value="109">NO APRUEBO</option>
+				            <option value="117">APRUEBO</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <h2>NOTA:</h2>
+            <ul>
+             <li>Si aprueba le llegara a la bandeja de tareas al Analista de la SUNAI</li>
+             <li>Si rechaza le llegara a la bandeja de tareas al Coordinador para la replanificacion</li>
+            </ul>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+	</div>		
+				</c:if>
+			</sec:authorize>
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
+				<c:if test="${tools:contains(accionesPermitidas, 'editar2')}">				
+   <!-- MODIFICAR ESTATUS DEL PLAN ANUAL MIENTRAS EL ESTATUS SEA "En Elaboracion" or "Rechazado Analista Sunai" or "Rechazado Supervisor Sunai" or "Rechazado Gerente Sunai")  -->                      
+			<div>
+			<br/>
+			<h1>SELECIONE A QUIEN ENVIARA LA TAREA</h1>
+		            <spring:url value="/plananual/${planAnual.id}" var="form_url"/>
+                      <form:form id="" action="${form_url}" method="put" modelAttribute="planAnual">
+                      <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+                      <div id="roo_planAnual_estadoPlan">
+                            <form:select cssStyle="width:250px" id="_estadoPlan_id" path="estadoPlan"> 
+				            <option value="92">Enviar a Sunai</option> <!-- Este id es crear plan gerente utilizado en el JBPM -->
+				            <option value="99">Enviar al Coordinador</option>
+                            </form:select>
+                            <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoPlan_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <script type="text/javascript">
+                            function mostrarResponsable() {
+							var combo = document.getElementById("_estadoPlan_id");
+							div = document
+									.getElementById('roo_planAnual_responsable');
+
+							if (combo.selectedIndex == undefined) {
+								if (combo.value == 'Enviar al Coordinador') {
+									div.style.display = '';
+								} else {
+									div.style.display = 'none';
+								}
+							} else {
+								if (combo.options[combo.selectedIndex].text == 'Enviar al Coordinador') {
+									div.style.display = '';
+								} else {
+									div.style.display = 'none';
+								}
+							}
+						}
+                            Spring.addDecoration(new Spring.ElementDecoration({
+    							elementId : '_estadoPlan_id',
+    							widgetType : 'dijit.form.FilteringSelect',
+    							widgetAttrs : {
+    								hasDownArrow : true,
+    								onChange : function(newValue) {
+    									mostrarResponsable();
+    								}
+    							}
+    						}));
+						</script>
+            <br/>
+            <div id="roo_planAnual_responsable" style="display: none;">
+            <h1>SELECIONE QUIEN SERA EL COORDINADOR RESPONSABLE</h1> 
+                <c:if test="${not empty coordinadores}">
+                    <!--<label for="_responsable_id">Responsable:</label>-->
+                    <form:select cssStyle="width:250px" id="_responsable_id" path="responsable">
+                        <form:options itemValue="id" items="${coordinadores}" itemLabel="nombre"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_responsable_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
+            <div class="submit" id="roo_planAnual_submit">
+                <spring:message code="button.update" var="update_button"/>
+                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+                <input id="proceed" type="submit" value="Enviar" onclick="confirmation(${planAnual.id})" />
+            </div>
+            <form:hidden id="_id_id" path="id"/>
+            <form:hidden id="_version_id" path="version"/>
+            <form:hidden id="_anoFiscal_id" path="anoFiscal"/>
+            <form:hidden id="_descripcion_id" path="descripcion"/>
+        </form:form>
+		</div>
+<!-- MODIFICAR ESTATUS DEL PLAN ANUAL MIENTRAS EL ESTATUS SEA "En Elaboracion" or "En proceso"  -->
+				</c:if>
+			</sec:authorize>
+
+		</c:if>
+		<c:if test="${empty planAnual}">
+			<spring:message arguments="${entity_label}"
+				code="entity.not.found.single" />
+		</c:if>
+	</div>
+	<script type="text/javascript">
+		$('#menuTable').tablePagination({});
+		$('#menuTable2').tablePagination({});
+	</script>
 </div>
