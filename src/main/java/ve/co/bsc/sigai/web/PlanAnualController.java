@@ -36,6 +36,7 @@ import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +52,6 @@ import ve.co.bsc.sigai.domain.ItemPlanificacionActuacion;
 import ve.co.bsc.sigai.domain.OrganismoEnte;
 import ve.co.bsc.sigai.domain.OtraActividad;
 import ve.co.bsc.sigai.domain.PlanAnual;
-import ve.co.bsc.sigai.service.HumanTaskService;
 import ve.co.bsc.sigai.service.JbpmService;
 import ve.co.bsc.util.Util;
 
@@ -66,11 +66,9 @@ import ve.co.bsc.util.Util;
 @Controller
 public class PlanAnualController {
 
-	Logger logger = Logger.getLogger(ActuacionController.class);
+	Logger logger = Logger.getLogger(PlanAnual.class);
 	@Autowired
 	private JbpmService jbpmService;
-	@Autowired
-	private HumanTaskService humanTaskService;
 
 	@RequestMapping(value = "/plananual", method = RequestMethod.GET)
 	public String list(
@@ -105,38 +103,45 @@ public class PlanAnualController {
 	}
 
 	@RequestMapping(value = "/plananual", method = RequestMethod.POST)
-	public String create(
-			@Valid @ModelAttribute("planAnual") PlanAnual planAnual,
-			BindingResult result, ModelMap modelMap, SessionStatus status,
-			HttpServletRequest request) {
+	public String create(@Valid PlanAnual planAnual, BindingResult result,
+			ModelMap modelMap, SessionStatus status, HttpServletRequest request) {
 		Util util = new Util();
 
-		planAnual.setRif(util.traerIdRif());
+		if (planAnual == null)
+			throw new IllegalArgumentException("A planAnual is required");
+
+		List<PlanAnual> list = PlanAnual.findAllPlanAnuals();
+		for (PlanAnual anual : list) {
+			logger.info("El año seleccionada de la lista es: "
+					+ anual.getAnoFiscal());
+			logger.info("El año ingresado en la vista es: "
+					+ planAnual.getAnoFiscal());
+			int a = planAnual.getAnoFiscal();
+			int b = anual.getAnoFiscal();
+			if (a == b) {
+				logger.info("Entrando a la validacion de los años fiscales iguales");
+				result.addError(new FieldError(result.getObjectName(),
+						"anoFiscal",
+						"El año fical "+ a +" ya se "
+								+ "encuentra registrado en el sistema"));
+				break;
+			}
+		}
+
+		if (result.hasErrors()) {
+			modelMap.addAttribute("planAnual", planAnual);
+			modelMap.addAttribute("estadoplans",
+					EstadoPlan.findAllEstadoPlans());
+			modelMap.addAttribute("organismoentes",
+					OrganismoEnte.findAllOrganismoEntes());
+			return "plananual/create";
+		}
 
 		// Se asigna el estadoPlan por defecto que es "En Proceso" por eso se
 		// cablea a id 1
 		EstadoPlan estadoPlanEnProceso = EstadoPlan.findEstadoPlan(new Long(1));
 		planAnual.setEstadoPlan(estadoPlanEnProceso);
-
-		List<PlanAnual> list = PlanAnual.findAllPlanAnuals();
-		for (PlanAnual anual : list) {
-			if (anual.getAnoFiscal() == planAnual.getAnoFiscal()) {
-
-				result.addError(new ObjectError("anoFiscal",
-						"Este plan anual se encuentra registrado en el sistema"));
-			}
-		}
-
-		if (planAnual == null) {
-			throw new IllegalArgumentException("A planAnual is required");
-		}
-		if (result.hasErrors()) {
-			modelMap.addAttribute("planAnual", planAnual);
-			modelMap.addAttribute("estadoplans",
-					EstadoPlan.findAllEstadoPlans());
-			return "plananual/create";
-		}
-
+		planAnual.setRif(util.traerIdRif());
 		planAnual.persist();
 		Util.registrarEntradaEnBitacora(planAnual, "Se creó el Plan Anual ",
 				request.getRemoteAddr());

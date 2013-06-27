@@ -32,9 +32,9 @@ public class TipoPersonaRifController {
 		tipoPersonaRif.setFechaCreacion(fechaAct);
 		tipoPersonaRif.setFechaModificacion(fechaAct);
 
-		if (tipoPersonaRif == null) {
+		if (tipoPersonaRif == null)
 			throw new IllegalArgumentException("A tipoPersonaRif is required");
-		}
+
 		if (result.hasErrors()) {
 			modelMap.addAttribute("tipoPersonaRif", tipoPersonaRif);
 			modelMap.addAttribute("estadoauditors",

@@ -64,18 +64,18 @@
 				</h3>
 
 				<div>
+					<c:if test="${empty actuacions}">
+						<spring:message text="No se encontraron actuaciones" />
+						<br />
+					</c:if>
 					<div class="submit">
 						<br />
-						<sec:authorize ifAnyGranted="ROLE_UNIDAD_GERENTE">
-							<c:if test="${tools:contains(accionesPermitidas, 'editar2')}">
-								<spring:url value="/actuacion/form"
-									var="web_mvc_jsp_create_actuacion_menu_item_url">
-									<spring:param name="idPlanAnual" value="${planAnual.id}" />
-								</spring:url>
-								<input type="button" value="Crear Actuacion"
-									onclick="document.location='${web_mvc_jsp_create_actuacion_menu_item_url}'" />
-							</c:if>
-						</sec:authorize>
+						<spring:url value="/actuacion/form"
+							var="web_mvc_jsp_create_actuacion_menu_item_url">
+							<spring:param name="idPlanAnual" value="${planAnual.id}" />
+						</spring:url>
+						<input type="button" value="Crear Actuacion"
+							onclick="document.location='${web_mvc_jsp_create_actuacion_menu_item_url}'" />
 					</div>
 					<br />
 					<c:if test="${not empty actuacions}">
@@ -170,11 +170,42 @@ or (anoActual > actuacion.anoFiscal and actuacion.mesDesdeReal != null and actua
 							</c:forEach>
 						</table>
 					</c:if>
-					<c:if test="${empty actuacions}">
-						<spring:message text="No se encontraron actuaciones" />
+					<br />
+				</div>
+
+				<h3>
+					<a href="#">Otras Actividades:</a>
+				</h3>
+				<div>
+					<c:if test="${empty otrasActividades}">
+						<spring:message text="No se encontraron actividades" />
 						<br />
 					</c:if>
-					<br />
+					<div class="submit">
+						<br />
+						<spring:url value="/otraactividad/form"
+							var="web_mvc_jsp_create_otraactividad_menu_item_url">
+							<spring:param name="idPlanAnual" value="${planAnual.id}" />
+						</spring:url>
+						<input type="button" value="Crear Actividad"
+							onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
+
+					</div>
+					<c:if test="${not empty otrasActividades}">
+						<table id="menuTable2" width="300">
+							<tr>
+								<th>Numero</th>
+								<th>Objetivo General</th>
+								<th>Unidad</th>
+								<th />
+								<sec:authorize
+									ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+									<th />
+									<th />
+								</sec:authorize>
+							</tr>
+						</table>
+					</c:if>
 				</div>
 			</div>
 
