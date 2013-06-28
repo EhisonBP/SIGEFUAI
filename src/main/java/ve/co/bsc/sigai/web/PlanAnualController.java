@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -37,7 +36,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +67,7 @@ public class PlanAnualController {
 	Logger logger = Logger.getLogger(PlanAnual.class);
 	@Autowired
 	private JbpmService jbpmService;
+	private static int año;
 
 	@RequestMapping(value = "/plananual", method = RequestMethod.GET)
 	public String list(
@@ -121,8 +120,7 @@ public class PlanAnualController {
 			if (a == b) {
 				logger.info("Entrando a la validacion de los años fiscales iguales");
 				result.addError(new FieldError(result.getObjectName(),
-						"anoFiscal",
-						"El año fical "+ a +" ya se "
+						"anoFiscal", "El año fical " + a + " ya se "
 								+ "encuentra registrado en el sistema"));
 				break;
 			}
@@ -215,19 +213,30 @@ public class PlanAnualController {
 			BindingResult result, ModelMap modelMap, SessionStatus status,
 			HttpServletRequest request) {
 
-		Util util = new Util();
-		Query query = PlanAnual.findPlanAnualsByRif(util.traerIdRif());
-		List<PlanAnual> list = query.getResultList();
-		for (PlanAnual anual : list) {
-			if (anual.getAnoFiscal() == planAnual.getAnoFiscal()) {
-				result.addError(new ObjectError("anoPlan",
-						"Este Año Fiscal ya se encuentra Registrado"));
+		if (planAnual == null)
+			throw new IllegalArgumentException("A planAnual is required");
+
+		if (año != planAnual.getAnoFiscal()) {
+			logger.info("El año fiscal que se desea actualizar es diferente al "
+					+ "original");
+			List<PlanAnual> list = PlanAnual.findAllPlanAnuals();
+			for (PlanAnual anual : list) {
+				logger.info("El año seleccionada de la lista es: "
+						+ anual.getAnoFiscal());
+				logger.info("El año ingresado en la vista es: "
+						+ planAnual.getAnoFiscal());
+				int a = planAnual.getAnoFiscal();
+				int b = anual.getAnoFiscal();
+				if (a == b) {
+					logger.info("Entrando a la validacion de los años fiscales iguales");
+					result.addError(new FieldError(result.getObjectName(),
+							"anoFiscal", "El año fical " + a + " ya se "
+									+ "encuentra registrado en el sistema"));
+					break;
+				}
 			}
 		}
 
-		if (planAnual == null) {
-			throw new IllegalArgumentException("A planAnual is required");
-		}
 		if (result.hasErrors()) {
 			modelMap.addAttribute("planAnual", planAnual);
 			modelMap.addAttribute("estadoplans",
@@ -248,7 +257,13 @@ public class PlanAnualController {
 		if (id == null) {
 			throw new IllegalArgumentException("An Identifier is required");
 		}
-		modelMap.addAttribute("planAnual", PlanAnual.findPlanAnual(id));
+
+		PlanAnual planAnual = PlanAnual.findPlanAnual(id);
+		año = planAnual.getAnoFiscal();
+		logger.info("El año fiscal optenido del registro a actualizar es: "
+				+ año);
+
+		modelMap.addAttribute("planAnual", planAnual);
 		modelMap.addAttribute("estadoplans", EstadoPlan.findAllEstadoPlans());
 		return "plananual/update";
 	}

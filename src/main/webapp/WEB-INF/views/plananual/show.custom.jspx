@@ -58,6 +58,9 @@
 				</div>
 			</div>
 
+			<br />
+			<br />
+
 			<div id="accordion">
 				<h3>
 					<a href="#">Actuaciones:</a>
@@ -191,6 +194,7 @@ or (anoActual > actuacion.anoFiscal and actuacion.mesDesdeReal != null and actua
 							onclick="document.location='${web_mvc_jsp_create_otraactividad_menu_item_url}'" />
 
 					</div>
+					<br />
 					<c:if test="${not empty otrasActividades}">
 						<table id="menuTable2" width="300">
 							<tr>
@@ -204,11 +208,65 @@ or (anoActual > actuacion.anoFiscal and actuacion.mesDesdeReal != null and actua
 									<th />
 								</sec:authorize>
 							</tr>
+							<c:forEach items="${otrasActividades}" var="otra">
+								<tr>
+									<td><c:out value="${fn:substring(otra.numero, 0, 5)}" />
+									</td>
+									<td><c:out escapeXml="false" value="${otra.objetivo}" />
+									</td>
+									<td><c:out
+											value="${fn:substring(otra.unidad.nombre, 0, 35)}" /></td>
+									<td><spring:url value="/otraactividad/${otra.id}"
+											var="show_form_url" /> <spring:url
+											value="/static/images/show.png" var="show_image_url" /> <form:form
+											id="" action="${show_form_url}" method="get">
+											<input name="idPlanAnual" type="hidden"
+												value="${planAnual.id}" />
+											<spring:message arguments="${entity_label}"
+												code="entity.show" var="show_label" />
+											<input alt="${show_label}" class="image"
+												src="${show_image_url}" title="Mostrar Actividad"
+												type="image" value="${show_label}" />
+										</form:form></td>
+									<sec:authorize
+										ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+										<td><spring:url value="/otraactividad/${otra.id}/form"
+												var="update_form_url" /> <spring:url
+												value="/static/images/update.png" var="update_image_url" />
+											<form:form id="" action="${update_form_url}" method="get">
+												<input name="idPlanAnual" type="hidden"
+													value="${planAnual.id}" />
+												<spring:message arguments="${entity_label}"
+													code="entity.update" var="update_label" />
+												<input alt="${update_label}" class="image"
+													src="${update_image_url}" title="Actualizar Actividad"
+													type="image" value="${update_label}" />
+											</form:form></td>
+										<td><spring:url value="/otraactividad/${otra.id}"
+												var="delete_form_url" /> <spring:url
+												value="/static/images/delete.png" var="delete_image_url" />
+											<form:form id="" action="${delete_form_url}" method="DELETE">
+												<input name="idPlanAnual" type="hidden"
+													value="${planAnual.id}" />
+												<spring:message arguments="${entity_label}"
+													code="entity.delete" var="delete_label" />
+												<input alt="${delete_label}" class="image"
+													src="${delete_image_url}" title="Eliminar Actividad"
+													type="image" value="${delete_label}" />
+												<c:if test="${not empty param.page}">
+													<input name="page" type="hidden" value="${param.page}" />
+												</c:if>
+												<c:if test="${not empty param.size}">
+													<input name="size" type="hidden" value="${param.size}" />
+												</c:if>
+											</form:form></td>
+									</sec:authorize>
+								</tr>
+							</c:forEach>
 						</table>
 					</c:if>
 				</div>
 			</div>
-
 		</c:if>
 		<c:if test="${empty planAnual}">
 			<spring:message arguments="${entity_label}"

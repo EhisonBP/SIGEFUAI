@@ -1214,3 +1214,9 @@ perform clean
 perform package
 quit
 // Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-06-27 16:54:51
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-06-28 08:31:12
+perform tests
+perform package
+perform tests
+perform tests
+perform tests
