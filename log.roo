@@ -1220,3 +1220,5 @@ perform package
 perform tests
 perform tests
 perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-06-28 17:00:17

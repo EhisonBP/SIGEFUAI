@@ -262,8 +262,6 @@ public class ActuacionController {
 		// inicia el workflow para esta actuacion
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("actuacion", actuacion);
-		parameters.put("loginGerente", loginGerente);
-		// parameters.put("loginAuditor", loginAuditor);
 		ProcessInstance p = jbpmService.startProcess(
 				"ve.co.bsc.sigai.domain.bpm.lifecycle.Actuacion", parameters,
 				actuacion);
