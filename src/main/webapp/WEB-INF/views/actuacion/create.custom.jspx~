@@ -138,15 +138,15 @@
 
 								if (combo.selectedIndex == undefined) {
 									if (combo.value == 'Operativa') {
-										div.style.display = ''; 'visible';
+										div.style.visibility = 'visible';
 									} else {
-										div.style.display = 'none'; 'hidden';
+										div.style.visibility = 'hidden';
 									}
 								} else {
 									if (combo.options[combo.selectedIndex].text == 'Operativa') {
-										div.style.display = '';
+										div.style.visibility = 'visible';
 									} else {
-										div.style.display = 'none'; 'hidden';
+										div.style.visibility = 'hidden';
 									}
 
 								}
@@ -168,7 +168,7 @@
 				</div>
 				<br />
 
-				<div id="roo_actuacion_nomreproyecto" style="display: none;">
+				<div id="roo_actuacion_nomreproyecto">
 					<label for="_nombreProyecto_id">Nombre Proyecto:</label>
 					<form:input cssStyle="width:250px" id="_nombreProyecto_id"
 						maxlength="199" path="nombreProyecto" size="0" />

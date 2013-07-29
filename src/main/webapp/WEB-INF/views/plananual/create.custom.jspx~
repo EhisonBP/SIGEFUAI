@@ -77,7 +77,7 @@
 				</script>
 				<input id="proceed" type="submit" value="${save_button}" /> <input
 					type="button" value="Cancelar"
-					onclick="window.location.href='/sigefuai/plananual/'" />
+					onclick="window.location.href='sigefuai/plananual/'" />
 			</div>
 		</form:form>
 	</div>
