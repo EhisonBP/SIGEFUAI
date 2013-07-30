@@ -313,8 +313,7 @@ public class ActuacionController {
 		} else {
 			miActuacion.setCodigoPlanificacion("AP");
 		}
-		*/		
-		miActuacion.setCodigoPlanificacion("AP");
+		*/
 
 		List<Auditor> todos = Auditor.findAllAuditors();
 		List<Auditor> losQueSon = new LinkedList<Auditor>();
