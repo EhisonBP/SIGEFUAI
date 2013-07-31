@@ -224,7 +224,7 @@
                                         <pre><c:out value="${tools:obtenerEspacios(actividadActuacion.nivelIndentacion)}"/><c:out value="${actividadActuacion.codigoCompleto}"/></pre>
                                     </td>
                                     <td>
-                                        <div style="overflow: scroll; height: 80px; width: 600px; ">
+                                        <div>
                                             <c:out escapeXml="false" value="${actividadActuacion.descripcion}"/>
                                         </div>
                                     </td>
@@ -286,7 +286,7 @@
                                                 <pre><c:out value="${tools:obtenerEspacios(actividadActuacion.nivelIndentacion)}"/><c:out value="${actividadActuacion.codigoCompleto}"/></pre>
                                             </td>
                                             <td>
-                                                <div style="overflow: scroll; height: 80px; width: 600px; ">    
+                                                <div>    
                                                     <c:out escapeXml="false" value="${actividadActuacion.descripcion}"/>
                                                 </div>
                                             </td>
@@ -346,7 +346,7 @@
                                             <pre><c:out value="${tools:obtenerEspacios(actividadActuacion.nivelIndentacion)}"/><c:out value="${actividadActuacion.codigoCompleto}"/></pre>
                                         </td>
                                         <td>
-                                            <div style="overflow: scroll; height: 80px; width: 600px; ">
+                                            <div>
                                                 <c:out escapeXml="false" value="${actividadActuacion.descripcion}"/>
                                             </div>
                                         </td>

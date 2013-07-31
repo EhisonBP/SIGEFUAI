@@ -39,6 +39,43 @@
 
 				</div>
 			</div>
+
+
+<!-- Boton de PAorbado-->
+					<div>
+						000000000000000000000000000000000000000000
+<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
+		<form:form id="" action="${form_url}" method="put"
+			modelAttribute="actuacion">
+			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+			
+
+<div id="roo_actuacion_estadoActuacion">
+                    <label for="_estadoActuacion_id">Estado Actuacion:</label>
+                    <form:select cssStyle="width:250px" id="_estadoActuacion_id" path="estadoActuacion">
+                        <form:options itemValue="id" items="${estadoactuacions}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_estadoActuacion_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+            </div>
+            <br/>
+			<div class="submit" id="roo_actuacion_submit">
+				<spring:message code="button.update" var="update_button" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<input id="proceed" type="submit" value="${update_button}" /> <input
+					type="button" value="Cancelar"
+					onclick="history.go( -1 );return true;" />
+			</div>
+			<form:hidden id="_id_id" path="id" />
+			<form:hidden id="_version_id" path="version" />
+		</form:form>
+					</div>
+<!-- Boton de PAorbado-->
+
 			<br />
 			<c:if test="${tools:contains(camposPermitidos, 'codigo')}">
 				<div id="roo_actuacion_codigo">
@@ -225,14 +262,9 @@
 								<c:forEach items="${objetivosEspecificos}"
 									var="objetivoEspecifico">
 									<tr>
-										<td><c:out value="${objetivoEspecifico.referencia}" />
-										</td>
-										<td>
-											<div style="overflow: scroll; height: 100px; width: 600px;">
-												<c:out escapeXml="false"
-													value="${objetivoEspecifico.descripcion}" />
-											</div>
-										</td>
+										<td><c:out value="${objetivoEspecifico.referencia}" /></td>
+										<td><c:out escapeXml="false"
+												value="${objetivoEspecifico.descripcion}" /></td>
 										<td><spring:url value="/static/images/show.png"
 												var="show_image_url" /> <spring:url
 												value="/objetivoespecifico/${objetivoEspecifico.id}"
@@ -243,8 +275,7 @@
 												<input alt="${show_label}" class="image"
 													src="${show_image_url}" title="${show_label}" type="image"
 													value="${show_label}" />
-											</form:form>
-										</td>
+											</form:form></td>
 										<td><spring:url
 												value="/objetivoespecifico/${objetivoEspecifico.id}/form"
 												var="update_form_url" /> <spring:url
@@ -255,8 +286,7 @@
 												<input alt="${update_label}" class="image"
 													src="${update_image_url}" title="${update_label}"
 													type="image" value="${update_label}" />
-											</form:form>
-										</td>
+											</form:form></td>
 										<td><spring:url
 												value="/objetivoespecifico/${objetivoEspecifico.id}"
 												var="delete_form_url" /> <spring:url
@@ -273,8 +303,7 @@
 												<c:if test="${not empty param.size}">
 													<input name="size" type="hidden" value="${param.size}" />
 												</c:if>
-											</form:form>
-										</td>
+											</form:form></td>
 									</tr>
 								</c:forEach>
 
@@ -361,18 +390,19 @@
 			</c:if>
 			<br />
 			<c:if test="${tools:contains(accionesPermitidas, 'mostrar')}">
-			<div id="roo_actuacion_responsableAuditor">
-				<label for="_responsableAuditor_id">Auditor Responsable:</label>
-				<div class="box" id="_responsableAuditor_id">
-					<c:out value="${actuacion.responsableAuditor}" />
+				<div id="roo_actuacion_responsableAuditor">
+					<label for="_responsableAuditor_id">Auditor Responsable:</label>
+					<div class="box" id="_responsableAuditor_id">
+						<c:out value="${actuacion.responsableAuditor}" />
+					</div>
 				</div>
-			</div>
-			<br />
+				<br />
 			</c:if>
 			<a onclick="document.location='${url}'"> <spring:url
 					value="/static/images/volver.png" var="create_img_url" /> <spring:message
 					arguments="Volver" code="global.menu.new" var="add_message" /> <img
-				alt="${add_message}" src="${create_img_url}" title="Volver" /> </a>
+				alt="${add_message}" src="${create_img_url}" title="Volver" />
+			</a>
 
 			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
 				<c:if test="${tools:contains(accionesPermitidas, 'mostrar')}">
@@ -434,8 +464,7 @@
 							<ul>
 								<c:forEach items="${actuacion.procesos}" var="p">
 									<div class="box" id="_proceso_id">
-										<li><c:out value="${p}" escapeXml="false" />
-										</li>
+										<li><c:out value="${p}" escapeXml="false" /></li>
 									</div>
 								</c:forEach>
 							</ul>
@@ -510,10 +539,7 @@
 										<th>Código</th>
 										<th>Descripcion</th>
 										<th />
-										<sec:authorize
-											ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-											<th />
-										</sec:authorize>
+
 									</tr>
 								</thead>
 								<c:forEach items="${actividadActuaciones}"
@@ -550,33 +576,6 @@
 														src="${show_image_url}" title="Mostrar Sección"
 														type="image" value="${show_label}" />
 												</form:form></td>
-
-											<sec:authorize
-												ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-												<c:if
-													test="${tools:contains(actividadActuacion.accionesPermitidas, 'editar')}">
-													<td><c:if test="${actividadActuacion.type eq 'pt' }">
-															<spring:url
-																value="/papeldetrabajo/${actividadActuacion.id}/form"
-																var="update_form_url" />
-														</c:if> <c:if test="${actividadActuacion.type eq 'p' }">
-															<spring:url value="/prueba/${actividadActuacion.id}/form"
-																var="update_form_url" />
-														</c:if> <c:if test="${actividadActuacion.type eq 'a' }">
-															<spring:url
-																value="/actividadgeneral/${actividadActuacion.id}/form"
-																var="update_form_url" />
-														</c:if> <spring:url value="/static/images/update.png"
-															var="update_image_url" /> <form:form id=""
-															action="${update_form_url}" method="get">
-															<spring:message arguments="${entity_label}"
-																code="entity.update" var="update_label" />
-															<input alt="${update_label}" class="image"
-																src="${update_image_url}" title="Actualizar Sección"
-																type="image" value="${update_label}" />
-														</form:form></td>
-												</c:if>
-											</sec:authorize>
 										</tr>
 									</c:if>
 								</c:forEach>
@@ -683,8 +682,7 @@
 										<td><c:out
 												value="${fn:substring(ocupacion.actividadAuditor.descripcionGeneral, 0 , 50)}" />
 										</td>
-										<td><c:out value="${ocupacion.cargoAuditor.nombre}" />
-										</td>
+										<td><c:out value="${ocupacion.cargoAuditor.nombre}" /></td>
 										<td><c:out value="${ocupacion.horas}" /></td>
 										<td><fmt:formatDate
 												pattern="${ocupacion_inicio_date_format}"
@@ -803,6 +801,9 @@
 						</form:form>
 					</div>
 				</div>
+
+
+
 			</c:if>
 		</c:if>
 		<c:if test="${empty actuacion}">

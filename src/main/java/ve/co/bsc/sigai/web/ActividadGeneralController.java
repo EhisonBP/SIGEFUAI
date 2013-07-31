@@ -247,6 +247,7 @@ public class ActividadGeneralController {
 		for (int i = 0; i < items.size(); i++) {
 			anoFiscal = items.get(i).getPlanAnual().getAnoFiscal();
 		}
+
 		if (anoFiscal != 0) {
 			Date fechaInicial = fechaEstimadaDeInicio;
 			Calendar calendarioInicial = Calendar.getInstance();
@@ -475,17 +476,25 @@ public class ActividadGeneralController {
 		for (int i = 0; i < items.size(); i++) {
 			anoFiscal = items.get(i).getPlanAnual().getAnoFiscal();
 		}
+
 		if (anoFiscal != 0) {
 			Date fechaInicial = fechaEstimadaDeInicio;
 			Calendar calendarioInicial = Calendar.getInstance();
 			calendarioInicial.setTime(fechaInicial);
 
 			int anoActividad = calendarioInicial.get(Calendar.YEAR);
-			int mesActividad = calendarioInicial.get(Calendar.MONTH);
+			int mesActividad = calendarioInicial.get(Calendar.MONTH) + 1;
 
 			if (anoActividad == anoFiscal) {
-				if ((mesActividad < miActuacion.getMesDesde())
-						|| (mesActividad > miActuacion.getMesHasta())) {
+				logger.debug("********FECHAS**********");
+				logger.debug("MesActividad: " + mesActividad);
+				logger.debug("mesDesdeTentativo (Actuacion): "
+						+ miActuacion.getMesDesdeTentativo());
+				logger.debug("mesHastaTentativo (Actuacion): "
+						+ miActuacion.getMesHastaTentativo());
+
+				if ((mesActividad < miActuacion.getMesDesdeTentativo())
+						|| (mesActividad > miActuacion.getMesHastaTentativo())) {
 					result.addError(new FieldError(result.getObjectName(),
 							"fechaEstimadaDeInicio",
 							"La fecha ingresada debe estar dentro de las fechas de la actuación"));
@@ -503,11 +512,11 @@ public class ActividadGeneralController {
 			calendarioFin.setTime(fechaFin);
 
 			int anoActividad2 = calendarioFin.get(Calendar.YEAR);
-			int mesActividad2 = calendarioFin.get(Calendar.MONTH);
+			int mesActividad2 = calendarioFin.get(Calendar.MONTH) + 1;
 
 			if (anoActividad2 == anoFiscal) {
-				if ((mesActividad2 < miActuacion.getMesDesde())
-						|| (mesActividad2 > miActuacion.getMesHasta())) {
+				if ((mesActividad2 < miActuacion.getMesDesdeTentativo())
+						|| (mesActividad2 > miActuacion.getMesHastaTentativo())) {
 					result.addError(new FieldError(result.getObjectName(),
 							"fechaEstimadaDeFin",
 							"La fecha ingresada debe estar dentro de las fechas de la actuación"));
@@ -515,7 +524,7 @@ public class ActividadGeneralController {
 			} else {
 				result.addError(new FieldError(result.getObjectName(),
 						"fechaEstimadaDeFin",
-						"La fecha ingresada tiene a�o incorrecto"));
+						"La fecha ingresada tiene año incorrecto"));
 			}
 		}
 
