@@ -482,8 +482,7 @@ public class ActuacionController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public String update(@ModelAttribute("anoFiscal") int anoFiscal,
-			@Valid Actuacion actuacion, BindingResult result,
+	public String update(@Valid Actuacion actuacion, BindingResult result,
 			ModelMap modelMap, HttpServletRequest request) {
 
 		// Manejo de errores
@@ -620,6 +619,14 @@ public class ActuacionController {
 			}
 		}
 
+		int anoFiscal = 0;
+		List<ItemPlanificacionActuacion> items2 = ItemPlanificacionActuacion
+				.findItemPlanificacionActuacionsByActuacion(actuacion)
+				.getResultList();
+		for (int i = 0; i < items2.size(); i++) {
+			anoFiscal = items2.get(i).getPlanAnual().getAnoFiscal();
+		}
+		
 		if (result.hasErrors()) {
 			modelMap.addAttribute("actuacion", actuacion);
 			// modelMap.addAttribute("actuacions",
