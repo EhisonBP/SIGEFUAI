@@ -189,14 +189,6 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 		}
 	}
 	
-	public final boolean isDatosNull(){
-		if (this.getEnfoque() == null){
-			return false;
-		} else {
-			return true;
-		} 
-	}
-
 	public void setEstadoSimple(String nombreEstado) {
 		RestAPIServiceClient.instance().updateActuacionEstado(this.getId(),
 				nombreEstado);

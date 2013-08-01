@@ -150,7 +150,7 @@
                 <spring:message code="button.save" var="save_button"/>
                 <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
                 <input id="proceed" type="submit" value="${save_button}"/>
-
+		<input type="button" value="Cancelar" onclick="history.go( -1 );return true;" />
             </div>
         </form:form>
         <script type="text/javascript">

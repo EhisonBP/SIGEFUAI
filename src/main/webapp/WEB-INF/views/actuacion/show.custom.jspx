@@ -33,13 +33,14 @@
 				<label for="x_uid">Plan Anual:</label>
 				<div class="box" id="x_uid">
 					<spring:url value="/plananual/${planAnual.id}" var="url" />
-					${planAnual.anoFiscal}
+					<a href="${url}">${planAnual.anoFiscal}</a>
 
 				</div>
 			</div>
 
 
 <!-- Boton de PAorbado-->
+<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
 <div>
 	<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
 	<form:form id="" action="${form_url}" method="put"
@@ -76,6 +77,7 @@
 		
 	</form:form>
 </div>
+</sec:authorize>
 <!-- Boton de PAorbado-->
 
 			<br />
@@ -249,7 +251,7 @@
 					<h3>
 						<a href="#">Objetivos Específicos</a>
 					</h3>
-					<div>
+					<div id= "objetivoEspecifico">
 						<c:if test="${not empty objetivosEspecificos}">
 							<table id="menuTable1" width="300">
 								<thead>
@@ -313,7 +315,7 @@
 						</c:if>
 						<c:if test="${empty objetivosEspecificos}">
 							<div id="roo_actuacion_objetivo">
-								<div style="font-style: italic">No se encontraron
+								<div id="tituloDefault" style="font-style: italic">No se encontraron
 									objetivos específicos</div>
 							</div>
 						</c:if>
@@ -400,12 +402,6 @@
 				</div>
 				<br />
 			</c:if>
-			<a onclick="document.location='${url}'"> <spring:url
-					value="/static/images/volver.png" var="create_img_url" /> <spring:message
-					arguments="Volver" code="global.menu.new" var="add_message" /> <img
-				alt="${add_message}" src="${create_img_url}" title="Volver" />
-			</a>
-
 			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
 				<c:if test="${tools:contains(accionesPermitidas, 'mostrar')}">
 					<h2>EDITE LA ACTUACION PARA QUE SELECIONE QUIEN SERA EL
@@ -821,16 +817,28 @@
 		$('#menuTable3').tablePagination({});
 
 		dojo.addOnLoad(function(){
+			//Validacion que hace que si estan llenos los valores de enfoque y metodo de la actuacion aparece para cargar los objetivos 				//especificos
 			var elemento = document.getElementById("_enfoque_id");
 			var elemento2 = document.getElementById("_metodo_id");
-			var div = document.getElementById("_boton_biblioteca");
-			alert("JavaScript alertando cuando carga la página " + elemento.innerHTML + " " +elemento2.innerHTML);
+			var div = document.getElementById("accordionObjetivosEspecificos");
+
 				if (elemento.innerHTML != '--'){
 					if (elemento2.innerHTML != '--') {
 						div.style.display = '';
 					}	
 				}
-				
+			
+			//Validando si hay por lo menos un objetivo especifico y asi te aparece el boton de
+			//cargar datos a travez de biblioteca
+			var elemento3 = document.getElementById("tituloDefault");
+			var div2 = document.getElementById("_boton_biblioteca");
+			
+			try{
+				elemento3.innerHTML;
+			}catch (e){
+				div2.style.display = '';			
+			}
+			
 		});
 	</script>
 </div>
