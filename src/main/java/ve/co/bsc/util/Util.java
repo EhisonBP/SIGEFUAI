@@ -351,6 +351,24 @@ public class Util {
 		return false;
 	}
 
+	public static boolean usuarioCreador(Auditor auditor) {
+		String login = null;
+
+		if (auditor instanceof Auditor) {
+			if (auditor != null) {
+				Object o = Usuario.findUsuarioCurrentlyLoggedIn();
+				if ((o != null) && (o instanceof Usuario)) {
+					Usuario u = (Usuario) o;
+					login = u.getLogin();
+				}
+				if (auditor.getLogin().equals(login)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	/* Se Modifico esta funcion para que mostrara el Nombre y no el login */
 	public static String usuarioLoggeado() {
 		String rolUsuario = null;
@@ -613,7 +631,7 @@ public class Util {
 		String gerente = "";
 		for (Auditor auditor : list) {
 			if (auditor.getCondicionAuditorInterno() != null
-					&& auditor.getEstadoAuditor().getNombre().equals("Activo")){
+					&& auditor.getEstadoAuditor().getNombre().equals("Activo")) {
 				if (gerente.equals("")) {
 					gerente = auditor.getLogin();
 				} else {
@@ -622,5 +640,22 @@ public class Util {
 			}
 		}
 		return gerente;
+	}
+
+	public static Auditor usuarioCreador() {
+
+		Object usuario = SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String login = ((User) usuario).getUsername().toString();
+
+		List<Auditor> a = Auditor.findAllAuditors();
+		Auditor auditor = new Auditor();
+		for (Auditor p : a) {
+			if (p.getLogin().equals(login)) {
+				auditor = p;
+				break;
+			}
+		}
+		return auditor;
 	}
 }

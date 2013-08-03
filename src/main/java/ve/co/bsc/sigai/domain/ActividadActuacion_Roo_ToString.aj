@@ -18,6 +18,7 @@ privileged aspect ActividadActuacion_Roo_ToString {
         sb.append("Documento: ").append(getDocumento() == null ? "null" : getDocumento().size()).append(", ");
         sb.append("ActividadActuacion: ").append(getActividadActuacion()).append(", ");
         sb.append("AccionesPermitidas: ").append(java.util.Arrays.toString(getAccionesPermitidas())).append(", ");
+        sb.append("Creador: ").append(getCreador()).append(", ");
         sb.append("Responsables: ").append(getResponsables() == null ? "null" : getResponsables().size()).append(", ");
         sb.append("ObjetivoAMitigar: ").append(getObjetivoAMitigar());
         return sb.toString();

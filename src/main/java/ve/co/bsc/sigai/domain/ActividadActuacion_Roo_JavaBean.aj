@@ -67,6 +67,14 @@ privileged aspect ActividadActuacion_Roo_JavaBean {
         this.accionesPermitidas = accionesPermitidas;
     }
     
+    public Auditor ActividadActuacion.getCreador() {
+        return this.creador;
+    }
+    
+    public void ActividadActuacion.setCreador(Auditor creador) {
+        this.creador = creador;
+    }
+    
     public Set<Auditor> ActividadActuacion.getResponsables() {
         return this.responsables;
     }

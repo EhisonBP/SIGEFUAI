@@ -42,6 +42,13 @@ version="2.0">
 </function>
 
 <function>
+<description>Función que recibe si el auditor logeado fue el creador de la tarea</description>
+<name>usuarioCreador</name>
+<function-class>ve.co.bsc.util.Util</function-class>
+<function-signature>java.lang.Boolean usuarioCreador(ve.co.bsc.sigai.domain.Auditor)</function-signature>
+</function>
+
+<function>
 <description>Función que retorna el nombre del usuario que inició sesión</description>
 <name>usuarioLoggeado</name>
 <function-class>ve.co.bsc.util.Util</function-class>

@@ -57,7 +57,11 @@ import ve.co.bsc.sigai.domain.TipoPersonaRif;
 import ve.co.bsc.sigai.form.OrganismoEnteForm;
 import ve.co.bsc.util.Util;
 
-//import com.sun.star.bridge.oleautomation.Date;
+/**
+ * 
+ * 
+ * @author Ehison Perez
+ */
 
 @RooWebScaffold(path = "organismoente", automaticallyMaintainView = true, formBackingObject = OrganismoEnte.class)
 @RequestMapping("/organismoente/**")
@@ -176,13 +180,13 @@ public class OrganismoEnteController {
 		 * de Ninguno
 		 ***/
 		if (datosOrganismoEnte.getEffectTypes() == 1) {
-			datosOrganismoEnte.getOrganismoEnte().setId_organismo_padre(null);
+			datosOrganismoEnte.getOrganismoEnte().setOrganismo_padre(
+					"No Posee un Ente Tutelar");
 			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
 					"No Posee un Ente Tutelar");
 		} else if (datosOrganismoEnte.getEffectTypes() == 2) {
 			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
-					datosOrganismoEnte.getOrganismoEnte()
-							.getId_organismo_padre().getNombre().toString());
+					datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre());
 		}
 		/***
 		 * Valido Que el Ente Tutelar Este vacio cuado El organismo no depende
@@ -234,8 +238,6 @@ public class OrganismoEnteController {
 		modelMap.addAttribute("estadoauditors",
 				EstadoAuditor.findAllEstadoAuditors());
 		modelMap.addAttribute("codigoareas", CodigoArea.findAllCodigoAreas());
-		modelMap.addAttribute("organismoentes",
-				OrganismoEnte.findAllOrganismoEntes());
 		modelMap.addAttribute("tipoorganismoes",
 				TipoOrganismo.findAllTipoOrganismoes());
 		modelMap.addAttribute("tipopersonarifs",
@@ -308,13 +310,13 @@ public class OrganismoEnteController {
 		 * de Ninguno
 		 ***/
 		if (datosOrganismoEnte.getEffectTypes() == 1) {
-			datosOrganismoEnte.getOrganismoEnte().setId_organismo_padre(null);
+			datosOrganismoEnte.getOrganismoEnte().setOrganismo_padre(
+					"No Posee un Ente Tutelar");
 			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
 					"No Posee un Ente Tutelar");
 		} else if (datosOrganismoEnte.getEffectTypes() == 2) {
 			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
-					datosOrganismoEnte.getOrganismoEnte()
-							.getId_organismo_padre().getNombre().toString());
+					datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre());
 		}
 
 		String fax = String.valueOf(datosOrganismoEnte.getDatosOrganismoEnte()

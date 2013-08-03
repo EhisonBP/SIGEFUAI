@@ -3,7 +3,6 @@ package ve.co.bsc.sigai.domain;
 import java.lang.String;
 import java.util.Date;
 import ve.co.bsc.sigai.domain.EstadoAuditor;
-import ve.co.bsc.sigai.domain.OrganismoEnte;
 import ve.co.bsc.sigai.domain.TipoOrganismo;
 import ve.co.bsc.sigai.domain.TipoPersonaRif;
 
@@ -41,12 +40,12 @@ privileged aspect OrganismoEnte_Roo_JavaBean {
         this.Rif = Rif;
     }
     
-    public OrganismoEnte OrganismoEnte.getId_organismo_padre() {
-        return this.id_organismo_padre;
+    public String OrganismoEnte.getOrganismo_padre() {
+        return this.organismo_padre;
     }
     
-    public void OrganismoEnte.setId_organismo_padre(OrganismoEnte id_organismo_padre) {
-        this.id_organismo_padre = id_organismo_padre;
+    public void OrganismoEnte.setOrganismo_padre(String organismo_padre) {
+        this.organismo_padre = organismo_padre;
     }
     
     public Date OrganismoEnte.getFechaCreacion() {

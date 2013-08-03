@@ -556,8 +556,6 @@
 											<td><c:out escapeXml="false"
 													value="${actividadActuacion.descripcion}" /></td>
 
-	<sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-		<c:if test="${tools:contains(actividadActuacion.accionesPermitidas, 'editar')}">
 											<td><spring:url value="/static/images/show.png"
 													var="show_image_url" /> <c:if
 													test="${actividadActuacion.type eq 'pt' }">
@@ -578,8 +576,6 @@
 														src="${show_image_url}" title="Mostrar Sección"
 														type="image" value="${show_label}" />
 												</form:form></td>
-												</c:if>
-											</sec:authorize>
 										</tr>
 									</c:if>
 								</c:forEach>

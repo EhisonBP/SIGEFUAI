@@ -34,10 +34,10 @@
                 </div>
             </div>
             <br/>
-            <div id="roo_organismoEnte_id_organismo_padre">
-                <label for="_id_organismo_padre_id">Id_organismo_padre:</label>
-                <div class="box" id="_id_organismo_padre_id">
-                    <c:out value="${organismoEnte.id_organismo_padre}"/>
+            <div id="roo_organismoEnte_organismo_padre">
+                <label for="_organismo_padre_id">Organismo_padre:</label>
+                <div class="box" id="_organismo_padre_id">
+                    <c:out value="${organismoEnte.organismo_padre}"/>
                 </div>
             </div>
             <br/>

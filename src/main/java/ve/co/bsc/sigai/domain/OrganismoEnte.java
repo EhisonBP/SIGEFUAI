@@ -24,8 +24,10 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooEntity(finders = { "findOrganismoEntesByRifEquals" })
 public class OrganismoEnte implements Cloneable, Serializable {
 
+	@NotNull
     private String Nombre;
 
+    @NotNull
     private String Acronimo;
 
     @NotNull
@@ -33,11 +35,11 @@ public class OrganismoEnte implements Cloneable, Serializable {
     @JoinColumn
     private TipoPersonaRif tipo_rif;
 
+    @NotNull
     private String Rif;
 
-    @ManyToOne(targetEntity = ve.co.bsc.sigai.domain.OrganismoEnte.class)
-    @JoinColumn
-    private ve.co.bsc.sigai.domain.OrganismoEnte id_organismo_padre;
+    
+    private String organismo_padre;
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)

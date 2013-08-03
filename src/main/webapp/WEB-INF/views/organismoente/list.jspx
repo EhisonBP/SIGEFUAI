@@ -15,7 +15,7 @@
                         <th>Acronimo</th>
                         <th>Tipo_rif</th>
                         <th>Rif</th>
-                        <th>Id_organismo_padre</th>
+                        <th>Organismo_padre</th>
                         <th>Fecha Creacion</th>
                         <th/>
                         <th/>
@@ -38,7 +38,7 @@
                             <c:out value="${fn:substring(organismoEnte.rif, 0, 10)}"/>
                         </td>
                         <td>
-                            <c:out value="${fn:substring(organismoEnte.id_organismo_padre, 0, 10)}"/>
+                            <c:out value="${fn:substring(organismoEnte.organismo_padre, 0, 10)}"/>
                         </td>
                         <td>
                             <fmt:formatDate pattern="${organismoEnte_fechaCreacion_date_format}" value="${organismoEnte.fechaCreacion}"/>

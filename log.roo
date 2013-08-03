@@ -1228,3 +1228,41 @@ perform package
 // Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-07-30 15:07:24
 exit
 // Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-07-30 15:38:36
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-01 21:36:49
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-08-01 23:30:57
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-08-01 23:31:35
+perform clean
+perform tests
+exit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-01 23:44:29
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-01 23:44:45
+perform tests
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-08-02 00:16:37
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-08-02 00:17:16
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-08-02 00:18:13
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-02 00:18:27
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-08-02 00:18:39
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-02 00:20:30
+perform clean
+perform assembly
+perform eclipse
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-02 00:39:07
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-02 06:20:59
+perform tests
+perform tests
+perform tests
+perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-02 09:15:35
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-02 19:25:30
+perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-02 19:39:29
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-02 21:14:14
+perform tests
+perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-02 22:17:54

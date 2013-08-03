@@ -55,6 +55,13 @@
                 </div>
             </div>
             <br/>
+            <div id="roo_prueba_creador">
+                <label for="_creador_id">Creador:</label>
+                <div class="box" id="_creador_id">
+                    <c:out value="${prueba.creador}"/>
+                </div>
+            </div>
+            <br/>
             <div id="roo_prueba_responsables">
                 <label for="_responsables_id">Responsables:</label>
                 <div class="box" id="_responsables_id">

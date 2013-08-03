@@ -373,6 +373,9 @@ public class ActividadGeneralController {
 					.getActividadActuacion());
 		}
 
+		logger.info("Se va ingresar en el campo de creandro el usuario " + util.usuarioCreador());
+		actividadGeneral.setCreador(util.usuarioCreador());
+
 		actividadGeneral.persist();
 		Util.registrarEntradaEnBitacora(actividadGeneral,
 				"Se creó la Actividad ", request.getRemoteAddr());

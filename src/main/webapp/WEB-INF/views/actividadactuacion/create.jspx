@@ -77,6 +77,16 @@
                 <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_accionesPermitidas_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
             </div>
             <br/>
+            <div id="roo_actividadActuacion_creador">
+                <c:if test="${not empty auditors}">
+                    <label for="_creador_id">Creador:</label>
+                    <form:select cssStyle="width:250px" id="_creador_id" path="creador">
+                        <form:options itemValue="id" items="${auditors}"/>
+                    </form:select>
+                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_creador_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:if>
+            </div>
+            <br/>
             <div id="roo_actividadActuacion_responsables">
                 <c:if test="${not empty auditors}">
                     <label for="_responsables_id">Responsables:</label>

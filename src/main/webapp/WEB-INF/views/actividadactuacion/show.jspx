@@ -55,6 +55,13 @@
                 </div>
             </div>
             <br/>
+            <div id="roo_actividadActuacion_creador">
+                <label for="_creador_id">Creador:</label>
+                <div class="box" id="_creador_id">
+                    <c:out value="${actividadActuacion.creador}"/>
+                </div>
+            </div>
+            <br/>
             <div id="roo_actividadActuacion_responsables">
                 <label for="_responsables_id">Responsables:</label>
                 <div class="box" id="_responsables_id">
