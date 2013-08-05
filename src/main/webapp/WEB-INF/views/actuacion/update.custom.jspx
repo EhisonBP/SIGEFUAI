@@ -127,13 +127,21 @@
 
 								if (combo.selectedIndex == undefined) {
 									var text = combo.value.substr(0, 2);
-									document.getElementById("codigo").innerHTML = text
-											.toUpperCase();
+									if (text == 'Te') {
+										document.getElementById("codigo").innerHTML = "TIC";
+									} else {
+										document.getElementById("codigo").innerHTML = text
+												.toUpperCase();
+									}
 								} else {
 									var text = combo.options[combo.selectedIndex].text
 											.substr(0, 2);
-									document.getElementById("codigo").innerHTML = text
-											.toUpperCase();
+									if (text == 'Te') {
+										document.getElementById("codigo").innerHTML = "TIC";
+									} else {
+										document.getElementById("codigo").innerHTML = text
+												.toUpperCase();
+									}
 								}
 							}
 
@@ -177,7 +185,7 @@
 				<br />
 			</c:if>
 
-			<div id="roo_actuacion_nomreproyecto">
+			<div id="roo_actuacion_nomreproyecto" style="display: none;">
 				<label for="_nombreProyecto_id">Nombre Proyecto:</label>
 				<form:input cssStyle="width:250px" id="_nombreProyecto_id"
 					maxlength="199" path="nombreProyecto" size="0" />
@@ -395,8 +403,7 @@
 					<label for="_unidades_id">Dependencias Sujetas a Control:</label>
 					<form:select cssStyle="width:250px" id="_unidades_id"
 						path="unidades">
-						<form:options itemValue="id" items="${unidads}"
-							itemLabel="nombre" />
+						<form:options itemValue="id" items="${unidads}" itemLabel="nombre" />
 					</form:select>
 				</c:if>
 			</div>
@@ -423,28 +430,26 @@
 				<br />
 			</c:if>
 			<sec:authorize
-				ifAnyGranted="ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-					<div id="roo_actuacion_responsableAuditor">
-						<c:if test="${not empty auditors}">
-							<label for="_responsableAuditor_id">Auditor Responsable:</label>
-							<form:select cssStyle="width:250px" id="_responsableAuditor_id"
-								path="responsableAuditor">
-								<form:options itemValue="id" items="${auditores}" />
-							</form:select>
-							<script type="text/javascript">
-								Spring
-										.addDecoration(new Spring.ElementDecoration(
-												{
-													elementId : '_responsableAuditor_id',
-													widgetType : 'dijit.form.FilteringSelect',
-													widgetAttrs : {
-														hasDownArrow : true
-													}
-												}));
-							</script>
-						</c:if>
-					</div>
-					<br />
+				ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+				<div id="roo_actuacion_responsableAuditor">
+					<c:if test="${not empty auditors}">
+						<label for="_responsableAuditor_id">Auditor Responsable:</label>
+						<form:select cssStyle="width:250px" id="_responsableAuditor_id"
+							path="responsableAuditor">
+							<form:options itemValue="id" items="${auditores}" />
+						</form:select>
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_responsableAuditor_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true
+								}
+							}));
+						</script>
+					</c:if>
+				</div>
+				<br />
 			</sec:authorize>
 			<c:if test="${tools:contains(camposPermitidos, 'estadoActuacion')}">
 				<div id="roo_actuacion_estadoActuacion">

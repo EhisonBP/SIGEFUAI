@@ -45,7 +45,8 @@
 								value="${fn:substring(organismoEnte.acronimo, 0, 10)}" /></td>
 						<td><c:out value="${fn:substring(organismoEnte.rif, 0, 12)}" />
 						</td>
-						<td><c:out value="${fn:substring(organismoEnte.organismo_padre, 0, 12)}" />
+						<td><c:out
+								value="${fn:substring(organismoEnte.organismo_padre, 0, 10)}" />
 						</td>
 						<td><spring:url value="/organismoente/${organismoEnte.id}"
 								var="show_form_url" /> <spring:url

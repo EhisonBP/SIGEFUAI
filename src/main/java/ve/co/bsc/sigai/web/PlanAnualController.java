@@ -137,7 +137,7 @@ public class PlanAnualController {
 
 		// Se asigna el estadoPlan por defecto que es "En Proceso" por eso se
 		// cablea a id 1
-		EstadoPlan estadoPlanEnProceso = EstadoPlan.findEstadoPlan(new Long(6));
+		EstadoPlan estadoPlanEnProceso = EstadoPlan.findEstadoPlan(new Long(1));
 		planAnual.setEstadoPlan(estadoPlanEnProceso);
 		planAnual.setRif(util.traerIdRif());
 		planAnual.persist();

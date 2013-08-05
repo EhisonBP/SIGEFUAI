@@ -118,6 +118,7 @@
 										.getElementById("_claseActuacion_id");
 
 								if (combo.selectedIndex == undefined) {
+									if (combo.value == "")
 									var text = combo.value.substr(0, 2);
 									document.getElementById("codigo").innerHTML = text
 											.toUpperCase();
@@ -128,7 +129,7 @@
 											.toUpperCase();
 								}
 							}
-
+							
 							function mostrarNombreProyecto() {
 								var combo = document
 										.getElementById("_claseActuacion_id");
@@ -138,15 +139,18 @@
 
 								if (combo.selectedIndex == undefined) {
 									if (combo.value == 'Operativa') {
-										div.style.visibility = 'visible';
+										div.style.display = '';
+										'visible';
 									} else {
-										div.style.visibility = 'hidden';
+										div.style.display = 'none';
+										'hidden';
 									}
 								} else {
 									if (combo.options[combo.selectedIndex].text == 'Operativa') {
-										div.style.visibility = 'visible';
+										div.style.display = '';
 									} else {
-										div.style.visibility = 'hidden';
+										div.style.display = 'none';
+										'hidden';
 									}
 
 								}
@@ -168,7 +172,7 @@
 				</div>
 				<br />
 
-				<div id="roo_actuacion_nomreproyecto">
+				<div id="roo_actuacion_nomreproyecto" style="display: none;">
 					<label for="_nombreProyecto_id">Nombre Proyecto:</label>
 					<form:input cssStyle="width:250px" id="_nombreProyecto_id"
 						maxlength="199" path="nombreProyecto" size="0" />

@@ -119,13 +119,21 @@
 
 								if (combo.selectedIndex == undefined) {
 									var text = combo.value.substr(0, 2);
-									document.getElementById("codigo").innerHTML = text
-											.toUpperCase();
+									if (text == 'Te') {
+										document.getElementById("codigo").innerHTML = "TIC";
+									} else {
+										document.getElementById("codigo").innerHTML = text
+												.toUpperCase();
+									}
 								} else {
 									var text = combo.options[combo.selectedIndex].text
 											.substr(0, 2);
-									document.getElementById("codigo").innerHTML = text
-											.toUpperCase();
+									if (text == 'Te') {
+										document.getElementById("codigo").innerHTML = "TIC";
+									} else {
+										document.getElementById("codigo").innerHTML = text
+												.toUpperCase();
+									}
 								}
 							}
 
@@ -138,15 +146,18 @@
 
 								if (combo.selectedIndex == undefined) {
 									if (combo.value == 'Operativa') {
-										div.style.display = ''; 'visible';
+										div.style.display = '';
+										'visible';
 									} else {
-										div.style.display = 'none'; 'hidden';
+										div.style.display = 'none';
+										'hidden';
 									}
 								} else {
 									if (combo.options[combo.selectedIndex].text == 'Operativa') {
 										div.style.display = '';
 									} else {
-										div.style.display = 'none'; 'hidden';
+										div.style.display = 'none';
+										'hidden';
 									}
 
 								}

@@ -166,15 +166,7 @@ public class OrganismoEnteController {
 			}
 		}
 
-		/**** Valido si el Rif no se encuentra Registrado *****/
-		/* Carga de Rif Con Letra segun tipo */
-		/* Cableo Hacia Personalizacion */
-		/** Valido que los Datos a registrar en personalizacion no van nulos **/
-		/* Se autoRegistra la Fecha de Creacion */
-		// java.util.Calendar calendar = java.util.Calendar.getInstance();
-		java.util.Date FechaActual = new Date();
-		datosOrganismoEnte.getOrganismoEnte().setFechaCreacion(FechaActual);
-		datosOrganismoEnte.getOrganismoEnte().setFechaModificacion(FechaActual);
+		;
 		/***
 		 * Valido Que el Ente Tutelar Este vacio cuado El organismo no depende
 		 * de Ninguno
@@ -185,8 +177,16 @@ public class OrganismoEnteController {
 			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
 					"No Posee un Ente Tutelar");
 		} else if (datosOrganismoEnte.getEffectTypes() == 2) {
-			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
-					datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre());
+			if (datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre()
+					.equals("")) {
+				result.addError(new ObjectError("organismo_padre",
+						"Al seleccionar si es necesario que ingrese el nombre del ente a "
+								+ "que se encuenra adscrito"));
+			} else {
+				datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
+						datosOrganismoEnte.getOrganismoEnte()
+								.getOrganismo_padre());
+			}
 		}
 		/***
 		 * Valido Que el Ente Tutelar Este vacio cuado El organismo no depende
@@ -207,6 +207,13 @@ public class OrganismoEnteController {
 					TipoPersonaRif.findAllTipoPersonaRifs());
 			return "organismoente/create";
 		}
+
+		/* Se autoRegistra la Fecha de Creacion */
+		// java.util.Calendar calendar = java.util.Calendar.getInstance();
+		java.util.Date FechaActual = new Date();
+		datosOrganismoEnte.getOrganismoEnte().setFechaCreacion(FechaActual);
+		datosOrganismoEnte.getOrganismoEnte().setFechaModificacion(FechaActual);
+
 		datosOrganismoEnte.getDatosOrganismoEnte().setEstatus(
 				datosOrganismoEnte.getOrganismoEnte().getEstatus());
 		datosOrganismoEnte.getOrganismoEnte().setRif(r);
@@ -288,6 +295,16 @@ public class OrganismoEnteController {
 			}
 		}
 
+		if (datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre()
+				.equals("")) {
+			result.addError(new ObjectError("organismo_padre",
+					"Al seleccionar si es necesario que ingrese el nombre del ente a "
+							+ "que se encuenra adscrito"));
+		} else {
+			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
+					datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre());
+		}
+
 		if (datosOrganismoEnte == null)
 			throw new IllegalArgumentException("A organismoEnte is required");
 		if (result.hasErrors()) {
@@ -309,15 +326,6 @@ public class OrganismoEnteController {
 		 * Valido Que el Ente Tutelar Este vacio cuado El organismo no depende
 		 * de Ninguno
 		 ***/
-		if (datosOrganismoEnte.getEffectTypes() == 1) {
-			datosOrganismoEnte.getOrganismoEnte().setOrganismo_padre(
-					"No Posee un Ente Tutelar");
-			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
-					"No Posee un Ente Tutelar");
-		} else if (datosOrganismoEnte.getEffectTypes() == 2) {
-			datosOrganismoEnte.getPersonalizacion().setNombreTutelar(
-					datosOrganismoEnte.getOrganismoEnte().getOrganismo_padre());
-		}
 
 		String fax = String.valueOf(datosOrganismoEnte.getDatosOrganismoEnte()
 				.getCodigoArea().getCodigo())

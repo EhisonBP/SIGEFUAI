@@ -21,16 +21,16 @@
 				}
 			}));
 		</script>
-        
-    <c:url var="findCiudadURL" value="ciudad.js" />
-    <c:url var="findEstadosURL" value="estados" />
-    <c:url var="findMunicipiosURL" value="municipios.js" />
+
+		<c:url var="findCiudadURL" value="ciudad.js" />
+		<c:url var="findEstadosURL" value="estados" />
+		<c:url var="findMunicipiosURL" value="municipios.js" />
 
 		<spring:url value="/organismoente" var="form_url" />
 		<form:form action="${form_url}" method="POST"
 			modelAttribute="datosOrganismoEnte">
 			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
-			
+
 			<div id="roo_organismoEnte_nombre">
 				<label for="_nombre_id">Nombre:</label>
 				<form:input cssStyle="width:250px" id="_Nombre_id" maxlength="70"
@@ -45,19 +45,21 @@
 					arguments="Nombre,(${field_required})"
 					code="field.simple.validation" var="field_validation" />
 				<script type="text/javascript">
-					Spring.addDecoration(new Spring.ElementDecoration({
-						elementId : '_Nombre_id',
-						widgetType : 'dijit.form.ValidationTextBox',
-						widgetAttrs : {
-							promptMessage : '${field_validation}',
-							invalidMessage : '${field_invalid}',
-							regExp : '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ,._-]*$',
-							required : true
-						}
-					}));
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_Nombre_id',
+										widgetType : 'dijit.form.ValidationTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											invalidMessage : '${field_invalid}',
+											regExp : '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ,._-]*$',
+											required : true
+										}
+									}));
 				</script>
 			</div>
-			<br />			
+			<br />
 
 			<div id="roo_organismoEnte_rif">
 				<c:if test="${not empty tipopersonarifs}">
@@ -88,16 +90,18 @@
 					arguments="Rif,(${field_required})" code="field.simple.validation"
 					var="field_validation" />
 				<script type="text/javascript">
-					Spring.addDecoration(new Spring.ElementDecoration({
-						elementId : '_Rif_id',
-						widgetType : 'dijit.form.ValidationTextBox',
-						widgetAttrs : {
-							promptMessage : '${field_validation}',
-							invalidMessage : 'Ingrese un Rif valido que contenga 9 dígitos',
-							regExp : '^[0-9]{9}$',
-							required : true
-						}
-					}));
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_Rif_id',
+										widgetType : 'dijit.form.ValidationTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											invalidMessage : 'Ingrese un Rif valido que contenga 9 dígitos',
+											regExp : '^[0-9]{9}$',
+											required : true
+										}
+									}));
 				</script>
 			</div>
 			<br />
@@ -114,16 +118,18 @@
 				<spring:message argumentSeparator="," arguments="Acronimo,"
 					code="field.simple.validation" var="field_validation" />
 				<script type="text/javascript">
-					Spring.addDecoration(new Spring.ElementDecoration({
-						elementId : '_Acronimo_id',
-						widgetType : 'dijit.form.ValidationTextBox',
-						widgetAttrs : {
-							promptMessage : '${field_validation}',
-							invalidMessage : '${field_invalid}',
-							regExp : '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ,._-]*$',
-							required : true
-						}
-					}));
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_Acronimo_id',
+										widgetType : 'dijit.form.ValidationTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											invalidMessage : '${field_invalid}',
+											regExp : '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ][a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ,._-]*$',
+											required : true
+										}
+									}));
 				</script>
 			</div>
 			<br />
@@ -157,29 +163,18 @@
 			<!-- Aki validacion de opcion -->
 			<script type="text/javascript">
 				function mostrarNombreProyecto() {
-					//$( "#roo_organismoEnte_id_organismo_padre" ).hide();
 					var combo = document.getElementById("effectTypes");
-
 					var div = document
-							.getElementById("roo_organismoEnte_id_organismo_padre");
-
+							.getElementById("roo_organismoEnte_organismo_padre");
 					if (combo.selectedIndex == undefined) {
 						if (combo.value == 'Si') {
 							div.style.display = '';
 						} else {
 							div.style.display = 'none';
-							//registro.pto.value = x;
-							//Prueba._id_organismo_padre_id.value = null;
 						}
-					} else {
-						if (combo.options[combo.selectedIndex].text == 'Si') {
-							div.style.display = '';
-						} else {
-							div.style.display = 'none';
-						}
-
 					}
 				}
+				
 				Spring.addDecoration(new Spring.ElementDecoration({
 					elementId : 'effectTypes',
 					widgetType : 'dijit.form.FilteringSelect',
@@ -191,26 +186,32 @@
 					}
 				}));
 			</script>
-			<div id="roo_organismoEnte_id_organismo_padre" style="display: none;">
+			<div id="roo_organismoEnte_organismo_padre" style="display: none;">
+				<br /> <label for="_organismo_padre_id">Ente y/o Organismo
+					Adscrito:</label>
+				<form:input cssStyle="width:250px" id="_organismo_padre_id"
+					maxlength="30" path="organismoEnte.organismo_padre" size="0" />
 				<br />
-				<c:if test="${not empty organismoentes}">
-					<label for="_id_organismo_padre_id">Ente y/o Organismo Adscrito:</label>
-					<form:select cssStyle="width:250px" id="_id_organismo_padre_id"
-						path="organismoEnte.id_organismo_padre">
-						<form:options itemValue="id" items="${organismoentes}"
-							itemLabel="nombre" />
-					</form:select>
-					<script type="text/javascript">
-						Spring.addDecoration(new Spring.ElementDecoration({
-							elementId : '_id_organismo_padre_id',
-							widgetType : 'dijit.form.FilteringSelect',
-							widgetAttrs : {
-								hasDownArrow : true
-							}
-						}));
-					</script>
-				</c:if>
+				<form:errors cssClass="errors" id="_organismo_padre_error_id"
+					path="organismoEnte.organismo_padre" />
+				<spring:message arguments="Organismo_padre" code="field.invalid"
+					var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator="," arguments="Organismo_padre,"
+					code="field.simple.validation" var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_organismo_padre_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							required : false
+						}
+					}));
+				</script>
 			</div>
+
 			<br />
 			<div id="roo_datosOrganismoEnte_pagina_web">
 				<label for="_pagina_web_id">Pagina web:</label>
@@ -225,137 +226,179 @@
 				<spring:message argumentSeparator="," arguments="Pagina_web,"
 					code="field.simple.validation" var="field_validation" />
 				<script type="text/javascript">
-					Spring.addDecoration(new Spring.ElementDecoration({
-						elementId : '_pagina_web_id',
-						widgetType : 'dijit.form.ValidationTextBox',
-						widgetAttrs : {
-							promptMessage : '${field_validation}',
-							invalidMessage : 'Es obligatorio que ingrese la URL completa de la pagina web',
-							regExp : '-?^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$',
-							required : true
-						}
-					}));
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_pagina_web_id',
+										widgetType : 'dijit.form.ValidationTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											invalidMessage : 'Es obligatorio que ingrese la URL completa de la pagina web',
+											regExp : '-?^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$',
+											required : true
+										}
+									}));
 				</script>
 			</div>
 			<div>
-			<br />
-			<!-- Una Prueba De valentia y Constancia..-->
-			<label for="ubi">Ubicacion:</label>
-			<form:select id="usStates" path="usState"> <!-- El selec de los Estados-->
-	        </form:select>
-			<script type="text/javascript">
-	        window.scrollTo(0, 1);
-            </script>
-            <!-- js Para cargar los Estados a parti de un Json-->
-			<script type="text/javascript">
-			<![CDATA[
-            $(document).ready(
-		function() {
-			$.getJSON('${findEstadosURL}', { //Url Donde se genera la lista en formato json con todos los estados
-				ajax : "true"
-			}, function(data) {
-				var html = '<option value="">Estado</option>';
-				var len = data.length;
-				for ( var i = 0; i < len; i++) {
-					html += '<option value="' + data[i].name + '">'
-							+ data[i].name + '</option>';
-				}
-				html += '</option>';
+				<br />
+				<!-- Una Prueba De valentia y Constancia..-->
+				<label for="ubi">Ubicacion:</label>
+				<form:select id="usStates" path="usState">
+					<!-- El selec de los Estados-->
+				</form:select>
+				<script type="text/javascript">
+					window.scrollTo(0, 1);
+				</script>
+				<!-- js Para cargar los Estados a parti de un Json-->
+				<script type="text/javascript">
+					<![CDATA[
+					$(document)
+							.ready(
+									function() {
+										$
+												.getJSON(
+														'${findEstadosURL}',
+														{ //Url Donde se genera la lista en formato json con todos los estados
+															ajax : "true"
+														},
+														function(data) {
+															var html = '<option value="">Estado</option>';
+															var len = data.length;
+															for ( var i = 0; i < len; i++) {
+																html += '<option value="' + data[i].name + '">'
+																		+ data[i].name
+																		+ '</option>';
+															}
+															html += '</option>';
 
-				$('#usStates').html(html); //Id del Select donde se ingresaran todos los <option>
-			});
-		});
-			]]>
-			</script>
-			<form:select id="city" path="city"> <!-- Select de las Ciudades-->
-		<form:option value="">Ciudad</form:option>
-	    </form:select>
- <!-- js para cargar el selec de las cidades -->
- <script type="text/javascript">
-	<![CDATA[
-	$(document).ready(function(){
-		$("#city").change(onSelectChange);
-	});
+															$('#usStates')
+																	.html(html); //Id del Select donde se ingresaran todos los <option>
+														});
+									});
+					]]>
+				</script>
+				<form:select id="city" path="city">
+					<!-- Select de las Ciudades-->
+					<form:option value="">Ciudad</form:option>
+				</form:select>
+				<!-- js para cargar el selec de las cidades -->
+				<script type="text/javascript">
+					<![CDATA[
+					$(document).ready(function() {
+						$("#city").change(onSelectChange);
+					});
 
-	function onSelectChange() {
-		var selected = $("#city option:selected");		
-		var output = "";
-		if(selected.val() != 0){
-			output = "You selected City " + selected.text();
-		}
-		//$("#output").html(output);
-	}
-	]]>
-</script>
-<script type="text/javascript">
-<![CDATA[
-$(document).ready(function() { 
-	$('#usStates').change( //recojo el parametro de los estados para filtrar la lista json y que solo traiga las ciudades del estado
-			function() {
-				$.getJSON('${findCiudadURL}', { //url donde se genera la lista tipo json con las ciudades
-					stateName : $(this).val(), //le paso el parametro recojido
-					ajax : 'true'
-				}, function(data) {
-					var html = '<option value="">Ciudad</option>';
-					var len = data.length;
-					for ( var i = 0; i < len; i++) {
-						html += '<option value="' + data[i].name + '">'
-								+ data[i].name + '</option>';
+					function onSelectChange() {
+						var selected = $("#city option:selected");
+						var output = "";
+						if (selected.val() != 0) {
+							output = "You selected City " + selected.text();
+						}
+						//$("#output").html(output);
 					}
-					html += '</option>';
+					]]>
+				</script>
+				<script type="text/javascript">
+					<![CDATA[
+					$(document)
+							.ready(
+									function() {
+										$('#usStates')
+												.change(
+														//recojo el parametro de los estados para filtrar la lista json y que solo traiga las ciudades del estado
+														function() {
+															$
+																	.getJSON(
+																			'${findCiudadURL}',
+																			{ //url donde se genera la lista tipo json con las ciudades
+																				stateName : $(
+																						this)
+																						.val(), //le paso el parametro recojido
+																				ajax : 'true'
+																			},
+																			function(
+																					data) {
+																				var html = '<option value="">Ciudad</option>';
+																				var len = data.length;
+																				for ( var i = 0; i < len; i++) {
+																					html += '<option value="' + data[i].name + '">'
+																							+ data[i].name
+																							+ '</option>';
+																				}
+																				html += '</option>';
 
-					$('#city').html(html); //Selec donde colocale los <option>
-				});
-			});
-});
-]]>
-</script>
-        <form:select id="municipio" path="municipio"> <!-- Selec de Municipios -->
-		<form:option value="">Municipio</form:option>
-	    </form:select>
-<script type="text/javascript">
-	<![CDATA[
-	$(document).ready(function(){
-		$("#municipio").change(onSelectChange);
-	});
+																				$(
+																						'#city')
+																						.html(
+																								html); //Selec donde colocale los <option>
+																			});
+														});
+									});
+					]]>
+				</script>
+				<form:select id="municipio" path="municipio">
+					<!-- Selec de Municipios -->
+					<form:option value="">Municipio</form:option>
+				</form:select>
+				<script type="text/javascript">
+					<![CDATA[
+					$(document).ready(function() {
+						$("#municipio").change(onSelectChange);
+					});
 
-	function onSelectChange() {
-		var selected = $("#city option:selected");		
-		var output = "";
-		if(selected.val() != 0){
-			//output = "You selected City " + selected.text();
-		}
-		//$("#output").html(output);
-	}
-	]]>
-</script>
-<script type="text/javascript">
-<![CDATA[
-$(document).ready(function() { 
-	$('#city').change( //recojo el parametro de la ciudad q biene siendo el nombre de la ciudad
-			function() {
-				$.getJSON('${findMunicipiosURL}', { //url donde esta la lista de municipios tipo json
-					ciudadName : $(this).val(), // envio el parametro
-					ajax : 'true'
-				}, function(data) {
-					var html = '<option value="">Municipio</option>';
-					var len = data.length;
-					for ( var i = 0; i < len; i++) {
-						html += '<option value="' + data[i].name + '">'
-								+ data[i].name + '</option>';
+					function onSelectChange() {
+						var selected = $("#city option:selected");
+						var output = "";
+						if (selected.val() != 0) {
+							//output = "You selected City " + selected.text();
+						}
+						//$("#output").html(output);
 					}
-					html += '</option>';
- 
-					$('#municipio').html(html); //Es el id del selec donde colocare los <optios>
-				});
-			});
-});
-]]>
-</script>	    
-<!--  -->	    
-	        <!-- Una Prueba De valentia y Constancia..-->
-	        <br />
-	        </div>	
+					]]>
+				</script>
+				<script type="text/javascript">
+					<![CDATA[
+					$(document)
+							.ready(
+									function() {
+										$('#city')
+												.change(
+														//recojo el parametro de la ciudad q biene siendo el nombre de la ciudad
+														function() {
+															$
+																	.getJSON(
+																			'${findMunicipiosURL}',
+																			{ //url donde esta la lista de municipios tipo json
+																				ciudadName : $(
+																						this)
+																						.val(), // envio el parametro
+																				ajax : 'true'
+																			},
+																			function(
+																					data) {
+																				var html = '<option value="">Municipio</option>';
+																				var len = data.length;
+																				for ( var i = 0; i < len; i++) {
+																					html += '<option value="' + data[i].name + '">'
+																							+ data[i].name
+																							+ '</option>';
+																				}
+																				html += '</option>';
+
+																				$(
+																						'#municipio')
+																						.html(
+																								html); //Es el id del selec donde colocare los <optios>
+																			});
+														});
+									});
+					]]>
+				</script>
+				<!--  -->
+				<!-- Una Prueba De valentia y Constancia..-->
+				<br />
+			</div>
 			<br />
 			<div id="roo_datosOrganismoEnte_direcion">
 				<label for="_direcion_id">Direcion:</label>
@@ -455,7 +498,7 @@ $(document).ready(function() {
 						widgetAttrs : {
 							promptMessage : '${field_validation}',
 							invalidMessage : '${field_invalid}',
-regExp : '^[0-9]{7}$',
+							regExp : '^[0-9]{7}$',
 							required : true
 						}
 					}));
@@ -476,19 +519,21 @@ regExp : '^[0-9]{7}$',
 					arguments="Correo Sunai,(${field_required})"
 					code="field.simple.validation" var="field_validation" />
 				<script type="text/javascript">
-					Spring.addDecoration(new Spring.ElementDecoration({
-						elementId : '_correoSunai_id',
-						widgetType : 'dijit.form.ValidationTextBox',
-						widgetAttrs : {
-							promptMessage : '${field_validation}',
-							invalidMessage : '${field_invalid}',
-							regExp : '[a-zA-Z0-9]+([a-zA-Z0-9._-]+)*@([a-zA-Z0-9](-?[a-zA-Z0-9])*.)+[a-zA-Z]{2}([zmuvtg]|fo|me)?',
-							required : true
-						}
-					}));
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_correoSunai_id',
+										widgetType : 'dijit.form.ValidationTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											invalidMessage : '${field_invalid}',
+											regExp : '[a-zA-Z0-9]+([a-zA-Z0-9._-]+)*@([a-zA-Z0-9](-?[a-zA-Z0-9])*.)+[a-zA-Z]{2}([zmuvtg]|fo|me)?',
+											required : true
+										}
+									}));
 				</script>
 			</div>
-            <br />
+			<br />
 			<div id="roo_organismoEnte_estatus">
 				<c:if test="${not empty estadoauditors}">
 					<label for="_estatus_id">Estatus:</label>
@@ -508,7 +553,7 @@ regExp : '^[0-9]{7}$',
 					</script>
 				</c:if>
 			</div>
-			
+
 			<br />
 			<div class="submit" id="roo_organismoEnte_submit">
 				<spring:message code="button.save" var="save_button" />

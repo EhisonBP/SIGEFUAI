@@ -174,22 +174,7 @@
 						}
 					}
 				}
-
-				function validador() {
-					var combo = document.getElementById("effectTypes");
-					var flag = false;
-					if (combo.selectedIndex == undefined) {
-						if (combo.value == 'Si') {
-							alert("Aparecio")
-							flag = true;
-						} else {
-							alert("desaparecio")
-							var flag = false;
-						}
-					}
-					return flag;
-				}
-
+				
 				Spring.addDecoration(new Spring.ElementDecoration({
 					elementId : 'effectTypes',
 					widgetType : 'dijit.form.FilteringSelect',
@@ -205,7 +190,7 @@
 				<br /> <label for="_organismo_padre_id">Ente y/o Organismo
 					Adscrito:</label>
 				<form:input cssStyle="width:250px" id="_organismo_padre_id"
-					maxlength="30" path="organismoEnte.organismo_padre" size="0" />
+					maxlength="70" path="organismoEnte.organismo_padre" size="0" />
 				<br />
 				<form:errors cssClass="errors" id="_organismo_padre_error_id"
 					path="organismoEnte.organismo_padre" />
@@ -221,7 +206,7 @@
 						widgetAttrs : {
 							promptMessage : '${field_validation}',
 							invalidMessage : '${field_invalid}',
-							required : validador()
+							required : false
 						}
 					}));
 				</script>

@@ -37,7 +37,7 @@
             <div id="roo_organismoEnte_id_organismo_padre">
                 <label for="_id_organismo_padre_id">Ente y/o Organismo Adscrito:</label>
                 <div class="box" id="_id_organismo_padre_id">
-                    <c:out value="${organismoEnte.id_organismo_padre.nombre}"/>
+                    <c:out value="${organismoEnte.organismo_padre}"/>
                 </div>
             </div>
             <br/>

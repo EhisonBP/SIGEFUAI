@@ -39,46 +39,57 @@
 			</div>
 
 
-<!-- Boton de PAorbado-->
-<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
-<div>
-	<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
-	<form:form id="" action="${form_url}" method="put"
-			modelAttribute="actuacion">
-			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
-			<form:hidden id="_estadoActuacion_id" path="estadoActuacion" value="10"/>
-			<div class="submit" id="roo_actuacion_submit">
-				<spring:message code="button.update" var="update_button" />
-				<script type="text/javascript">
-					function cambiarValor(){
-						document.getElementById("_estadoActuacion_id").value= "8";
-					}
-					Spring.addDecoration(new Spring.ValidateAllDecoration({
-						elementId : 'proceed',
-						event : 'onclick',
-						onChange : function(newValue) {
-										cambiarValor();
+			<!-- Boton de PAorbado-->
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+				<c:if
+					test="${tools:contains(accionesPermitidas, 'aprobacionCoordinador1')}">
+					<div>
+						<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
+						<form:form id="" action="${form_url}" method="put"
+							modelAttribute="actuacion">
+							<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+							<form:hidden id="_estadoActuacion_id" path="estadoActuacion"
+								value="10" />
+							<div class="submit" id="roo_actuacion_submit">
+								<spring:message code="button.update" var="update_button" />
+								<script type="text/javascript">
+									function cambiarValor() {
+										document
+												.getElementById("_estadoActuacion_id").value = "8";
 									}
-					}));
-				</script>
-				<input id="proceed" type="submit" value="Aprobar" onclick="cambiarValor()"/> 
+									Spring
+											.addDecoration(new Spring.ValidateAllDecoration(
+													{
+														elementId : 'proceed',
+														event : 'onclick',
+														onChange : function(
+																newValue) {
+															cambiarValor();
+														}
+													}));
+								</script>
+								<input id="proceed" type="submit" value="Aprobar"
+									onclick="cambiarValor()" />
 
-				<spring:message code="button.update" var="update_button" />
-				<script type="text/javascript">
-					Spring.addDecoration(new Spring.ValidateAllDecoration({
-						elementId : 'proceed2',
-						event : 'onclick'
-					}));
-				</script>
-				<input id="proceed2" type="submit" value="Rechazar" onclick=""/> 
-			</div>
-		<form:hidden id="_id_id" path="id" />
-		<form:hidden id="_version_id" path="version" />
-		
-	</form:form>
-</div>
-</sec:authorize>
-<!-- Boton de PAorbado-->
+								<spring:message code="button.update" var="update_button" />
+								<script type="text/javascript">
+									Spring
+											.addDecoration(new Spring.ValidateAllDecoration(
+													{
+														elementId : 'proceed2',
+														event : 'onclick'
+													}));
+								</script>
+								<input id="proceed2" type="submit" value="Rechazar" onclick="" />
+							</div>
+							<form:hidden id="_id_id" path="id" />
+							<form:hidden id="_version_id" path="version" />
+
+						</form:form>
+					</div>
+				</c:if>
+			</sec:authorize>
+			<!-- Boton de PAorbado-->
 
 			<br />
 			<c:if test="${tools:contains(camposPermitidos, 'codigo')}">
@@ -247,11 +258,12 @@
 
 			<c:if
 				test="${tools:contains(camposPermitidos, 'objetivosEspecificos')}">
-				<div id="accordionObjetivosEspecificos" class="accordion" style="display: none;">
+				<div id="accordionObjetivosEspecificos" class="accordion"
+					style="display: none;">
 					<h3>
 						<a href="#">Objetivos Específicos</a>
 					</h3>
-					<div id= "objetivoEspecifico">
+					<div id="objetivoEspecifico">
 						<c:if test="${not empty objetivosEspecificos}">
 							<table id="menuTable1" width="300">
 								<thead>
@@ -315,8 +327,8 @@
 						</c:if>
 						<c:if test="${empty objetivosEspecificos}">
 							<div id="roo_actuacion_objetivo">
-								<div id="tituloDefault" style="font-style: italic">No se encontraron
-									objetivos específicos</div>
+								<div id="tituloDefault" style="font-style: italic">No se
+									encontraron objetivos específicos</div>
 							</div>
 						</c:if>
 						<br />
@@ -393,30 +405,33 @@
 				<br />
 			</c:if>
 			<br />
-			<c:if test="${tools:contains(accionesPermitidas, 'mostrar')}">
-				<div id="roo_actuacion_responsableAuditor">
-					<label for="_responsableAuditor_id">Auditor Responsable:</label>
-					<div class="box" id="_responsableAuditor_id">
-						<c:out value="${actuacion.responsableAuditor}" />
-					</div>
-				</div>
-				<br />
-			</c:if>
 			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
 				<c:if test="${tools:contains(accionesPermitidas, 'mostrar')}">
-					<h2>EDITE LA ACTUACION PARA QUE SELECIONE QUIEN SERA EL
-						AUDITOR RESPONSABLE ANTES DE ENVIAR LA TAREA</h2>
+					<div id="roo_actuacion_responsableAuditor">
+						<label for="_responsableAuditor_id">Auditor Responsable:</label>
+						<div class="box" id="_responsableAuditor_id">
+							<c:out value="${actuacion.responsableAuditor}" />
+						</div>
+					</div>
+					<br />
 				</c:if>
 			</sec:authorize>
-			<c:if test="${tools:contains(camposPermitidos, 'estadoActuacion')}">
-				<div id="roo_actuacion_estadoActuacion">
-					<label for="_estadoActuacion_id">Estatus:</label>
-					<div class="box" id="_estadoActuacion_id">
-						<c:out value="${actuacion.estadoActuacion.nombre}" />
-					</div>
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+				<c:if test="${tools:contains(accionesPermitidas, 'mostrar')}">
+					<h2 id="mensaje_coordinador" style="display: '';">EDITE LA
+						ACTUACION PARA QUE SELECIONE QUIEN SERA EL AUDITOR RESPONSABLE
+						ANTES DE ENVIAR LA TAREA</h2>
+				</c:if>
+			</sec:authorize>
+
+			<div id="roo_actuacion_estadoActuacion">
+				<label for="_estadoActuacion_id">Estatus:</label>
+				<div class="box" id="_estadoActuacion_id">
+					<c:out value="${actuacion.estadoActuacion.nombre}" />
 				</div>
-				<br />
-			</c:if>
+			</div>
+			<br />
+
 
 			<c:if test="${tools:contains(camposPermitidos, 'unidadDeMedida')}">
 				<div id="roo_actuacion_unidadDeMedida">
@@ -490,7 +505,7 @@
 			</c:if>
 			<br />
 			<!-- Muestro El Boton Editar Actuacion para que termine la carga -->
-			
+
 			<c:if test="${tools:contains(accionesPermitidas, 'biblioteca')}">
 				<c:if test="${empty actuacion.biblioteca}">
 					<spring:url value="/actuacion/${actuacion.id}/form"
@@ -513,16 +528,17 @@
 			<br />
 			<!-- Si no se ha asignado biblioteca muestro el botón para asignarsela -->
 			<div id="_boton_biblioteca" style="display: none;">
-			<c:if test="${tools:contains(accionesPermitidas, 'biblioteca')}">
-				<c:if test="${empty actuacion.biblioteca}">
-					<spring:url
-						value="/actuacion/asignarbiblioteca/${actuacion.id}/form"
-						var="asignar_biblioteca" />
-					<input type="button" value="Cargar programa a partir de biblioteca"
-						onclick="document.location='${asignar_biblioteca}'" />
-					<br />
+				<c:if test="${tools:contains(accionesPermitidas, 'biblioteca')}">
+					<c:if test="${empty actuacion.biblioteca}">
+						<spring:url
+							value="/actuacion/asignarbiblioteca/${actuacion.id}/form"
+							var="asignar_biblioteca" />
+						<input type="button"
+							value="Cargar programa a partir de biblioteca"
+							onclick="document.location='${asignar_biblioteca}'" />
+						<br />
+					</c:if>
 				</c:if>
-			</c:if>
 			</div>
 
 			<!-- Pinta los acordeones solamente si ya se asignó biblioteca a la actuacion -->
@@ -556,28 +572,30 @@
 											<td><c:out escapeXml="false"
 													value="${actividadActuacion.descripcion}" /></td>
 
-	<sec:authorize ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-		<c:if test="${tools:contains(actividadActuacion.accionesPermitidas, 'editar')}">
-											<td><spring:url value="/static/images/show.png"
-													var="show_image_url" /> <c:if
-													test="${actividadActuacion.type eq 'pt' }">
-													<spring:url
-														value="/papeldetrabajo/${actividadActuacion.id}"
-														var="show_form_url" />
-												</c:if> <c:if test="${actividadActuacion.type eq 'p' }">
-													<spring:url value="/prueba/${actividadActuacion.id}"
-														var="show_form_url" />
-												</c:if> <c:if test="${actividadActuacion.type eq 'a' }">
-													<spring:url
-														value="/actividadgeneral/${actividadActuacion.id}"
-														var="show_form_url" />
-												</c:if> <form:form id="" action="${show_form_url}" method="get">
-													<spring:message arguments="${entity_label}"
-														code="entity.show" var="show_label" />
-													<input alt="${show_label}" class="image"
-														src="${show_image_url}" title="Mostrar Sección"
-														type="image" value="${show_label}" />
-												</form:form></td>
+											<sec:authorize
+												ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
+												<c:if
+													test="${tools:contains(actividadActuacion.accionesPermitidas, 'editar')}">
+													<td><spring:url value="/static/images/show.png"
+															var="show_image_url" /> <c:if
+															test="${actividadActuacion.type eq 'pt' }">
+															<spring:url
+																value="/papeldetrabajo/${actividadActuacion.id}"
+																var="show_form_url" />
+														</c:if> <c:if test="${actividadActuacion.type eq 'p' }">
+															<spring:url value="/prueba/${actividadActuacion.id}"
+																var="show_form_url" />
+														</c:if> <c:if test="${actividadActuacion.type eq 'a' }">
+															<spring:url
+																value="/actividadgeneral/${actividadActuacion.id}"
+																var="show_form_url" />
+														</c:if> <form:form id="" action="${show_form_url}" method="get">
+															<spring:message arguments="${entity_label}"
+																code="entity.show" var="show_label" />
+															<input alt="${show_label}" class="image"
+																src="${show_image_url}" title="Mostrar Sección"
+																type="image" value="${show_label}" />
+														</form:form></td>
 												</c:if>
 											</sec:authorize>
 										</tr>
@@ -820,29 +838,40 @@
 		$('#menuTable2').tablePagination({});
 		$('#menuTable3').tablePagination({});
 
-		dojo.addOnLoad(function(){
-			//Validacion que hace que si estan llenos los valores de enfoque y metodo de la actuacion aparece para cargar los objetivos 				//especificos
+		dojo.addOnLoad(function() {
+			//Validacion que hace que si estan llenos los valores de enfoque y metodo de la actuacion aparece para cargar los objetivos 				
+			//especificos
 			var elemento = document.getElementById("_enfoque_id");
 			var elemento2 = document.getElementById("_metodo_id");
 			var div = document.getElementById("accordionObjetivosEspecificos");
-
-				if (elemento.innerHTML != '--'){
+			try {
+				if (elemento.innerHTML != '--') {
 					if (elemento2.innerHTML != '--') {
 						div.style.display = '';
-					}	
+					}
 				}
+			} catch (e) {
+			}
+
+			//Quitar Mensaje de Editar Actuacion con para sellecionar auditor responsable
+			var elemento4 = document.getElementById("mensaje_coordinador");
+			var div3 = document.getElementById("_responsableAuditor_id");
+			try {
+				if (div3.innerHTML != "") {
+					elemento4.style.display = 'none';
+				}
+			} catch (e) {
+			}
 			
 			//Validando si hay por lo menos un objetivo especifico y asi te aparece el boton de
 			//cargar datos a travez de biblioteca
 			var elemento3 = document.getElementById("tituloDefault");
 			var div2 = document.getElementById("_boton_biblioteca");
-			
-			try{
+			try {
 				elemento3.innerHTML;
-			}catch (e){
-				div2.style.display = '';			
+			} catch (e) {
+				div2.style.display = '';
 			}
-			
 		});
 	</script>
 </div>

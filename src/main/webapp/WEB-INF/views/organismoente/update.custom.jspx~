@@ -140,7 +140,71 @@
 					</script>
 				</div>
 
-			<div id="roo_organismoEnte_organismo_padre">
+				<br />
+				<div id="roo_organismoEnte_id_tipo_organismo">
+					<c:if test="${not empty tipoorganismoes}">
+						<label for="_id_tipo_organismo_id">Tipo de Organismo:</label>
+						<form:select cssStyle="width:250px" id="_id_tipo_organismo_id"
+							path="organismoEnte.id_tipo_organismo">
+							<form:options itemValue="id" items="${tipoorganismoes}"
+								itemLabel="nombre" />
+						</form:select>
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_id_tipo_organismo_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true
+								}
+							}));
+						</script>
+					</c:if>
+				</div>
+				<br /> <label for="effectTypes">&#191;Es Adscrito?</label>
+				<form:select name="effects" id="effectTypes" path="effectTypes"
+					cssStyle="width:50px">
+					<option value="1">No</option>
+					<option value="2">Si</option>
+				</form:select>
+				<br />
+				<!-- Aki validacion de opcion -->
+				<script type="text/javascript">
+					function mostrarNombreProyecto() {
+						//$( "#roo_organismoEnte_id_organismo_padre" ).hide();
+						var combo = document.getElementById("effectTypes");
+
+						var div = document
+								.getElementById("roo_organismoEnte_organismo_padre");
+
+						if (combo.selectedIndex == undefined) {
+							if (combo.value == 'Si') {
+								div.style.display = '';
+							} else {
+								div.style.display = 'none';
+								//registro.pto.value = x;
+								//Prueba._id_organismo_padre_id.value = null;
+							}
+						} else {
+							if (combo.options[combo.selectedIndex].text == 'Si') {
+								div.style.display = '';
+							} else {
+								div.style.display = 'none';
+							}
+
+						}
+					}
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : 'effectTypes',
+						widgetType : 'dijit.form.FilteringSelect',
+						widgetAttrs : {
+							hasDownArrow : true,
+							onChange : function(newValue) {
+								mostrarNombreProyecto();
+							}
+						}
+					}));
+				</script>
+			<div id="roo_organismoEnte_organismo_padre" style="display: none;">
 				<br /> <label for="_organismo_padre_id">Ente y/o Organismo
 					Adscrito:</label>
 				<form:input cssStyle="width:250px" id="_organismo_padre_id"

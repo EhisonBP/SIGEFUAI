@@ -25,7 +25,9 @@
                             <c:out value="${fn:substring(claseActuacion.nombre, 0, 30)}"/>
                         </td>
                         <td>
+                             <div style="overflow: scroll; height: 100px; width: 450px; ">
                                 <c:out escapeXml="false" value="${claseActuacion.descripcion}"/>
+                             </div>
                         </td>
                         <td>
                             <spring:url value="/claseactuacion/${claseActuacion.id}" var="show_form_url"/>
