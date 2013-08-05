@@ -1,169 +1,273 @@
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags">
-    
-    <script type="text/javascript">
-        tinyMCE.init({
-            mode : "exact",
-            plugins : "paste",
-            elements : "_descripcion_id, _resultadosEsperados_id, _hitosDeControl_id",
-            theme : "simple"
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags">
 
-        });
-    </script>
+	<script type="text/javascript">
+		tinyMCE
+				.init({
+					mode : "exact",
+					plugins : "paste",
+					elements : "_descripcion_id, _resultadosEsperados_id, _hitosDeControl_id",
+					theme : "simple"
 
-    <jsp:output omit-xml-declaration="yes"/>
-    <script type="text/javascript">dojo.require('dijit.TitlePane');dojo.require('dijit.form.FilteringSelect');dojo.require('dijit.form.DateTextBox');</script>
-    <div id="x_title_div">
-        <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : 'x_title_div', widgetType : 'dijit.TitlePane', widgetAttrs : {title: 'Editar Actividad'}})); </script>
-        <spring:url value="/actividadgeneral/${actividadGeneral.id}" var="form_url"/>
-        <form:form id="" action="${form_url}" method="put" modelAttribute="actividadGeneral">
-            <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
-            <div id="roo_actividadGeneral_actuacion">
-                <label for="_actuacion_id">Actuacion:</label>
-                <div id="_actuacion_id">
-                    <spring:url value="/actuacion/${actividadGeneral.codigoActuacion.id}" var="url_actuacion"/>
-                    <a href="${url_actuacion}" >${actividadGeneral.codigoActuacion.nombre}</a>
-                </div>
-            </div>
-            <br/>
-            <c:if test="${esActividadHija eq 'false'}">
-                <div id="roo_actividadGeneral_objetivoAMitigar">
-                    <c:if test="${not empty objetivoespecificoes}">
-                        <label for="_objetivoAMitigar_id">Objetivo Específico Asociado:</label>
-                        <form:select cssStyle="width:520px" id="_objetivoAMitigar_id" path="objetivoAMitigar">
+				});
+	</script>
 
-                            
-                            <form:options itemValue="id" items="${objetivoespecificoes}" htmlEscape="false"/>
-                        
-                        </form:select>
-                        <script type="text/javascript">
-                            Spring.addDecoration(
-                                new Spring.ElementDecoration({
-                                    elementId : '_objetivoAMitigar_id',
-                                    widgetType: 'dijit.form.FilteringSelect',
-                                    widgetAttrs : {hasDownArrow : true,
-                                    onChange : function(newValue){
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+		dojo.require('dijit.TitlePane');
+		dojo.require('dijit.form.FilteringSelect');
+		dojo.require('dijit.form.DateTextBox');
+	</script>
+	<div id="x_title_div">
+		<script type="text/javascript">
+			Spring.addDecoration(new Spring.ElementDecoration({
+				elementId : 'x_title_div',
+				widgetType : 'dijit.TitlePane',
+				widgetAttrs : {
+					title : 'Editar Actividad'
+				}
+			}));
+		</script>
+		<spring:url value="/actividadgeneral/${actividadGeneral.id}"
+			var="form_url" />
+		<form:form id="" action="${form_url}" method="put"
+			modelAttribute="actividadGeneral">
+			<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+			<div id="roo_actividadGeneral_actuacion">
+				<label for="_actuacion_id">Actuacion:</label>
+				<div id="_actuacion_id">
+					<spring:url
+						value="/actuacion/${actividadGeneral.codigoActuacion.id}"
+						var="url_actuacion" />
+					<a href="${url_actuacion}">${actividadGeneral.codigoActuacion.nombre}</a>
+				</div>
+			</div>
+			<br />
+			<c:if test="${esActividadHija eq 'false'}">
+				<div id="roo_actividadGeneral_objetivoAMitigar">
+					<c:if test="${not empty objetivoespecificoes}">
+						<label for="_objetivoAMitigar_id">Objetivo Específico
+							Asociado:</label>
+						<form:select cssStyle="width:520px" id="_objetivoAMitigar_id"
+							path="objetivoAMitigar">
 
-                                       actualizarCodigo();
-                                    }
 
+							<form:options itemValue="id" items="${objetivoespecificoes}"
+								htmlEscape="false" />
 
+						</form:select>
+						<script type="text/javascript">
+							Spring.addDecoration(new Spring.ElementDecoration({
+								elementId : '_objetivoAMitigar_id',
+								widgetType : 'dijit.form.FilteringSelect',
+								widgetAttrs : {
+									hasDownArrow : true,
+									onChange : function(newValue) {
 
-                        }}
+										actualizarCodigo();
+									}
 
+								}
+							}
 
-                                )
-                            );
-                                function actualizarCodigo(){
-                                    /*var x = document.getElementById("_objetivoAMitigar_id");
-                                    var text = x.value.split("-");
-                                    document.getElementById("codigo").innerHTML=text[0]+".";*/
-                                    var combo = document.getElementById("_objetivoAMitigar_id");
+							));
+							function actualizarCodigo() {
+								/*var x = document.getElementById("_objetivoAMitigar_id");
+								var text = x.value.split("-");
+								document.getElementById("codigo").innerHTML=text[0]+".";*/
+								var combo = document
+										.getElementById("_objetivoAMitigar_id");
 
-                                    if (combo.selectedIndex == undefined){
-                                        var text = combo.value.split("-");
-                                        document.getElementById("codigo").innerHTML=text[0]+".";
-                                    }
-                                    else{
-                                        var text = combo.options[combo.selectedIndex].text.split("-");
-                                        document.getElementById("codigo").innerHTML=text[0]+".";
-                                    }
+								if (combo.selectedIndex == undefined) {
+									var text = combo.value.split("-");
+									document.getElementById("codigo").innerHTML = text[0];
+								} else {
+									var text = combo.options[combo.selectedIndex].text
+											.split("-");
+									document.getElementById("codigo").innerHTML = text[0];
+								}
 
-                                }
+							}
+						</script>
+					</c:if>
+				</div>
+			</c:if>
+			<c:if test="${esActividadHija eq 'true'}">
+				<div id="roo_actividadGeneral_objetivoAMitigar">
+					<label for="_objetivoAMitigar_id">Objetivo Específico
+						Asociado:</label>
+					<div id="_objetivoAMitigar_id">
+						<c:out escapeXml="false" value="${objetivoAMitigar.descripcion}" />
+					</div>
+				</div>
+			</c:if>
+			<br />
+			<div id="roo_actividadGeneral_codigo">
+				<label for="_codigo_id">Código:</label>
+				<c:if test="${not empty actividadGeneral.actividadActuacion}">
+					<c:if test="${actividadGeneral.actividadActuacion.type eq 'pt' }">
+						<spring:url
+							value="/papeldetrabajo/${actividadGeneral.actividadActuacion.id}"
+							var="url_actividad" />
+						<a href="${url_actividad}"><c:out
+								value="${actividadGeneral.codigoPadres}" />
+							<div style="display: inline" id="codigo">&#160;</div></a>
+					</c:if>
+					<c:if test="${actividadGeneral.actividadActuacion.type eq 'a' }">
+						<spring:url
+							value="/actividadgeneral/${actividadGeneral.actividadActuacion.id}"
+							var="url_actividad" />
+						<a href="${url_actividad}"><c:out
+								value="${actividadGeneral.codigoPadres}" />
+							<div style="display: inline" id="codigo">&#160;</div></a>
+					</c:if>
+				</c:if>
+			</div>
+			<br />
+			<div id="roo_actividadGeneral_descripcion">
+				<label for="_descripcion_id">Descripción:</label>
+				<form:input cssStyle="width:520px; height: 200px;"
+					id="_descripcion_id" path="descripcion" />
+				<br />
+				<form:errors cssClass="errors" id="_descripcion_error_id"
+					path="descripcion" />
+			</div>
+			<br />
+			<div id="roo_actividadGeneral_fechaEstimadaDeInicio">
+				<label for="_fechaEstimadaDeInicio_id">Fecha Estimada De
+					Inicio:</label>
+				<form:input cssStyle="width:250px" id="_fechaEstimadaDeInicio_id"
+					maxlength="30" path="fechaEstimadaDeInicio" size="0" />
+				<br />
+				<form:errors cssClass="errors" id="_fechaEstimadaDeInicio_error_id"
+					path="fechaEstimadaDeInicio" />
+				<spring:message arguments="Fecha Estimada De Inicio"
+					code="field.invalid" var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator=","
+					arguments="Fecha Estimada De Inicio,"
+					code="field.simple.validation" var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_fechaEstimadaDeInicio_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							required : false
+						}
+					}));
+				</script>
+				<script type="text/javascript">
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_fechaEstimadaDeInicio_id',
+										widgetType : 'dijit.form.DateTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											constraints : {
+												datePattern : '${actividadGeneral_fechaEstimadaDeInicio_date_format}',
+												required : false
+											},
+											datePattern : '${actividadGeneral_fechaEstimadaDeInicio_date_format}'
+										}
+									}));
+				</script>
+			</div>
+			<br />
+			<div id="roo_actividadGeneral_fechaEstimadaDeFin">
+				<label for="_fechaEstimadaDeFin_id">Fecha Estimada De Fin:</label>
+				<form:input cssStyle="width:250px" id="_fechaEstimadaDeFin_id"
+					maxlength="30" path="fechaEstimadaDeFin" size="0" />
+				<br />
+				<form:errors cssClass="errors" id="_fechaEstimadaDeFin_error_id"
+					path="fechaEstimadaDeFin" />
+				<spring:message arguments="Fecha Estimada De Fin"
+					code="field.invalid" var="field_invalid" />
+				<spring:message code="field.required" var="field_required" />
+				<spring:message argumentSeparator=","
+					arguments="Fecha Estimada De Fin," code="field.simple.validation"
+					var="field_validation" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ElementDecoration({
+						elementId : '_fechaEstimadaDeFin_id',
+						widgetType : 'dijit.form.ValidationTextBox',
+						widgetAttrs : {
+							promptMessage : '${field_validation}',
+							invalidMessage : '${field_invalid}',
+							required : false
+						}
+					}));
+				</script>
+				<script type="text/javascript">
+					Spring
+							.addDecoration(new Spring.ElementDecoration(
+									{
+										elementId : '_fechaEstimadaDeFin_id',
+										widgetType : 'dijit.form.DateTextBox',
+										widgetAttrs : {
+											promptMessage : '${field_validation}',
+											constraints : {
+												datePattern : '${actividadGeneral_fechaEstimadaDeFin_date_format}',
+												required : false
+											},
+											datePattern : '${actividadGeneral_fechaEstimadaDeFin_date_format}'
+										}
+									}));
+				</script>
+			</div>
+			<br />
+			<div id="roo_actividadGeneral_resultadosEsperados">
+				<label for="_resultadosEsperados_id">Resultados Esperados:</label>
+				<form:input cssStyle="width:520px; height: 200px;"
+					id="_resultadosEsperados_id" path="resultadosEsperados" />
+				<br />
+				<form:errors cssClass="errors" id="_resultadosEsperados_error_id"
+					path="resultadosEsperados" />
 
-                        </script>
-                    </c:if>
-                </div>
-            </c:if>
-            <c:if test="${esActividadHija eq 'true'}">
-                <div id="roo_actividadGeneral_objetivoAMitigar">
-                    <label for="_objetivoAMitigar_id">Objetivo Específico Asociado:</label>
-                    <div id="_objetivoAMitigar_id">
-                        <c:out escapeXml="false" value="${objetivoAMitigar.descripcion}"/>
-                    </div>
-                </div>
-            </c:if>
-            <br/>            
-            <div id="roo_actividadGeneral_codigo">
-                <label for="_codigo_id">Código:</label>
-                <c:if test="${not empty actividadGeneral.actividadActuacion}">
-                        <c:if test="${actividadGeneral.actividadActuacion.type eq 'pt' }">
-                            <spring:url value="/papeldetrabajo/${actividadGeneral.actividadActuacion.id}" var="url_actividad"/>
-                            <a href="${url_actividad}" ><c:out value="${actividadGeneral.codigoPadres}"/><div style="display: inline" id="codigo">&#160;</div><c:out value="${actividadGeneral.codigo}"/></a>
-                        </c:if>
-                        <c:if test="${actividadGeneral.actividadActuacion.type eq 'a' }">
-                            <spring:url value="/actividadgeneral/${actividadGeneral.actividadActuacion.id}" var="url_actividad"/>
-                            <a href="${url_actividad}" ><c:out value="${actividadGeneral.codigoPadres}"/><div style="display: inline" id="codigo">&#160;</div><c:out value="${actividadGeneral.codigo}"/></a>
-                        </c:if>
-                </c:if>
-            </div>
-            <br/>
-            <div id="roo_actividadGeneral_descripcion">
-                <label for="_descripcion_id">Descripción:</label>
-                <form:input cssStyle="width:520px; height: 200px;" id="_descripcion_id" path="descripcion"/>
-                <br/>
-                <form:errors cssClass="errors" id="_descripcion_error_id" path="descripcion"/>
-            </div>
-            <br/>
-            <div id="roo_actividadGeneral_fechaEstimadaDeInicio">
-                <label for="_fechaEstimadaDeInicio_id">Fecha Estimada De Inicio:</label>
-                <form:input cssStyle="width:250px" id="_fechaEstimadaDeInicio_id" maxlength="30" path="fechaEstimadaDeInicio" size="0"/>
-                <br/>
-                <form:errors cssClass="errors" id="_fechaEstimadaDeInicio_error_id" path="fechaEstimadaDeInicio"/>
-                <spring:message arguments="Fecha Estimada De Inicio" code="field.invalid" var="field_invalid"/>
-                <spring:message code="field.required" var="field_required"/>
-                <spring:message argumentSeparator="," arguments="Fecha Estimada De Inicio," code="field.simple.validation" var="field_validation"/>
-                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaEstimadaDeInicio_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
-                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaEstimadaDeInicio_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${actividadGeneral_fechaEstimadaDeInicio_date_format}', required : false}, datePattern : '${actividadGeneral_fechaEstimadaDeInicio_date_format}'}})); </script>
-            </div>
-            <br/>
-            <div id="roo_actividadGeneral_fechaEstimadaDeFin">
-                <label for="_fechaEstimadaDeFin_id">Fecha Estimada De Fin:</label>
-                <form:input cssStyle="width:250px" id="_fechaEstimadaDeFin_id" maxlength="30" path="fechaEstimadaDeFin" size="0"/>
-                <br/>
-                <form:errors cssClass="errors" id="_fechaEstimadaDeFin_error_id" path="fechaEstimadaDeFin"/>
-                <spring:message arguments="Fecha Estimada De Fin" code="field.invalid" var="field_invalid"/>
-                <spring:message code="field.required" var="field_required"/>
-                <spring:message argumentSeparator="," arguments="Fecha Estimada De Fin," code="field.simple.validation" var="field_validation"/>
-                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaEstimadaDeFin_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${field_validation}', invalidMessage: '${field_invalid}', required : false}})); </script>
-                <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_fechaEstimadaDeFin_id', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: '${field_validation}', constraints: {datePattern : '${actividadGeneral_fechaEstimadaDeFin_date_format}', required : false}, datePattern : '${actividadGeneral_fechaEstimadaDeFin_date_format}'}})); </script>
-            </div>
-            <br/>
-            <div id="roo_actividadGeneral_resultadosEsperados">
-                <label for="_resultadosEsperados_id">Resultados Esperados:</label>
-                <form:input cssStyle="width:520px; height: 200px;" id="_resultadosEsperados_id" path="resultadosEsperados"/>
-                <br/>
-                <form:errors cssClass="errors" id="_resultadosEsperados_error_id" path="resultadosEsperados"/>
+			</div>
+			<br />
+			<div id="roo_actividadGeneral_hitosDeControl">
+				<label for="_hitosDeControl_id">Hitos De Control:</label>
+				<form:input cssStyle="width:520px; height: 200px;"
+					id="_hitosDeControl_id" path="hitosDeControl" />
+				<br />
+				<form:errors cssClass="errors" id="_hitosDeControl_error_id"
+					path="hitosDeControl" />
+			</div>
+			<br />
+			<div id="roo_prueba_responsables">
+				<c:if test="${not empty auditors}">
+					<label for="_responsables_id">Responsables:</label>
+					<form:select cssStyle="width:250px" id="_responsables_id"
+						path="responsables">
+						<form:options itemValue="id" items="${auditors}" />
+					</form:select>
+				</c:if>
+			</div>
+			<br />
+			<div class="submit" id="roo_actividadGeneral_submit">
+				<spring:message code="button.update" var="update_button" />
+				<script type="text/javascript">
+					Spring.addDecoration(new Spring.ValidateAllDecoration({
+						elementId : 'proceed',
+						event : 'onclick'
+					}));
+				</script>
+				<input id="proceed" type="submit" value="${update_button}" /> <input
+					type="button" value="Cancelar"
+					onclick="history.go( -1 );return true;" />
 
-            </div>
-            <br/>
-            <div id="roo_actividadGeneral_hitosDeControl">
-                <label for="_hitosDeControl_id">Hitos De Control:</label>
-                <form:input cssStyle="width:520px; height: 200px;" id="_hitosDeControl_id" path="hitosDeControl"/>
-                <br/>
-                <form:errors cssClass="errors" id="_hitosDeControl_error_id" path="hitosDeControl"/>
-            </div>            
-            <br/>           
-            <div id="roo_prueba_responsables">
-                <c:if test="${not empty auditors}">
-                    <label for="_responsables_id">Responsables:</label>
-                    <form:select cssStyle="width:250px" id="_responsables_id" path="responsables">
-                        <form:options itemValue="id" items="${auditors}"/>
-                    </form:select>
-                </c:if>
-            </div>
-            <br/>
-            <div class="submit" id="roo_actividadGeneral_submit">
-                <spring:message code="button.update" var="update_button"/>
-                <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
-                <input id="proceed" type="submit" value="${update_button}"/>
-                
-            </div>
-            <form:hidden id="_id_id" path="id"/>
-            <form:hidden id="_version_id" path="version"/>
-        </form:form>
-            <script type="text/javascript">
-                actualizarCodigo();
-            </script>
+			</div>
+			<form:hidden id="_id_id" path="id" />
+			<form:hidden id="_version_id" path="version" />
+		</form:form>
+		<script type="text/javascript">
+			actualizarCodigo();
+		</script>
 
-    </div>
+	</div>
 </div>

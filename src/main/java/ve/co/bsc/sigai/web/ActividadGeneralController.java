@@ -69,6 +69,7 @@ public class ActividadGeneralController {
 
 	private static final Logger logger = Logger
 			.getLogger(ActividadGeneralController.class);
+	private static int idObjetivo;
 
 	@Autowired
 	private JbpmService jbpmService;
@@ -120,18 +121,19 @@ public class ActividadGeneralController {
 
 			// El elemento encontrado es una actividad
 			if (actividad.getActividadActuacion() == null) {
-
+				logger.debug("Ingresando En la primera Validacion \n\n");
 				if (Integer.parseInt(actividad.getCodigo()) > mayorActividad) {
 					mayorActividad = Integer.parseInt(actividad.getCodigo());
 				}
 			} // El elemento encontrado es una tarea
 			else {
+				logger.debug("Ingresando En la segunda Validacion \n\n");
 				// Verifico que sean las tareas que pertenecen a esta actividad
 				if (actividad.getActividadActuacion() == laActividad
 						.getActividadActuacion()) {
+					logger.debug("Ingresando En la segunda Validacion parte 1 \n\n");
 					if (Integer.parseInt(actividad.getCodigo()) > mayorTarea) {
 						mayorTarea = Integer.parseInt(actividad.getCodigo());
-
 					}
 				}
 			}
@@ -342,6 +344,7 @@ public class ActividadGeneralController {
 					.getResultList();
 			modelMap.addAttribute("objetivoespecificoes", objetivoespecificoes);
 
+			//
 			if (actividadGeneral.getActividadActuacion() instanceof ActividadGeneral) {
 				modelMap.addAttribute("esActividadHija", "true");
 				modelMap.addAttribute("objetivoAMitigar", actividadGeneral
@@ -368,12 +371,68 @@ public class ActividadGeneralController {
 			return "actividadgeneral/create";
 		}
 
+		// Ingresando el Codigo segun el orden de la actividad segun el orden
+		// del Objetivo Especifico
+
+		// Buscamos todas las actividades generales de la actuacion
+		Query queryActividades = ActividadGeneral
+				.findActividadGeneralsByCodigoActuacion(miActuacion);
+		List<ActividadGeneral> actividades = queryActividades.getResultList();
+
+		// Verificamos cual es el ultimo codigo para generar el correlativo
+		// siguiente
+		int mayorTarea = 0;
+		int mayorActividad = 0;
+		for (int i = 0; i < actividades.size(); i++) {
+			ActividadGeneral actividad = (ActividadGeneral) actividades.get(i);
+			logger.debug("Valores para validacion de codigo\n\n");
+			logger.debug("Valor 1 es :"
+					+ actividad.getActividadActuacion().getId().toString());
+			logger.debug("Valor 2 es :"
+					+ actividadGeneral.getActividadActuacion().getId()
+							.toString());
+			logger.debug("Valor 3:"
+					+ actividadGeneral.getObjetivoAMitigar().getId().toString());
+			logger.debug("Valor 4: "
+					+ actividad.getObjetivoAMitigar().getId().toString());
+			logger.debug("Fin Valores para validacion de codigo");
+
+			// El elemento encontrado es una actividad
+			if (actividad.getActividadActuacion() == null) {
+				logger.debug("Ingresando En la primera Validacion");
+				if (Integer.parseInt(actividad.getCodigo()) > mayorActividad) {
+					mayorActividad = Integer.parseInt(actividad.getCodigo());
+				}
+			} // El elemento encontrado es una tarea
+			else {
+				logger.debug("Ingresando En la segunda Validacion");
+				// Verifico que sean las tareas que pertenecen a esta actividad
+				if (actividad.getObjetivoAMitigar() == actividadGeneral
+						.getObjetivoAMitigar()) {
+					logger.debug("Ingresando En la segunda Validacion parte 1");
+					if (Integer.parseInt(actividad.getCodigo()) > mayorTarea) {
+						mayorTarea = Integer.parseInt(actividad.getCodigo());
+
+					}
+				}
+			}
+
+		}
+		// Verificamos si esta actividad general es actividad o tarea
+		if (actividadGeneral.getActividadActuacion() != null) {
+			actividadGeneral.setCodigo(String.valueOf(mayorTarea + 1));
+			logger.debug("El valor que se va ingresar es: "
+					+ String.valueOf(mayorTarea + 1));
+		}
+		// Fin de la Validacion de las actividades de las actividades
+
 		if (actividadCompleta.getActividadActuacion() != null) {
 			actividadGeneral.setActividadActuacion(actividadCompleta
 					.getActividadActuacion());
 		}
 
-		logger.info("Se va ingresar en el campo de creandro el usuario " + util.usuarioCreador());
+		logger.info("Se va ingresar en el campo de creandro el usuario "
+				+ util.usuarioCreador());
 		actividadGeneral.setCreador(util.usuarioCreador());
 
 		actividadGeneral.persist();
@@ -627,6 +686,68 @@ public class ActividadGeneralController {
 				actividadesNietas.get(j).merge();
 			}
 		}
+		logger.debug("Id del Objetivo es:" + idObjetivo);
+		logger.debug(actividadCompleta.getObjetivoAMitigar().getId() + "\n\n");
+
+		if (actividadCompleta.getObjetivoAMitigar().getId() != idObjetivo) {
+			// Buscamos todas las actividades generales de la actuacion
+			Query queryActividades = ActividadGeneral
+					.findActividadGeneralsByCodigoActuacion(miActuacion);
+			List<ActividadGeneral> actividades = queryActividades
+					.getResultList();
+			// Verificamos cual es el ultimo codigo para generar el correlativo
+			// siguiente
+			int mayorTarea = 0;
+			int mayorActividad = 0;
+			for (int i = 0; i < actividades.size(); i++) {
+				ActividadGeneral actividad = (ActividadGeneral) actividades
+						.get(i);
+				logger.debug("Valores para validacion de codigo\n\n");
+				logger.debug("Valor 1 es :"
+						+ actividad.getActividadActuacion().getId().toString());
+				logger.debug("Valor 2 es :"
+						+ actividadCompleta.getActividadActuacion().getId()
+								.toString());
+				logger.debug("Valor 3:"
+						+ actividadCompleta.getObjetivoAMitigar().getId()
+								.toString());
+				logger.debug("Valor 4: "
+						+ actividad.getObjetivoAMitigar().getId().toString());
+				logger.debug("Fin Valores para validacion de codigo");
+
+				// El elemento encontrado es una actividad
+				if (actividad.getActividadActuacion() == null) {
+					logger.debug("Ingresando En la primera Validacion");
+					if (Integer.parseInt(actividad.getCodigo()) > mayorActividad) {
+						mayorActividad = Integer
+								.parseInt(actividad.getCodigo());
+					}
+				} // El elemento encontrado es una tarea
+				else {
+					logger.debug("Ingresando En la segunda Validacion");
+					// Verifico que sean las tareas que pertenecen a esta
+					// actividad
+					if (actividad.getObjetivoAMitigar() == actividadCompleta
+							.getObjetivoAMitigar()) {
+						logger.debug("Ingresando En la segunda Validacion parte 1");
+						if (Integer.parseInt(actividad.getCodigo()) > mayorTarea) {
+							mayorTarea = Integer
+									.parseInt(actividad.getCodigo());
+
+						}
+					}
+				}
+
+			}
+			// Verificamos si esta actividad general es actividad o tarea
+			if (actividadCompleta.getActividadActuacion() != null) {
+				actividadCompleta.setCodigo(String.valueOf(mayorTarea + 1));
+				logger.debug("El valor que se va ingresar es: "
+						+ String.valueOf(mayorTarea + 1));
+			}
+			// Fin de la Validacion de las actividades de las actividades
+		}
+
 		actividadCompleta.merge();
 		Util.registrarEntradaEnBitacora(actividadCompleta,
 				"Se modificó la Actividad ", request.getRemoteAddr());
@@ -701,6 +822,9 @@ public class ActividadGeneralController {
 						org.springframework.context.i18n.LocaleContextHolder
 								.getLocale()));
 
+		idObjetivo = Integer.parseInt(laActividad.getObjetivoAMitigar().getId()
+				.toString());
+		logger.debug("Id del Objetivo es:" + id + "\n\n");
 		return "actividadgeneral/update";
 	}
 
