@@ -1266,3 +1266,12 @@ perform tests
 perform tests
 quit
 // Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-02 22:17:54
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-05 21:16:31
+perform tests
+perform package
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-05 21:22:48
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-05 21:36:59
+email sender setup --hostServer smtp.gmail.com --protocol smtp --port 587
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-05 21:56:37

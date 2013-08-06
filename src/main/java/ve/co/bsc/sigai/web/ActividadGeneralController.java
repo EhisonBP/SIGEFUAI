@@ -35,6 +35,8 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -58,6 +60,7 @@ import ve.co.bsc.sigai.domain.ItemPlanificacionActuacion;
 import ve.co.bsc.sigai.domain.ObjetivoEspecifico;
 import ve.co.bsc.sigai.domain.RolUsuario;
 import ve.co.bsc.sigai.domain.Usuario;
+import ve.co.bsc.sigai.service.EmailService;
 import ve.co.bsc.sigai.service.JbpmService;
 import ve.co.bsc.util.Util;
 
@@ -439,6 +442,14 @@ public class ActividadGeneralController {
 		Util.registrarEntradaEnBitacora(actividadGeneral,
 				"Se creó la Actividad ", request.getRemoteAddr());
 		status.setComplete();
+
+		logger.debug("Se esta enviando un correo electronico\n\n");
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"ApplicationContext");
+		EmailService email = (EmailService) context.getBean("emailService");
+		email.sendMessage("ehisonbp@gmail.com", "ehisonbp@gmail.com",
+				"Testing123", "Testing only \n\n Hello Spring Email Sender");
+
 		return "redirect:/actividadgeneral/" + actividadGeneral.getId();
 	}
 
@@ -827,5 +838,4 @@ public class ActividadGeneralController {
 		logger.debug("Id del Objetivo es:" + id + "\n\n");
 		return "actividadgeneral/update";
 	}
-
 }
