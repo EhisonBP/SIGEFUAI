@@ -35,8 +35,6 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -444,11 +442,9 @@ public class ActividadGeneralController {
 		status.setComplete();
 
 		logger.debug("Se esta enviando un correo electronico\n\n");
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"ApplicationContext");
-		EmailService email = (EmailService) context.getBean("emailService");
-		email.sendMessage("ehisonbp@gmail.com", "ehisonbp@gmail.com",
-				"Testing123", "Testing only \n\n Hello Spring Email Sender");
+		EmailService.getInstance().sendMessage("ehisonbp@gmail.com",
+				"ehisonbp@gmail.com", "Esta es una Prueba",
+				"Esta es una prueba para el envio de correo de sigefuai");
 
 		return "redirect:/actividadgeneral/" + actividadGeneral.getId();
 	}
@@ -763,6 +759,12 @@ public class ActividadGeneralController {
 		Util.registrarEntradaEnBitacora(actividadCompleta,
 				"Se modificó la Actividad ", request.getRemoteAddr());
 		status.setComplete();
+
+		logger.debug("Se esta enviando un correo electronico\n\n");
+		EmailService.getInstance().sendMessage("ehisonbp@gmail.com",
+				"ehisonbp@gmail.com", "Esta es una Prueba",
+				"Esta es una prueba para el envio de correo de sigefuai");
+
 		return "redirect:/actividadgeneral/" + actividadCompleta.getId();
 	}
 
