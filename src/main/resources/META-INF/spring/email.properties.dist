@@ -1,5 +1,5 @@
-mail.hostname=<CAMBIAME>
-mail.port=<CAMBIAME>
-mail.username=<CAMBIAME>
-mail.password=<CAMBIAME>
-mail.protocol=<CAMBIAME>
+mail.hostname=smtp.gmail.com
+mail.port=587
+mail.username=ehisonbp@gmail.com
+mail.password=19154165
+mail.protocol=smtp
