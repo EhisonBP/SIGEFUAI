@@ -73,11 +73,11 @@ privileged aspect Actuacion_Roo_JavaBean {
         this.responsable = responsable;
     }
     
-    public Auditor Actuacion.getResponsableAuditor() {
+    public Set<Auditor> Actuacion.getResponsableAuditor() {
         return this.responsableAuditor;
     }
     
-    public void Actuacion.setResponsableAuditor(Auditor responsableAuditor) {
+    public void Actuacion.setResponsableAuditor(Set<Auditor> responsableAuditor) {
         this.responsableAuditor = responsableAuditor;
     }
     

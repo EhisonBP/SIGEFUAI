@@ -22,6 +22,7 @@
 
 package ve.co.bsc.sigai.web;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -442,10 +443,33 @@ public class ActividadGeneralController {
 		status.setComplete();
 
 		logger.debug("Se esta enviando un correo electronico\n\n");
-		EmailService.getInstance().sendMessage("ehisonbp@gmail.com",
-				"ehisonbp@gmail.com", "Esta es una Prueba",
-				"Esta es una prueba para el envio de correo de sigefuai");
+		String url = "http://10.16.17.101:8081/sigefuai/actividadgeneral/"
+				+ actividadGeneral.getId();
+		DateFormat format = DateFormat.getDateInstance();
+		if (actividadGeneral.getResponsables() != null) {
+			for (Auditor auditor : actividadGeneral.getResponsables()) {
+				String mensaje = "<p>Estimado "
+						+ auditor.getNombre()
+						+ " "
+						+ auditor.getApellido()
+						+ "</p>"
+						+ "<p>Me dirijo a usted, a propósito de la ejecución de la Actuación Fiscal "
+						+ miActuacion.getDescripcionSimpleCorreo()
+						+ " con el fin de indicarle que debe proceder a la realización de la actividad en un lapso que comprenderá desde "
+						+ format.format(actividadGeneral
+								.getFechaEstimadaDeInicio())
+						+ " hasta "
+						+ format.format(actividadGeneral
+								.getFechaEstimadaDeFin()) + "</p>"
+						+ "<p><a href='" + url + "'>" + url + "</a></p>"
+						+ "<p>Sin mas a que hacer referencia, me despido.</p>";
 
+				EmailService.getInstance().sendMessage(
+						actividadGeneral.getCreador().getCorreo(),
+						auditor.getCorreo(),
+						"SIGEFUAI: Asignación de Actividad", mensaje);
+			}
+		}
 		return "redirect:/actividadgeneral/" + actividadGeneral.getId();
 	}
 
@@ -761,9 +785,33 @@ public class ActividadGeneralController {
 		status.setComplete();
 
 		logger.debug("Se esta enviando un correo electronico\n\n");
-		EmailService.getInstance().sendMessage("ehisonbp@gmail.com",
-				"ehisonbp@gmail.com", "Esta es una Prueba",
-				"Esta es una prueba para el envio de correo de sigefuai");
+		String url = "http://localhost:8081/sigefuai/actividadgeneral/"
+				+ actividadCompleta.getId();
+		DateFormat format = DateFormat.getDateInstance();
+		if (actividadCompleta.getResponsables() != null) {
+			for (Auditor auditor : actividadCompleta.getResponsables()) {
+				String mensaje = "<p>Estimado "
+						+ auditor.getNombre()
+						+ " "
+						+ auditor.getApellido()
+						+ "</p>"
+						+ "<p>Me dirijo a usted, a propósito de la ejecución de la Actuación Fiscal "
+						+ miActuacion.getDescripcionSimpleCorreo()
+						+ " con el fin de indicarle que debe proceder a la realización de la actividad en un lapso que comprenderá desde "
+						+ format.format(actividadCompleta
+								.getFechaEstimadaDeInicio())
+						+ " hasta "
+						+ format.format(actividadCompleta
+								.getFechaEstimadaDeFin()) + "</p>"
+						+ "<p><a href='" + url + "'>" + url + "</a></p>"
+						+ "<p>Sin mas a que hacer referencia, me despido.</p>";
+
+				EmailService.getInstance().sendMessage(
+						actividadCompleta.getCreador().getCorreo(),
+						auditor.getCorreo(),
+						"SIGEFUAI: Asignación de Actividad", mensaje);
+			}
+		}
 
 		return "redirect:/actividadgeneral/" + actividadCompleta.getId();
 	}

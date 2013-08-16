@@ -431,24 +431,14 @@
 			</c:if>
 			<sec:authorize
 				ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
-				<div id="roo_actuacion_responsableAuditor">
-					<c:if test="${not empty auditors}">
-						<label for="_responsableAuditor_id">Auditor Responsable:</label>
-						<form:select cssStyle="width:250px" id="_responsableAuditor_id"
-							path="responsableAuditor">
-							<form:options itemValue="id" items="${auditores}" />
-						</form:select>
-						<script type="text/javascript">
-							Spring.addDecoration(new Spring.ElementDecoration({
-								elementId : '_responsableAuditor_id',
-								widgetType : 'dijit.form.FilteringSelect',
-								widgetAttrs : {
-									hasDownArrow : true
-								}
-							}));
-						</script>
-					</c:if>
-				</div>
+            			<div id="roo_actuacion_responsableAuditor">
+                			<c:if test="${not empty auditors}">
+                   				 <label for="_responsableAuditor_id">Auditor Responsable:</label>
+                    				<form:select cssStyle="width:250px" id="_responsableAuditor_id" path="responsableAuditor">
+                        				<form:options itemValue="id" items="${auditores}" />
+                    				</form:select>
+                			</c:if>
+            			</div>
 				<br />
 			</sec:authorize>
 			<c:if test="${tools:contains(camposPermitidos, 'estadoActuacion')}">

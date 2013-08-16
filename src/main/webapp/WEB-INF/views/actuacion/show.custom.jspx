@@ -37,60 +37,6 @@
 
 				</div>
 			</div>
-
-
-			<!-- Boton de PAorbado-->
-			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
-				<c:if
-					test="${tools:contains(accionesPermitidas, 'aprobacionCoordinador1')}">
-					<div>
-						<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
-						<form:form id="" action="${form_url}" method="put"
-							modelAttribute="actuacion">
-							<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
-							<form:hidden id="_estadoActuacion_id" path="estadoActuacion"
-								value="10" />
-							<div class="submit" id="roo_actuacion_submit">
-								<spring:message code="button.update" var="update_button" />
-								<script type="text/javascript">
-									function cambiarValor() {
-										document
-												.getElementById("_estadoActuacion_id").value = "8";
-									}
-									Spring
-											.addDecoration(new Spring.ValidateAllDecoration(
-													{
-														elementId : 'proceed',
-														event : 'onclick',
-														onChange : function(
-																newValue) {
-															cambiarValor();
-														}
-													}));
-								</script>
-								<input id="proceed" type="submit" value="Aprobar"
-									onclick="cambiarValor()" />
-
-								<spring:message code="button.update" var="update_button" />
-								<script type="text/javascript">
-									Spring
-											.addDecoration(new Spring.ValidateAllDecoration(
-													{
-														elementId : 'proceed2',
-														event : 'onclick'
-													}));
-								</script>
-								<input id="proceed2" type="submit" value="Rechazar" onclick="" />
-							</div>
-							<form:hidden id="_id_id" path="id" />
-							<form:hidden id="_version_id" path="version" />
-
-						</form:form>
-					</div>
-				</c:if>
-			</sec:authorize>
-			<!-- Boton de PAorbado-->
-
 			<br />
 			<c:if test="${tools:contains(camposPermitidos, 'codigo')}">
 				<div id="roo_actuacion_codigo">
@@ -506,6 +452,58 @@
 			<br />
 			<!-- Muestro El Boton Editar Actuacion para que termine la carga -->
 
+<!-- Boton de PAorbado-->
+			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
+				<c:if
+					test="${tools:contains(accionesPermitidas, 'aprobacionCoordinador1')}">
+					<div>
+						<spring:url value="/actuacion/${actuacion.id}" var="form_url" />
+						<form:form id="" action="${form_url}" method="put"
+							modelAttribute="actuacion">
+							<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
+							<form:hidden id="_estadoActuacion_id" path="estadoActuacion"
+								value="10" />
+							<div class="submit" id="roo_actuacion_submit">
+								<spring:message code="button.update" var="update_button" />
+								<script type="text/javascript">
+									function cambiarValor() {
+										document
+												.getElementById("_estadoActuacion_id").value = "2";
+									}
+									Spring
+											.addDecoration(new Spring.ValidateAllDecoration(
+													{
+														elementId : 'proceed',
+														event : 'onclick',
+														onChange : function(
+																newValue) {
+															cambiarValor();
+														}
+													}));
+								</script>
+								<input id="proceed" type="submit" value="Aprobar"
+									onclick="cambiarValor()" />
+
+								<spring:message code="button.update" var="update_button" />
+								<script type="text/javascript">
+									Spring
+											.addDecoration(new Spring.ValidateAllDecoration(
+													{
+														elementId : 'proceed2',
+														event : 'onclick'
+													}));
+								</script>
+								<input id="proceed2" type="submit" value="Rechazar" onclick="" />
+							</div>
+							<form:hidden id="_id_id" path="id" />
+							<form:hidden id="_version_id" path="version" />
+
+						</form:form>
+					</div>
+				</c:if>
+			</sec:authorize>
+			<!-- Boton de PAorbado-->
+
 			<c:if test="${tools:contains(accionesPermitidas, 'biblioteca')}">
 				<c:if test="${empty actuacion.biblioteca}">
 					<spring:url value="/actuacion/${actuacion.id}/form"
@@ -574,8 +572,7 @@
 
 											<sec:authorize
 												ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-												<c:if
-													test="${tools:contains(actividadActuacion.accionesPermitidas, 'editar')}">
+												
 													<td><spring:url value="/static/images/show.png"
 															var="show_image_url" /> <c:if
 															test="${actividadActuacion.type eq 'pt' }">
@@ -596,7 +593,7 @@
 																src="${show_image_url}" title="Mostrar Sección"
 																type="image" value="${show_label}" />
 														</form:form></td>
-												</c:if>
+												
 											</sec:authorize>
 										</tr>
 									</c:if>
@@ -857,7 +854,7 @@
 			var elemento4 = document.getElementById("mensaje_coordinador");
 			var div3 = document.getElementById("_responsableAuditor_id");
 			try {
-				if (div3.innerHTML != "") {
+				if (div3.innerHTML != "[]") {
 					elemento4.style.display = 'none';
 				}
 			} catch (e) {

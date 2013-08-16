@@ -7,14 +7,18 @@ package ve.co.bsc.sigai.service;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,13 +30,21 @@ public class EmailService implements ApplicationContextAware, InitializingBean {
 
 	private static final Logger logger = Logger.getLogger(EmailService.class);
 	private static EmailService emailService;
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 	private static ApplicationContext context;
 	private ExecutorService executor;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		this.executor = Executors.newFixedThreadPool(1);
+	}
+
+	public JavaMailSender getMailSender() {
+		return mailSender;
+	}
+
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
 	}
 
 	private static ApplicationContext getContext() {
@@ -59,14 +71,6 @@ public class EmailService implements ApplicationContextAware, InitializingBean {
 		}
 	}
 
-	public MailSender getMailSender() {
-		return mailSender;
-	}
-
-	public void setMailSender(MailSender mailSender) {
-		this.mailSender = mailSender;
-	}
-
 	public static EmailService getInstance() {
 
 		if (emailService == null) {
@@ -78,13 +82,60 @@ public class EmailService implements ApplicationContextAware, InitializingBean {
 
 	public void sendMessage(final String from, final String to,
 			final String subject, final String message) throws MailException {
+		/**
+		 * final SimpleMailMessage msg = new SimpleMailMessage(); msg.setTo(to);
+		 * msg.setFrom(from); msg.setSubject(subject); msg.setText(message);
+		 */
 
-		final SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo(to);
-		msg.setFrom(from);
-		msg.setSubject(subject);
-		msg.setText(message);
+		final MimeMessagePreparator msg = new MimeMessagePreparator() {
 
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				mimeMessage.setFrom(new InternetAddress(from));
+				mimeMessage.setSubject(subject, "UTF-8");
+				mimeMessage.setRecipient(Message.RecipientType.TO,
+						new InternetAddress(to));
+				mimeMessage.setText(message, "ISO-8859-1", "html");
+			}
+		};
+		logger.debug("Colocando mensaje en cola [" + msg + "]");
+		this.executor.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					logger.debug(Thread.currentThread().getId()
+							+ " intentando enviar mail [" + msg + "]");
+					mailSender.send(msg);
+					logger.debug(Thread.currentThread().getId()
+							+ " mail enviado satisfactoriamente [" + msg + "]");
+				} catch (Exception e) {
+					logger.error("\n\nNo se pudo enviar mensaje [" + msg + "]"
+							+ e.getCause().toString() + "\n", e.getCause());
+				}
+			}
+		});
+		logger.debug("Colocado mensaje en cola [" + msg + "]");
+	}
+
+	public void sendMessage(final String to, final String subject,
+			final String message) throws MailException {
+		/**
+		 * final SimpleMailMessage msg = new SimpleMailMessage(); msg.setTo(to);
+		 * msg.setFrom(from); msg.setSubject(subject); msg.setText(message);
+		 */
+
+		final MimeMessagePreparator msg = new MimeMessagePreparator() {
+
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				mimeMessage.setFrom(new InternetAddress("ehisonbp@gmail.com"));
+				mimeMessage.setSubject(subject, "UTF-8");
+				mimeMessage.setRecipient(Message.RecipientType.TO,
+						new InternetAddress(to));
+				mimeMessage.setText(message, "ISO-8859-1", "html");
+			}
+		};
 		logger.debug("Colocando mensaje en cola [" + msg + "]");
 		this.executor.submit(new Runnable() {
 

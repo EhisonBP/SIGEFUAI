@@ -77,9 +77,8 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 	@JoinColumn
 	private Auditor responsable;
 
-	@ManyToOne(targetEntity = Auditor.class)
-	@JoinColumn
-	private Auditor responsableAuditor;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Set<Auditor> responsableAuditor = new HashSet<Auditor>();
 
 	@ManyToOne(targetEntity = EstadoActuacion.class)
 	@JoinColumn
@@ -188,7 +187,7 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 			return this.getEstadoActuacion().getNombre();
 		}
 	}
-	
+
 	public void setEstadoSimple(String nombreEstado) {
 		RestAPIServiceClient.instance().updateActuacionEstado(this.getId(),
 				nombreEstado);
@@ -466,11 +465,21 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 		return "/actuacion/" + this.getId();
 	}
 
+	public String getUrlCorreo() {
+		return "http://10.16.17.101:8081/sigefuai/actuacion/" + this.getId();
+	}
+
 	public String getDescripcionSimple() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		sb.append(getId());
 		sb.append("] Codigo ");
+		sb.append(getCodigoCompleto());
+		return sb.toString();
+	}
+
+	public String getDescripcionSimpleCorreo() {
+		StringBuilder sb = new StringBuilder();
 		sb.append(getCodigoCompleto());
 		return sb.toString();
 	}
@@ -570,11 +579,41 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 		return sb.toString();
 	}
 
-	public String auditor() {
+	public String auditores() {
 		logger.debug("Buscando login del Usuario para el JPBM--------->>");
-		String login = Actuacion.findActuacion(this.getId())
-				.getResponsableAuditor().getLogin();
-		logger.debug("el login Es " + login);
-		return login;
+		String login = "";
+		Set<Auditor> auditors = Actuacion.findActuacion(this.getId())
+				.getResponsableAuditor();
+		if (auditors != null) {
+			logger.debug("Entrando a la lista de auditores");
+			for (Auditor auditor : auditors) {
+				if (login.equals("")) {
+					logger.debug("Entrando en la primera validacion de auditores");
+					login = auditor.getLogin();
+				} else {
+					logger.debug("Entrando en la segunda validacion de auditores");
+					login = login + ", " + auditor.getLogin();
+				}
+				logger.debug("Los auditore son: " + login);
+
+			}
+			return login;
+		} else {
+			logger.debug("No se Encontro la lista de responsables");
+			login = "gerente";
+			return login;
+		}
+	}
+
+	public Set<Auditor> getListAuditors() {
+		Set<Auditor> set = Actuacion.findActuacion(this.getId())
+				.getResponsableAuditor();
+		return set;
+	}
+
+	public String nombreResponsable() {
+		String nombre = this.getResponsable().getNombre() + " "
+				+ this.getResponsable().getApellido();
+		return nombre;
 	}
 }

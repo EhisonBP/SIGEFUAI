@@ -66,7 +66,6 @@ import ve.co.bsc.sigai.domain.Biblioteca;
 import ve.co.bsc.sigai.domain.ClaseActuacion;
 import ve.co.bsc.sigai.domain.EstadoActividadActuacion;
 import ve.co.bsc.sigai.domain.EstadoActuacion;
-import ve.co.bsc.sigai.domain.EstadoPlan;
 import ve.co.bsc.sigai.domain.HistorialCambios;
 import ve.co.bsc.sigai.domain.ItemPlanificacionActuacion;
 import ve.co.bsc.sigai.domain.ObjetivoEspecifico;
@@ -308,12 +307,10 @@ public class ActuacionController {
 
 		// Asigno el codigoPlanificacion AP o ANP
 		/**
-		if (miPlan.getEstadoPlan() == EstadoPlan.findEstadoPlan(new Long(6))) {
-			miActuacion.setCodigoPlanificacion("ANP");
-		} else {
-			miActuacion.setCodigoPlanificacion("AP");
-		}
-		*/		
+		 * if (miPlan.getEstadoPlan() == EstadoPlan.findEstadoPlan(new Long(6)))
+		 * { miActuacion.setCodigoPlanificacion("ANP"); } else {
+		 * miActuacion.setCodigoPlanificacion("AP"); }
+		 */
 		miActuacion.setCodigoPlanificacion("AP");
 
 		List<Auditor> todos = Auditor.findAllAuditors();
@@ -459,6 +456,7 @@ public class ActuacionController {
 
 		modelMap.addAttribute("objetoComentable", actuacion);
 
+		logger.info("\n" + actuacion.auditores());
 		return "actuacion/show";
 	}
 
@@ -626,7 +624,7 @@ public class ActuacionController {
 		for (int i = 0; i < items2.size(); i++) {
 			anoFiscal = items2.get(i).getPlanAnual().getAnoFiscal();
 		}
-		
+
 		if (result.hasErrors()) {
 			modelMap.addAttribute("actuacion", actuacion);
 			// modelMap.addAttribute("actuacions",

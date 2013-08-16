@@ -75,7 +75,6 @@
                     <form:select cssStyle="width:250px" id="_responsableAuditor_id" path="responsableAuditor">
                         <form:options itemValue="id" items="${auditors}"/>
                     </form:select>
-                    <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_responsableAuditor_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
                 </c:if>
             </div>
             <br/>

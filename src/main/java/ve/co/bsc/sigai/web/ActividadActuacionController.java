@@ -36,6 +36,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ve.co.bsc.sigai.domain.ActividadActuacion;
 import ve.co.bsc.sigai.domain.ActividadGeneral;
@@ -219,4 +220,5 @@ public class ActividadActuacionController {
 				"Se modificó la actividad ", request.getRemoteAddr());
 		return "redirect:/actividadactuacion/" + actividadActuacion.getId();
 	}
+	
 }

@@ -1275,3 +1275,26 @@ quit
 email sender setup --hostServer smtp.gmail.com --protocol smtp --port 587
 quit
 // Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-05 21:56:37
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-12 12:42:35
+perform clean
+perform tests
+perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-12 12:52:03
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-13 12:02:09
+perform clean
+perform tests
+perform tests
+perform tests
+perform tests
+perform tests
+perform clean
+perform package
+perform tests
+perform tests
+perform tests
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-13 13:43:15
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-16 14:16:36
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-16 15:13:42
