@@ -37,7 +37,7 @@
 					<label for="_roles_id">Rol de Usuario:</label>
 					<form:select cssStyle="width:250px" id="_roles_id"
 						path="usuarios.roles">
-						<form:options itemValue="id" items="${rolusuarios}" />
+						<form:options itemValue="id" items="${rolusuarios}" itemLabel="descripcion"/>
 					</form:select>
 					<script type="text/javascript">
 						Spring.addDecoration(new Spring.ElementDecoration({

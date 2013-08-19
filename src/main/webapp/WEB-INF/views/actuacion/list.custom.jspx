@@ -55,7 +55,7 @@
 						<c:out value="${fn:substring(actuacion.estadoActuacion.nombre, 0, 10)}" />
 					</td> -->
 					<td>
-						<c:out value="${fn:substring(actuacion.claseActuacion.nombre, 0, 10)}" />
+						<c:out value="${fn:substring(actuacion.claseActuacion.nombre, 0, 20)}" />
 					</td>
 					
 				 <td align="center">
