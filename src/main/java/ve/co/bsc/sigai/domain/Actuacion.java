@@ -181,6 +181,7 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 	}
 
 	public String getEstadoSimple() {
+<<<<<<< HEAD
 		logger.debug("Buscando Estado de la Actuacion pra el JBPM ---------->");
 		String estado = "";
 		estado = Actuacion.findActuacion(this.getId()).getEstadoActuacion()
@@ -192,6 +193,17 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 		} else {
 			logger.debug("Esta es si el Estado no tiene nada");
 			return "Error no se consiguio un estado";
+=======
+		logger.debug("Buscando estado de la actuacion para la validadcon del JBPM --->");
+		String estado = Actuacion.findActuacion(this.getId()).getEstadoActuacion().getNombre();
+		logger.debug("Estado de la actuacion es: "+ estado);
+		if (!estado.equals("")) {
+			logger.debug("Entrado en la validacion de true");
+			return estado;
+		} else {
+			logger.debug("Entrando en la validacion de false")
+			return "No se encontro el estado de la Actuacion";
+>>>>>>> e863551f75a54345c62a7de9066844030df29ad2
 		}
 	}
 

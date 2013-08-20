@@ -1,0 +1,297 @@
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Iniciando Servicio BPM
+WARN main ve.co.bsc.sigai.service.JbpmService - kbase es null, creando nuevo KnowledgeBase
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando definiciones de procesos
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando proceso [128] lifecycle-planAnual
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Proceso [128] lifecycle-planAnual cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando proceso [280] lifecycle-actuacion
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Proceso [280] lifecycle-actuacion cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Procesos cargados
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando reglas de negocio
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando regla [34] ap-actividadActuacion
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Regla [34] ap-actividadActuacion cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando regla [36] ap-hallazgo
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Regla [36] ap-hallazgo cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando regla [37] ap-otraActividad
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Regla [37] ap-otraActividad cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando regla [124] ap-planAnual
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Regla [124] ap-planAnual cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando regla [125] sv-actuacion
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Regla [125] sv-actuacion cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Cargando regla [418] ap-actuacion
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Regla [418] ap-actuacion cargado OK
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Reglas cargadas
+DEBUG main ve.co.bsc.sigai.service.JbpmService - KP org.drools.bpmn2
+DEBUG main ve.co.bsc.sigai.service.JbpmService - P ve.co.bsc.sigai.domain.bpm.lifecycle.Actuacion ve.co.bsc.sigai.domain.bpm.lifecycle.Actuacion org.drools.bpmn2
+DEBUG main ve.co.bsc.sigai.service.JbpmService - P ve.co.bsc.sigai.domain.bpm.lifecycle.PlanAnual ve.co.bsc.sigai.domain.bpm.lifecycle.PlanAnual org.drools.bpmn2
+DEBUG main ve.co.bsc.sigai.service.JbpmService - KP ve.co.bsc.sigai.domain.bpm.rules
+WARN main ve.co.bsc.sigai.service.JbpmService - ksessionStatefull es null, creando nuevo StatefullKnowledgeSession
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Sesion previa de StatefullKnowledgeSession (id: 80) encontrada, recuperandola
+DEBUG main org.drools.persistence.SingleSessionCommandService - Instantiating  JtaTransactionManager
+DEBUG main org.drools.persistence.jta.JtaTransactionManager - No JTA TransactionSynchronizationRegistry found at default JNDI location [java:comp/TransactionSynchronizationRegistry]
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Sesion previa de StatefullKnowledgeSession (id: 80) cargada satisfactoriamente
+WARN main ve.co.bsc.sigai.service.JbpmService - ksessionStateless es null, creando nuevo StatelessKnowledgeSession
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Instancias de procesos cargadas:
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Fin de lista de instancias de procesos cargadas
+DEBUG main ve.co.bsc.sigai.service.JbpmService - Finalizada inicializacion de Servicio BPM
+DEBUG main ve.co.bsc.sigai.service.HumanTaskService - Iniciando WS-HumanTaskService
+DEBUG main ve.co.bsc.sigai.service.HumanTaskService - Finalizada inicializacion de WS-HumanTaskService
+INFO main org.apache.cxf.endpoint.ServerImpl - Setting the server's publish address to be /
+INFO http-8081-1 org.apache.tiles.context.AbstractTilesApplicationContextFactory - Initializing Tiles2 application context. . .
+INFO http-8081-1 org.apache.tiles.context.AbstractTilesApplicationContextFactory - Finished initializing Tiles2 application context.
+INFO http-8081-1 org.apache.tiles.factory.TilesContainerFactory - Initializing Tiles2 container. . .
+INFO http-8081-1 org.apache.tiles.factory.TilesContainerFactory - Tiles2 container initialized
+INFO http-8081-1 org.apache.tiles.access.TilesAccess - Publishing TilesContext for context: org.springframework.web.servlet.view.tiles2.SpringTilesApplicationContextFactory$SpringWildcardServletTilesApplicationContext
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-1 ve.co.bsc.sigai.service.JbpmService - Registrando WS-HumanTaskHandler
+DEBUG http-8081-1 ve.co.bsc.sigai.service.JbpmService - WS-HumanTaskHandler registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - registrando roles
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - registrando rol Administrator
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol Administrator registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando rol ROLE_UNIDAD_AUDITOR
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol ROLE_UNIDAD_AUDITOR registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando rol ROLE_UNIDAD_COORDINADOR
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol ROLE_UNIDAD_COORDINADOR registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando rol ROLE_UNIDAD_GERENTE
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol ROLE_UNIDAD_GERENTE registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando rol ROLE_UNIDAD_AUDITADO
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol ROLE_UNIDAD_AUDITADO registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando rol ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol ROLE_ADMIN registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando rol ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Rol ROLE_ADMIN_INSTITUCION registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - roles registrados
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - registrando usuarios
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: admin
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario admin registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: eperez
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario eperez registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: auditor2
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario auditor2 registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: auditor1
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario auditor1 registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: coordinador
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario coordinador registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: gerente
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario gerente registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: presidente
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario presidente registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Registrando usuario: gto
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Usuario gto registrado
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - usuarios registrados
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@0: Username: admin; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario admin
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@0: Username: admin; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario eperez
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+DEBUG http-8081-2 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-2 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-2 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-2 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-2 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-2 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@fd0ef400: Username: coordinador; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_UNIDAD_COORDINADOR
+DEBUG http-8081-2 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario coordinador
+DEBUG http-8081-2 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@fd0ef400: Username: coordinador; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_UNIDAD_COORDINADOR
+DEBUG http-8081-2 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-2 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@0: Username: admin; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario admin
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@0: Username: admin; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario eperez
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@0: Username: admin; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario admin
+DEBUG http-8081-1 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@0: Username: admin; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+DEBUG http-8081-1 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-1 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+ERROR http-8081-5 org.apache.tiles.jsp.taglib.RenderTag - IO Error executing tag: JSPException including path '/WEB-INF/views/usuario/create.custom.jspx'.
+org.apache.tiles.util.TilesIOException: JSPException including path '/WEB-INF/views/usuario/create.custom.jspx'.
+	at org.apache.tiles.servlet.context.ServletUtil.wrapServletException(ServletUtil.java:232)
+	at org.apache.tiles.jsp.context.JspTilesRequestContext.include(JspTilesRequestContext.java:105)
+	at org.apache.tiles.jsp.context.JspTilesRequestContext.dispatch(JspTilesRequestContext.java:96)
+	at org.apache.tiles.renderer.impl.UntypedAttributeRenderer.write(UntypedAttributeRenderer.java:61)
+	at org.apache.tiles.renderer.impl.AbstractBaseAttributeRenderer.render(AbstractBaseAttributeRenderer.java:103)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:669)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:337)
+	at org.apache.tiles.jsp.taglib.InsertAttributeTag.render(InsertAttributeTag.java:234)
+	at org.apache.tiles.jsp.taglib.InsertAttributeTag.render(InsertAttributeTag.java:211)
+	at org.apache.tiles.jsp.taglib.RenderTag.doEndTag(RenderTag.java:220)
+	at org.apache.jsp.WEB_002dINF.layouts.default_jspx._jspx_meth_tiles_005finsertAttribute_005f1(default_jspx.java:5014)
+	at org.apache.jsp.WEB_002dINF.layouts.default_jspx._jspx_meth_c_005fif_005f3(default_jspx.java:1071)
+	at org.apache.jsp.WEB_002dINF.layouts.default_jspx._jspService(default_jspx.java:126)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:374)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:337)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:630)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:436)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:374)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:302)
+	at org.apache.tiles.servlet.context.ServletTilesRequestContext.forward(ServletTilesRequestContext.java:241)
+	at org.apache.tiles.servlet.context.ServletTilesRequestContext.dispatch(ServletTilesRequestContext.java:222)
+	at org.apache.tiles.renderer.impl.TemplateAttributeRenderer.write(TemplateAttributeRenderer.java:44)
+	at org.apache.tiles.renderer.impl.AbstractBaseAttributeRenderer.render(AbstractBaseAttributeRenderer.java:103)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:669)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:689)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:643)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:626)
+	at org.apache.tiles.impl.BasicTilesContainer.render(BasicTilesContainer.java:322)
+	at org.springframework.web.servlet.view.tiles2.TilesView.renderMergedOutputModel(TilesView.java:124)
+	at org.springframework.web.servlet.view.AbstractView.render(AbstractView.java:262)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1157)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:927)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:827)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:778)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:690)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:630)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:436)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:374)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:302)
+	at org.tuckey.web.filters.urlrewrite.NormalRewrittenUrl.doRewrite(NormalRewrittenUrl.java:195)
+	at org.tuckey.web.filters.urlrewrite.RuleChain.handleRewrite(RuleChain.java:159)
+	at org.tuckey.web.filters.urlrewrite.RuleChain.doRules(RuleChain.java:141)
+	at org.tuckey.web.filters.urlrewrite.UrlRewriter.processRequest(UrlRewriter.java:90)
+	at org.tuckey.web.filters.urlrewrite.UrlRewriteFilter.doFilter(UrlRewriteFilter.java:417)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:344)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:110)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:84)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:98)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:95)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:55)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:36)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilter(BasicAuthenticationFilter.java:178)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:188)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:106)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:356)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:150)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter.doFilterInternal(OpenEntityManagerInViewFilter.java:147)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:175)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:286)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:844)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:447)
+	at java.lang.Thread.run(Thread.java:636)
+Caused by: java.lang.NumberFormatException: For input string: "descripcion"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:481)
+	at java.lang.Integer.parseInt(Integer.java:514)
+	at javax.el.ListELResolver.coerce(ListELResolver.java:166)
+	at javax.el.ListELResolver.getValue(ListELResolver.java:51)
+	at javax.el.CompositeELResolver.getValue(CompositeELResolver.java:53)
+	at org.apache.el.parser.AstValue.getValue(AstValue.java:114)
+	at org.apache.el.ValueExpressionImpl.getValue(ValueExpressionImpl.java:186)
+	at org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(PageContextImpl.java:923)
+	at org.apache.jsp.WEB_002dINF.views.usuario.create_custom_jspx._jspx_meth_form_005foptions_005f0(create_custom_jspx.java:1060)
+	at org.apache.jsp.WEB_002dINF.views.usuario.create_custom_jspx._jspx_meth_form_005fselect_005f0(create_custom_jspx.java:1030)
+	at org.apache.jsp.WEB_002dINF.views.usuario.create_custom_jspx._jspx_meth_c_005fif_005f0(create_custom_jspx.java:985)
+	at org.apache.jsp.WEB_002dINF.views.usuario.create_custom_jspx._jspService(create_custom_jspx.java:163)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:374)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:337)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:630)
+	at org.apache.catalina.core.ApplicationDispatcher.doInclude(ApplicationDispatcher.java:535)
+	at org.apache.catalina.core.ApplicationDispatcher.include(ApplicationDispatcher.java:472)
+	at org.apache.jasper.runtime.JspRuntimeLibrary.include(JspRuntimeLibrary.java:968)
+	at org.apache.jasper.runtime.PageContextImpl.doInclude(PageContextImpl.java:638)
+	at org.apache.jasper.runtime.PageContextImpl.include(PageContextImpl.java:632)
+	at org.apache.tiles.jsp.context.JspTilesRequestContext.include(JspTilesRequestContext.java:103)
+	... 103 more
+DEBUG http-8081-3 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-3 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario eperez
+DEBUG http-8081-3 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-3 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+DEBUG http-8081-3 ve.co.bsc.sigai.web.HumanTaskController - Iniciando lista de human tasks
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Buscando TaskAssignedAsPotentialOwnerToCurrentUser
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Instanciando cliente y estableciendo conexion
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Estableciendo conexion (intento 0)
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Cliente conectado
+DEBUG http-8081-3 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Solicitando tasks para el usuario eperez
+DEBUG http-8081-3 ve.co.bsc.sigai.domain.Usuario - [principal] es: org.springframework.security.core.userdetails.User@2f10c00: Username: eperez; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_ADMIN_INSTITUCION
+DEBUG http-8081-3 ve.co.bsc.sigai.service.HumanTaskService - Encontradas 0 tareas
+DEBUG http-8081-3 ve.co.bsc.sigai.web.HumanTaskController - 0 tareas encontradas, redireccionando a la vista
+INFO Thread-3 org.apache.tiles.servlet.context.ServletUtil - Removing TilesContext for context: org.apache.catalina.core.ApplicationContextFacade
