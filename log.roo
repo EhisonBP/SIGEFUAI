@@ -1298,3 +1298,10 @@ quit
 // Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-16 14:16:36
 quit
 // Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-16 15:13:42
+// Spring Roo 1.0.2.RELEASE [rev 638] log opened at 2013-08-17 23:53:40
+perform clean
+perform package
+perform tests
+perform eclipse
+quit
+// Spring Roo 1.0.2.RELEASE [rev 638] log closed at 2013-08-18 00:06:23

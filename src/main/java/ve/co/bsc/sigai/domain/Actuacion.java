@@ -181,10 +181,17 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 	}
 
 	public String getEstadoSimple() {
-		if (this.getEstadoActuacion() == null) {
-			return "";
+		logger.debug("Buscando Estado de la Actuacion pra el JBPM ---------->");
+		String estado = "";
+		estado = Actuacion.findActuacion(this.getId()).getEstadoActuacion()
+				.getNombre();
+		logger.debug("El estado de la Actuacion es: " + estado);
+		if (!estado.equals("")) {
+			logger.debug("Esta Validacion es por si estado tiene algo");
+			return estado;
 		} else {
-			return this.getEstadoActuacion().getNombre();
+			logger.debug("Esta es si el Estado no tiene nada");
+			return "Error no se consiguio un estado";
 		}
 	}
 

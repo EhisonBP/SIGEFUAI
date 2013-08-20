@@ -452,7 +452,7 @@
 			<br />
 			<!-- Muestro El Boton Editar Actuacion para que termine la carga -->
 
-<!-- Boton de PAorbado-->
+			<!-- Boton de Aprobado-->
 			<sec:authorize ifAnyGranted="ROLE_UNIDAD_COORDINADOR">
 				<c:if
 					test="${tools:contains(accionesPermitidas, 'aprobacionCoordinador1')}">
@@ -461,15 +461,21 @@
 						<form:form id="" action="${form_url}" method="put"
 							modelAttribute="actuacion">
 							<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />
-							<form:hidden id="_estadoActuacion_id" path="estadoActuacion"
-								value="10" />
+							<form:hidden id="_estadoActuacion_id2" path="estadoActuacion"
+								value="9" />
 							<div class="submit" id="roo_actuacion_submit">
 								<spring:message code="button.update" var="update_button" />
 								<script type="text/javascript">
 									function cambiarValor() {
+
+										var elemento1 = document
+												.getElementById("_estadoActuacion_id2");
+										elemento1.value = "8";
 										document
-												.getElementById("_estadoActuacion_id").value = "2";
+												.getElementById("_estadoActuacion_id2").value = elemento1.value;
+										//alert(elemento1.value);
 									}
+
 									Spring
 											.addDecoration(new Spring.ValidateAllDecoration(
 													{
@@ -493,7 +499,7 @@
 														event : 'onclick'
 													}));
 								</script>
-								<input id="proceed2" type="submit" value="Rechazar" onclick="" />
+								<input id="proceed2" type="submit" value="Rechazar" />
 							</div>
 							<form:hidden id="_id_id" path="id" />
 							<form:hidden id="_version_id" path="version" />
@@ -572,7 +578,8 @@
 
 											<sec:authorize
 												ifAnyGranted="ROLE_UNIDAD_AUDITOR, ROLE_UNIDAD_COORDINADOR, ROLE_UNIDAD_GERENTE">
-												
+												<c:if
+													test="${tools:contains(actividadActuacion.accionesPermitidas, 'editar')}">
 													<td><spring:url value="/static/images/show.png"
 															var="show_image_url" /> <c:if
 															test="${actividadActuacion.type eq 'pt' }">
@@ -593,7 +600,7 @@
 																src="${show_image_url}" title="Mostrar Sección"
 																type="image" value="${show_label}" />
 														</form:form></td>
-												
+												</c:if>
 											</sec:authorize>
 										</tr>
 									</c:if>
@@ -859,7 +866,7 @@
 				}
 			} catch (e) {
 			}
-			
+
 			//Validando si hay por lo menos un objetivo especifico y asi te aparece el boton de
 			//cargar datos a travez de biblioteca
 			var elemento3 = document.getElementById("tituloDefault");

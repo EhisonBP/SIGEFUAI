@@ -87,7 +87,6 @@
 								<tr>
 
 									<th>Codigo</th>
-									<th>Nombre</th>
 									<th>Tipo</th>
 									<th>Estado</th>
 									<th />
@@ -99,10 +98,7 @@
 								<tr>
 									<td><c:out
 											value="${fn:substring(actuacion.codigoCompleto, 0, 20)}" /></td>
-									<td><c:out
-											value="${fn:substring(actuacion.nombre, 0, 20)}" /></td>
-									<td><c:out
-											value="${fn:substring(actuacion.claseActuacion.nombre, 0, 10)}" />
+									<td><c:out value="${actuacion.claseActuacion.nombre}" />
 									</td>
 									<td align="center"><c:choose>
 											<!--Amarillo: Cuando la Actuacion no se inicia en la fecha tentativa -->

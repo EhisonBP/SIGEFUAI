@@ -456,7 +456,12 @@ public class ActuacionController {
 
 		modelMap.addAttribute("objetoComentable", actuacion);
 
-		logger.info("\n" + actuacion.auditores());
+		logger.info("La validacion es: "
+				+ actuacion.getEstadoSimple().equals(
+						"Programa Aprobado Coordinador") + "\n");
+		logger.info("El estado simple del plan es: "
+				+ actuacion.getEstadoSimple() + "\n");
+
 		return "actuacion/show";
 	}
 
