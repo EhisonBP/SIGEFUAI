@@ -180,7 +180,7 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 		}
 	}
 
-	public String getEstadoSimpleActuacion() {
+	public String getEstadoSimple() {
 		logger.debug("Buscando Estado de la Actuacion pra el JBPM ---------->");
 		String estado = this.getEstadoActuacion().getNombre();
 		logger.debug("El estado de la Actuacion es: " + estado);
@@ -526,7 +526,7 @@ public class Actuacion extends ActividadAuditor implements Cloneable,
 				.append(", ");
 		sb.append("Id: ").append(getId()).append(", ");
 		sb.append("Version: ").append(getVersion()).append(", ");
-		sb.append("EstadoSimple: ").append(getEstadoSimpleActuacion()).append(", ");
+		sb.append("EstadoSimple: ").append(getEstadoSimple()).append(", ");
 		sb.append("CodigoCompleto: ").append(getCodigoCompleto()).append(", ");
 		sb.append("CodigoPadres: ").append(getCodigoPadres()).append(", ");
 		sb.append("CodigoActuacionTodo: ").append(getCodigoActuacionTodo())

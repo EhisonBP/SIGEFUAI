@@ -237,6 +237,11 @@ public class ActuacionController {
 		actuacion.setMesDesdeTentativo(actuacion.getMesDesde());
 		actuacion.setMesHastaTentativo(actuacion.getMesHasta());
 
+		// iNSERTANDO ESTADO DE LA ACTUACION
+		EstadoActuacion estadoActuacion = EstadoActuacion
+				.findEstadoActuacion(new Long(1));
+		actuacion.setEstadoActuacion(estadoActuacion);
+
 		// Verifico si seleccionó un tipo de auditoría que no sea de Operativa
 		// para asignar null al campo nombreOperativa
 		String claseActuacion = actuacion.getClaseActuacion().getNombre();
@@ -264,11 +269,11 @@ public class ActuacionController {
 		ProcessInstance p = jbpmService.startProcess(
 				"ve.co.bsc.sigai.domain.bpm.lifecycle.Actuacion", parameters,
 				actuacion);
-
-		logger.debug("solicitando revision de actuacion en motor de reglas");
-		jbpmService.executeRulesStateless(actuacion);
-		logger.debug("revision de actuacion en motor de reglas listo");
-
+		/**
+		 * logger.debug("solicitando revision de actuacion en motor de reglas");
+		 * jbpmService.executeRulesStateless(actuacion);
+		 * logger.debug("revision de actuacion en motor de reglas listo");
+		 */
 		status.setComplete();
 		return "redirect:/actuacion/" + actuacion.getId();
 	}
@@ -457,10 +462,10 @@ public class ActuacionController {
 		modelMap.addAttribute("objetoComentable", actuacion);
 
 		logger.info("La validacion es: "
-				+ actuacion.getEstadoSimple().equals(
+				+ actuacion.getEstadoSimpleActuacion().equals(
 						"Programa Aprobado Coordinador") + "\n");
 		logger.info("El estado simple del plan es: "
-				+ actuacion.getEstadoSimple() + "\n");
+				+ actuacion.getEstadoSimpleActuacion() + "\n");
 
 		return "actuacion/show";
 	}
