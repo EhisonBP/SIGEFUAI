@@ -1,2 +1,0 @@
-DEBUG main org.drools.persistence.SingleSessionCommandService - Instantiating  JtaTransactionManager
-DEBUG main org.drools.persistence.jta.JtaTransactionManager - No JTA TransactionSynchronizationRegistry found at default JNDI location [java:comp/TransactionSynchronizationRegistry]
